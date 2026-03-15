@@ -6,35 +6,58 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const apiKey = process.env.GROQ_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return res.status(500).json({
-      error: 'API key no configurada. Andá a Vercel → tu proyecto → Settings → Environment Variables → agregá GROQ_API_KEY con tu clave de groq.com (es gratis).'
+      error: 'API key no configurada. Andá a Vercel → Settings → Environment Variables → agregá ANTHROPIC_API_KEY. La conseguís en console.anthropic.com'
     });
   }
 
+  const useSearch = req.body.useSearch || false;
+
   try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const body = {
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 2048,
+      messages: req.body.messages
+    };
+
+    // Web search real para tendencias
+    if (useSearch) {
+      body.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01'
+    };
+
+    if (useSearch) {
+      headers['anthropic-beta'] = 'web-search-2025-03-05';
+    }
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 2048,
-        messages: req.body.messages
-      })
+      headers,
+      body: JSON.stringify(body)
     });
 
     const data = await response.json();
-    if (!response.ok) return res.status(response.status).json(data);
+    if (!response.ok) {
+      return res.status(response.status).json({ error: data.error?.message || JSON.stringify(data) });
+    }
 
-    // Normalizar al formato que espera el frontend
-    const text = data.choices?.[0]?.message?.content || '';
+    // Extraer solo bloques de texto (ignorar tool_use y tool_result)
+    const text = (data.content || [])
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('');
+
     return res.status(200).json({
       content: [{ type: 'text', text }]
     });
+
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }

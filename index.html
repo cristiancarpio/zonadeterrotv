@@ -27,7 +27,7 @@
 html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden}
 .app{display:flex;flex-direction:column;min-height:100vh;max-width:900px;margin:0 auto}
 @media(min-width:600px){
-  .nav{grid-template-columns:repeat(5,1fr);gap:8px;padding:14px 28px}
+  .nav{gap:8px;padding:14px 28px}
   .panel{padding:0 28px 100px}
   .header{padding:22px 28px 0}
   .live-bar,.install-banner{margin-left:28px;margin-right:28px}
@@ -62,7 +62,9 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .refresh-btn:hover{border-color:var(--red);color:var(--red)}
 
 /* NAV */
-.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:12px 20px}
+.nav{display:flex;overflow-x:auto;gap:5px;padding:12px 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{flex:0 0 auto;min-width:64px;}
 .nav-btn{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:8px 3px;text-align:center;cursor:pointer;transition:all 0.2s}
 .nav-btn .ni{font-size:20px;display:block;margin-bottom:3px}
 .nav-btn .nl{font-size:11px;color:var(--text-dim);font-weight:500;display:block;line-height:1.2}
@@ -76,6 +78,16 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .nav-btn.active.yt .nl{color:#1abc9c}
 .nav-btn.active.str{border-color:var(--purple);background:var(--purple-dim)}
 .nav-btn.active.str .nl{color:#bb8fce}
+.nav-btn.active.cm{border-color:#00b4d8;background:rgba(0,180,216,0.15)}
+.nav-btn.active.cm .nl{color:#00b4d8}
+.nav-btn.active.im{border-color:#f72585;background:rgba(247,37,133,0.15)}
+.nav-btn.active.im .nl{color:#f72585}
+.nav-btn.active.wk{border-color:#4cc9f0;background:rgba(76,201,240,0.15)}
+.nav-btn.active.wk .nl{color:#4cc9f0}
+.nav-btn.active.gs{border-color:#f4a261;background:rgba(244,162,97,0.15)}
+.nav-btn.active.gs .nl{color:#f4a261}
+.nav-btn.active.yd{border-color:#2dc653;background:rgba(45,198,83,0.15)}
+.nav-btn.active.yd .nl{color:#2dc653}
 
 /* PANELS */
 .panel{display:none;padding:0 20px 100px;animation:fi 0.2s ease}
@@ -213,6 +225,11 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <button class="nav-btn an" onclick="setPanel('an',this)"><span class="ni">📊</span><span class="nl">Análisis</span></button>
     <button class="nav-btn yt" onclick="setPanel('yt',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
     <button class="nav-btn str" onclick="setPanel('str',this)"><span class="ni">💰</span><span class="nl">Estrategia</span></button>
+    <button class="nav-btn cm" onclick="setPanel('cm',this)"><span class="ni">💬</span><span class="nl">Comentarios</span></button>
+    <button class="nav-btn im" onclick="setPanel('im',this)"><span class="ni">🖼️</span><span class="nl">Imágenes</span></button>
+    <button class="nav-btn wk" onclick="setPanel('wk',this)"><span class="ni">🗓️</span><span class="nl">Semana</span></button>
+    <button class="nav-btn gs" onclick="setPanel('gs',this)"><span class="ni">🎥</span><span class="nl">Guión YT</span></button>
+    <button class="nav-btn yd" onclick="setPanel('yd',this)"><span class="ni">📝</span><span class="nl">Desc YT</span></button>
   </nav>
 
   <!-- ═══════════════════════════════════════════════ FACEBOOK POSTS -->
@@ -285,6 +302,12 @@ select option{background:#1a1a1a;color:#f0f0f0}
     </div>
     <button class="gen-btn fb" id="fb-btn" onclick="gen('fb')">GENERAR 5 POSTS 📘</button>
     <div class="gen-note">El post 5 siempre incluye CTA de monetización</div>
+
+    <div style="height:1px;background:var(--border);margin:16px 0"></div>
+    <div class="sec-title" style="font-size:18px">ENCUESTAS VIRALES</div>
+    <div class="sec-sub">Las encuestas tienen el mayor alcance orgánico en Facebook</div>
+    <button class="gen-btn" id="enc-btn" style="background:linear-gradient(135deg,#4a0e2a,#e63946)" onclick="genEncuestas()">GENERAR 5 ENCUESTAS 📊</button>
+    <div class="gen-note">Preguntas que dividen la audiencia · máximo debate · máximo alcance</div>
   </div>
 
   <!-- ═══════════════════════════════════════════════ REELS FACEBOOK -->
@@ -516,6 +539,313 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="gen-note">Plan mes a mes para escalar tus $300 actuales</div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════ COMENTARIOS -->
+  <div class="panel" id="panel-cm">
+    <div class="sec-title">RESPUESTAS A COMENTARIOS</div>
+    <div class="sec-sub">Respondé rápido · el algoritmo te premia en las primeras 2 hs</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">⚡ Por qué importa</span></div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.7">
+        Facebook mide cuánto tardás en responder. Responder los primeros 10 comentarios dentro de las 2 horas <strong style="color:var(--text)">multiplica x3 el alcance orgánico</strong>. Una repregunta corta alcanza.
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Pegá el comentario que recibiste</div>
+        <textarea id="cm-comentario" placeholder="Ej: jajaja esto me pasó a mí de verdad, una vez en el monte escuché algo raro..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Tono de respuesta</div>
+        <select id="cm-tono">
+          <option value="cercano y humano, como si fuera un amigo apasionado del terror">Cercano y humano</option>
+          <option value="misterioso y que genere intriga para que sigan comentando">Misterioso</option>
+          <option value="divertido y que invite a debatir más">Divertido</option>
+          <option value="informativo, aportando un dato extra de valor">Informativo</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Objetivo</div>
+        <select id="cm-objetivo">
+          <option value="generar más comentarios con una repregunta al final">Más comentarios</option>
+          <option value="llevar al usuario al grupo privado de terror">Al grupo privado</option>
+          <option value="generar reacciones positivas y compartidos">Más shares</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="cm-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="cm-s1"><span class="step-ic">🔍</span>Analizando el comentario recibido</div>
+        <div class="prog-step" id="cm-s2"><span class="step-ic">🧠</span>Pensando la mejor respuesta estratégica</div>
+        <div class="prog-step" id="cm-s3"><span class="step-ic">✍️</span>Redactando 5 opciones de respuesta</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="cm-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="cm-btn" style="background:linear-gradient(135deg,#005f73,#00b4d8)" onclick="genComentarios()">GENERAR 5 RESPUESTAS 💬</button>
+    <div class="gen-note">Cada respuesta lista para copiar y pegar</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ IMÁGENES -->
+  <div class="panel" id="panel-im">
+    <div class="sec-title">COPY PARA IMÁGENES</div>
+    <div class="sec-sub">Texto para fotos FB · texto en Reels · títulos de thumbnails YT</div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Tipo de contenido</div>
+        <select id="im-tipo">
+          <option value="post con imagen en Facebook">Post con imagen FB</option>
+          <option value="thumbnail de YouTube">Thumbnail YouTube</option>
+          <option value="texto superpuesto en Reel de terror">Texto en Reel</option>
+          <option value="portada de grupo privado de terror">Portada de grupo</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Tema de la imagen</div>
+        <select id="im-tema">
+          <option value="escena de película de terror">Película de terror</option>
+          <option value="lugar abandonado o perturbador">Lugar perturbador</option>
+          <option value="leyenda urbana o criatura">Leyenda / criatura</option>
+          <option value="experiencia paranormal personal">Experiencia paranormal</option>
+          <option value="noticia o hecho real perturbador">Hecho real</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Objetivo</div>
+        <select id="im-objetivo">
+          <option value="maximizar comentarios y debate">Más comentarios</option>
+          <option value="maximizar clicks y CTR">Más clicks / CTR</option>
+          <option value="maximizar shares y viralidad">Más compartidos</option>
+          <option value="llevar al grupo privado de terror">Al grupo privado</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Largo del texto</div>
+        <select id="im-largo">
+          <option value="muy corto: 1 sola línea impactante de máximo 6 palabras">1 línea · 6 palabras</option>
+          <option value="corto: 2 a 3 líneas con gancho y pregunta">2-3 líneas</option>
+          <option value="descripción completa de 60 a 90 palabras para el post de la imagen">Descripción completa</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Describí tu imagen (opcional pero mejora el resultado)</div>
+        <textarea id="im-desc" placeholder="Ej: foto de una casa abandonada de noche con una ventana iluminada..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:60px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="im-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="im-s1"><span class="step-ic">🔍</span>Analizando tipo de imagen y objetivo</div>
+        <div class="prog-step" id="im-s2"><span class="step-ic">🧠</span>Generando copies optimizados para alcance</div>
+        <div class="prog-step" id="im-s3"><span class="step-ic">✍️</span>Refinando con ganchos de terror irresistibles</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="im-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="im-btn" style="background:linear-gradient(135deg,#7b0e4e,#f72585)" onclick="genImagen()">GENERAR 5 COPIES 🖼️</button>
+    <div class="gen-note">5 opciones de texto · elegís la que más te gusta</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ PLANIFICADOR SEMANAL -->
+  <div class="panel" id="panel-wk">
+    <div class="sec-title">PLAN SEMANAL</div>
+    <div class="sec-sub">7 días completos · 35 posts + 21 Reels listos para publicar</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">📅 Qué incluye</span></div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
+        Genera el contenido completo de <strong style="color:var(--text)">toda la semana</strong> basado en las tendencias actuales:<br>
+        · 5 posts por día × 7 días = <strong style="color:var(--text)">35 posts</strong><br>
+        · 3 scripts de Reels por día × 7 días = <strong style="color:var(--text)">21 Reels</strong><br>
+        · Distribuidos por horario y tipo para máximo alcance<br>
+        · Cada día temáticamente coherente y variado
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Foco de la semana</div>
+        <select id="wk-foco">
+          <option value="variado: mezcla de películas, leyendas, experiencias personales y debates">Variado ✓</option>
+          <option value="estrenos y novedades del cine de terror de la semana">Estrenos semana</option>
+          <option value="leyendas urbanas latinoamericanas y experiencias paranormales">Leyendas latinas</option>
+          <option value="terror clásico: películas y directores icónicos del género">Terror clásico</option>
+          <option value="analog horror, creepypastas y terror de internet">Terror internet</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Tono dominante</div>
+        <select id="wk-tono">
+          <option value="fan apasionado y humano, voz cercana">Fan apasionado</option>
+          <option value="dramático con suspenso creciente">Dramático</option>
+          <option value="mix de opinión directa y debate">Mix debate</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">CTA de monetización</div>
+        <select id="wk-cta">
+          <option value="grupo privado de terror ($5-10/mes)">Grupo privado</option>
+          <option value="Stars de Facebook en lives">Stars FB</option>
+          <option value="canal de YouTube del creador">Canal YouTube</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
+        <select id="wk-ht">
+          <option value="con 5 hashtags en español por post">5 hashtags</option>
+          <option value="sin hashtags">Sin hashtags</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="wk-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="wk-s1"><span class="step-ic">🔍</span>Analizando tendencias de la semana</div>
+        <div class="prog-step" id="wk-s2"><span class="step-ic">🗓️</span>Estructurando los 7 días con variedad</div>
+        <div class="prog-step" id="wk-s3"><span class="step-ic">✍️</span>Redactando posts y scripts completos</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="wk-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="wk-btn" style="background:linear-gradient(135deg,#023e8a,#4cc9f0)" onclick="genSemana()">GENERAR SEMANA COMPLETA 🗓️</button>
+    <div class="gen-note">⚠️ Tarda 20-30 seg · generá un café mientras esperás ☕</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════ GUIÓN YOUTUBE -->
+  <div class="panel" id="panel-gs">
+    <div class="sec-title">GUIÓN YOUTUBE</div>
+    <div class="sec-sub">Video completo de 10-15 min · listo para grabar</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">🎥 Cómo usarlo</span></div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
+        Generá el guión completo del video → grabás leyendo o improvisando sobre la estructura → ese mismo contenido se convierte en <strong style="color:var(--text)">5 posts FB + 3 Reels + descripción SEO</strong> con las otras herramientas de la app.
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Tema del video (podés ser específico)</div>
+        <textarea id="gs-tema" placeholder="Ej: Las 5 películas de terror más perturbadoras de 2025 que nadie habla, o: La historia real detrás de La Monja..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Formato</div>
+        <select id="gs-formato">
+          <option value="análisis y teorías en profundidad con datos reales">Análisis / teorías</option>
+          <option value="ranking top con suspenso creciente, el más impactante al final">Ranking Top</option>
+          <option value="documental corto con narración dramática">Documental corto</option>
+          <option value="reseña con opinión personal apasionada">Reseña personal</option>
+          <option value="historia real narrada como si fuera un relato de terror">Historia real narrada</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Duración objetivo</div>
+        <select id="gs-dur">
+          <option value="10 minutos (aproximadamente 1400 palabras)">10 minutos</option>
+          <option value="12 minutos (aproximadamente 1700 palabras)">12 minutos</option>
+          <option value="15 minutos (aproximadamente 2100 palabras)">15 minutos</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Tono</div>
+        <select id="gs-tono">
+          <option value="narrador apasionado y humano, como si contaras algo que te fascina">Apasionado</option>
+          <option value="dramático con suspenso creciente, como documental de terror">Dramático</option>
+          <option value="analítico pero entretenido, con humor negro ocasional">Analítico</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">CTA final</div>
+        <select id="gs-cta">
+          <option value="suscribirse al canal y activar la campanita">Suscripción</option>
+          <option value="unirse al grupo privado de terror">Grupo privado</option>
+          <option value="membresía del canal">Membresía</option>
+          <option value="ver el siguiente video recomendado">Siguiente video</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="gs-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="gs-s1"><span class="step-ic">🔍</span>Investigando el tema con tendencias actuales</div>
+        <div class="prog-step" id="gs-s2"><span class="step-ic">🗂️</span>Estructurando el guión con retención máxima</div>
+        <div class="prog-step" id="gs-s3"><span class="step-ic">✍️</span>Redactando el guión completo listo para grabar</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="gs-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="gs-btn" style="background:linear-gradient(135deg,#7c3a00,#f4a261)" onclick="genGuion()">GENERAR GUIÓN COMPLETO 🎥</button>
+    <div class="gen-note">⚠️ Tarda 25-35 seg por la extensión · vale la pena esperar ☕</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ DESCRIPCIÓN YOUTUBE -->
+  <div class="panel" id="panel-yd">
+    <div class="sec-title">DESCRIPCIÓN YOUTUBE</div>
+    <div class="sec-sub">SEO optimizado · keywords · timestamps · links</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">📈 Por qué importa el SEO</span></div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
+        YouTube es el <strong style="color:var(--text)">segundo buscador más usado del mundo</strong>. Una descripción bien optimizada con keywords correctas puede traerte vistas orgánicas durante años sin publicidad. La mayoría de creadores la ignora — eso es tu ventaja.
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Título del video</div>
+        <input type="text" id="yd-titulo" placeholder="Ej: Las 5 películas de terror más perturbadoras de 2025" style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;margin-top:4px">
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">De qué trata el video (2-3 líneas)</div>
+        <textarea id="yd-desc" placeholder="Ej: Análisis de las películas de terror más comentadas del año, con ranking del más al menos perturbador, incluye Nosferatu, La Novia de Frankenstein y más..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Duración del video</div>
+        <select id="yd-dur">
+          <option value="10 minutos">10 min</option>
+          <option value="12 minutos">12 min</option>
+          <option value="15 minutos">15 min</option>
+          <option value="20 minutos o más">+20 min</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Links a incluir</div>
+        <select id="yd-links">
+          <option value="grupo privado de terror y canal de YouTube">Grupo + Canal</option>
+          <option value="solo el grupo privado de terror">Solo grupo</option>
+          <option value="solo el canal de YouTube">Solo canal</option>
+          <option value="ningún link por ahora">Sin links</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Idioma SEO</div>
+        <select id="yd-idioma">
+          <option value="español latinoamericano general">Español latino</option>
+          <option value="español de Argentina">Argentina</option>
+          <option value="español de México">México</option>
+          <option value="español de España">España</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
+        <select id="yd-ht">
+          <option value="con 5 hashtags de terror en español al final">5 hashtags</option>
+          <option value="con 8 hashtags de terror en español al final">8 hashtags</option>
+          <option value="sin hashtags">Sin hashtags</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="yd-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="yd-s1"><span class="step-ic">🔍</span>Analizando keywords de terror en YouTube</div>
+        <div class="prog-step" id="yd-s2"><span class="step-ic">📊</span>Estructurando descripción para el algoritmo</div>
+        <div class="prog-step" id="yd-s3"><span class="step-ic">✍️</span>Redactando descripción + timestamps + tags</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="yd-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="yd-btn" style="background:linear-gradient(135deg,#0a3d1f,#2dc653)" onclick="genDescYT()">GENERAR DESCRIPCIÓN SEO 📝</button>
+    <div class="gen-note">Descripción · timestamps · keywords · tags · hashtags</div>
+  </div>
+
+
 </div>
 <script>
 // ── DATE ───────────────────────────────────────────────────────────────
@@ -589,11 +919,12 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
+        useSearch: true,
         messages:[{role:'user',content:prompt}]
       })
     });
     const data = await res.json();
-    if(data.error) throw new Error(data.error);
+    if(data.error) throw new Error(typeof data.error==='string'?data.error:data.error.message||JSON.stringify(data.error));
     const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
     const clean = txt.replace(/```json|```/g,'').trim();
     const jsonStart = clean.indexOf('{');
@@ -745,7 +1076,20 @@ async function gen(plat) {
     const dur=document.getElementById('rl-dur').value;
     const gancho=document.getElementById('rl-gancho').value;
     const cta=document.getElementById('rl-cta').value;
-    prompt=`Generame 3 scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}. Para cada Reel incluí: 1) GANCHO (primeras 3 palabras en pantalla), 2) DESARROLLO (guión segundo a segundo), 3) CTA FINAL (últimos 5 segundos), 4) SUGERENCIA VISUAL, 5) HORARIO RECOMENDADO. Cada Reel numerado y listo para producir.`;
+    prompt=`Generame 3 scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}.
+
+Para cada Reel usá este formato exacto:
+
+🎬 REEL [N] — [título del reel]
+⏱️ 0-3 seg    → GANCHO: [las 3 palabras más impactantes posibles que aparecen en pantalla]
+⏱️ 3-[X] seg  → DESARROLLO: [guión hablado segundo a segundo, qué decís en cada momento]
+⏱️ [X]-[Y] seg → CLÍMAX: [el momento más perturbador o revelador]
+⏱️ [Y]-[Z] seg → CTA: [últimos 5 segundos, llamada a la acción]
+⏱️ TOTAL: [Z] segundos
+🎨 VISUAL: [qué imagen o clip poner de fondo]
+📅 PUBLICAR: [horario recomendado]
+
+Cada Reel numerado y listo para producir. Los tiempos tienen que ser realistas para el texto indicado.`;
   } else {
     const plataforma=document.getElementById('vp-plat').value;
     const formato=document.getElementById('vp-formato').value;
@@ -814,6 +1158,293 @@ async function genPlan(){
     showResult('str','<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
   }
   if(btn) btn.disabled=false;
+}
+
+
+// ── COMENTARIOS ────────────────────────────────────────────────────────
+async function genComentarios() {
+  const btn = document.getElementById('cm-btn');
+  const comentario = document.getElementById('cm-comentario').value.trim();
+  if (!comentario) { alert('Pegá el comentario que recibiste primero.'); return; }
+  btn.disabled = true;
+  const obj = startProg('cm');
+  const tono = document.getElementById('cm-tono').value;
+  const objetivo = document.getElementById('cm-objetivo').value;
+  const prompt = `Sos el admin de una página de terror en Facebook muy popular. Recibiste este comentario en uno de tus posts:
+
+"${comentario}"
+
+Generame 5 respuestas distintas para ese comentario. Tono: ${tono}. Objetivo: ${objetivo}.
+
+Reglas importantes:
+- Cada respuesta tiene que sonar 100% humana, no como IA
+- Máximo 2-3 líneas por respuesta
+- Usá el voseo argentino/latinoamericano
+- Cada respuesta numerada del 1 al 5
+- Que inviten a seguir interactuando sin ser forzadas`;
+
+  try {
+    const txt = await callAPI(prompt);
+    stopProg('cm', obj);
+    showResult('cm', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">💬 5 respuestas listas</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('cm', obj);
+    showResult('cm', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
+}
+
+// ── IMÁGENES ───────────────────────────────────────────────────────────
+async function genImagen() {
+  const btn = document.getElementById('im-btn');
+  btn.disabled = true;
+  const obj = startProg('im');
+  const tipo = document.getElementById('im-tipo').value;
+  const tema = document.getElementById('im-tema').value;
+  const objetivo = document.getElementById('im-objetivo').value;
+  const largo = document.getElementById('im-largo').value;
+  const desc = document.getElementById('im-desc').value.trim();
+  const tends = getTrends('fb');
+
+  const prompt = `Sos un experto en contenido de terror viral en redes sociales. Generame 5 opciones de texto/copy para: ${tipo}.
+
+Tema de la imagen: ${tema}${desc ? '. Descripción específica: ' + desc : ''}.
+Tendencias actuales de terror: ${tends}.
+Objetivo: ${objetivo}.
+Largo: ${largo}.
+
+Reglas:
+- Cada texto tiene que parar el scroll instantáneamente
+- Voz humana, voseo latinoamericano, nada genérico
+- Para thumbnails de YouTube: máximo 4 palabras, que generen curiosidad o miedo inmediato
+- Para posts de Facebook con imagen: empezá con el gancho más fuerte posible
+- Para texto en Reels: que funcione como subtítulo visual impactante
+- Numeradas del 1 al 5, cada una con un enfoque distinto`;
+
+  try {
+    const txt = await callAPI(prompt);
+    stopProg('im', obj);
+    showResult('im', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🖼️ 5 copies listos</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('im', obj);
+    showResult('im', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
+}
+
+// ── PLANIFICADOR SEMANAL ───────────────────────────────────────────────
+async function genSemana() {
+  const btn = document.getElementById('wk-btn');
+  btn.disabled = true;
+  const obj = startProg('wk');
+  const foco = document.getElementById('wk-foco').value;
+  const tono = document.getElementById('wk-tono').value;
+  const cta = document.getElementById('wk-cta').value;
+  const ht = document.getElementById('wk-ht').value;
+  const tends = getTrends('fb');
+
+  const prompt = `Sos un estratega de contenido de terror en redes sociales. Generame el plan de contenido completo para esta semana (Lunes a Domingo) para una página de terror en Facebook.
+
+Tendencias actuales: ${tends}.
+Foco temático: ${foco}.
+Tono: ${tono}.
+CTA de monetización: ${cta}.
+Hashtags: ${ht}.
+
+Para cada día generá:
+**DÍA X — [nombre del día]**
+📝 POST 1 (8:00 AM): [tipo] — [texto completo del post]
+📝 POST 2 (12:00 PM): [tipo] — [texto completo del post]
+📝 POST 3 (3:00 PM): [tipo] — [texto completo del post]
+📝 POST 4 (6:00 PM): [tipo] — [texto completo del post]
+📝 POST 5 CTA (9:00 PM): [texto completo con CTA a ${cta}]
+🎬 REEL 1 (10:00 AM): GANCHO: [3 palabras] | DESARROLLO: [guión 30-45 seg] | CTA: [últimos 5 seg]
+🎬 REEL 2 (6:00 PM): GANCHO: [3 palabras] | DESARROLLO: [guión 30-45 seg] | CTA: [últimos 5 seg]
+🎬 REEL 3 (9:30 PM): GANCHO: [3 palabras] | DESARROLLO: [guión 30-45 seg] | CTA: [últimos 5 seg]
+
+Reglas: voz 100% humana, voseo latinoamericano, cada día temáticamente distinto, ganchos brutales en menos de 8 palabras, nunca empezar con "Hola", "Hey" ni "¿Sabías que".`;
+
+  try {
+    const txt = await callAPI(prompt);
+    stopProg('wk', obj);
+    showResult('wk', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🗓️ Semana completa generada</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('wk', obj);
+    showResult('wk', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
+}
+
+// ── ENCUESTAS VIRALES ──────────────────────────────────────────────────
+async function genEncuestas() {
+  const btn = document.getElementById('enc-btn');
+  btn.disabled = true;
+  const obj = startProg('fb');
+  const tends = getTrends('fb');
+
+  const prompt = `Sos experto en engagement de páginas de terror en Facebook. Generame 5 encuestas/preguntas virales para publicar hoy, basadas en estas tendencias: ${tends}.
+
+Para cada encuesta:
+- Una pregunta que genere debate inmediato y opiniones divididas
+- 2 a 4 opciones de respuesta (para usar en encuesta de Facebook o en los comentarios)
+- Una línea de contexto para pegar antes de la pregunta (el gancho)
+- Que sean sobre terror: películas, experiencias, miedos, leyendas, debates del género
+
+Formato por cada encuesta:
+**ENCUESTA X**
+🎬 GANCHO: [texto gancho de 1 línea]
+❓ PREGUNTA: [la pregunta]
+📊 OPCIONES: [opción A] / [opción B] / [opción C si aplica]
+
+Reglas: voseo latinoamericano, preguntas que dividan la audiencia al 50/50 para generar más debate, nada genérico.`;
+
+  try {
+    const txt = await callAPI(prompt);
+    stopProg('fb', obj);
+    showResult('enc', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📊 5 encuestas listas</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('fb', obj);
+    showResult('enc', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
+}
+
+
+// ── GUIÓN YOUTUBE ──────────────────────────────────────────────────────
+async function genGuion() {
+  const btn = document.getElementById('gs-btn');
+  const tema = document.getElementById('gs-tema').value.trim();
+  if (!tema) { alert('Ingresá el tema del video primero.'); return; }
+  btn.disabled = true;
+  const obj = startProg('gs');
+  const formato = document.getElementById('gs-formato').value;
+  const dur = document.getElementById('gs-dur').value;
+  const tono = document.getElementById('gs-tono').value;
+  const cta = document.getElementById('gs-cta').value;
+  const tends = getTrends('yt');
+
+  const prompt = `Sos un guionista experto en contenido de terror para YouTube en español latinoamericano. Escribí el guión completo de un video de ${dur} sobre este tema: "${tema}".
+
+Tendencias actuales del nicho terror que podés incorporar: ${tends}.
+Formato: ${formato}.
+Tono: ${tono}.
+CTA final: ${cta}.
+
+Estructurá el guión así:
+
+## TÍTULO PRINCIPAL
+[el mejor título SEO para este video]
+
+### TÍTULOS ALTERNATIVOS (A/B test)
+- Opción B: [título alternativo]
+- Opción C: [título alternativo]
+
+---
+
+## 🎬 GUIÓN COMPLETO
+
+### INTRO (0:00 - 0:30) — GANCHO
+[Texto exacto a decir. Tiene que atrapar en los primeros 3 segundos. Pregunta perturbadora o afirmación impactante. Anticipá lo que van a descubrir sin spoilear.]
+
+### BLOQUE 1 (0:30 - X:XX) — [nombre del bloque]
+[Texto completo a decir. Datos, historia, análisis. Incluí momentos de pausa dramática marcados con [PAUSA] donde corresponda. Indicá [CORTE A] cuando sugieran cambio de plano o imagen.]
+
+### BLOQUE 2 (X:XX - X:XX) — [nombre del bloque]
+[Texto completo]
+
+### BLOQUE 3 (X:XX - X:XX) — [nombre del bloque]
+[Texto completo]
+
+### BLOQUE 4 (X:XX - X:XX) — [nombre del bloque]
+[Texto completo]
+
+### CLÍMAX (X:XX - X:XX) — EL MOMENTO MÁS FUERTE
+[El bloque más perturbador o revelador. El que hace que la gente comparta el video.]
+
+### OUTRO (X:XX - fin) — CTA
+[Cierre natural + llamada a ${cta}. Que no suene forzado.]
+
+---
+
+## 📋 NOTAS DE PRODUCCIÓN
+- **Recursos visuales sugeridos**: [qué imágenes/clips buscar para el B-roll]
+- **Música de fondo recomendada**: [tipo de ambiente sonoro]
+- **Momentos clave para thumbnail**: [en qué segundo hay una expresión o imagen buena para capturar]
+
+Escribí el guión en voseo latinoamericano, voz humana y apasionada. El texto tiene que poder leerse directamente ante la cámara.`;
+
+  try {
+    const txt = await callAPI(prompt);
+    stopProg('gs', obj);
+    showResult('gs', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🎥 Guión completo listo</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('gs', obj);
+    showResult('gs', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
+}
+
+// ── DESCRIPCIÓN YOUTUBE ────────────────────────────────────────────────
+async function genDescYT() {
+  const btn = document.getElementById('yd-btn');
+  const titulo = document.getElementById('yd-titulo').value.trim();
+  const desc = document.getElementById('yd-desc').value.trim();
+  if (!titulo) { alert('Ingresá el título del video primero.'); return; }
+  btn.disabled = true;
+  const obj = startProg('yd');
+  const dur = document.getElementById('yd-dur').value;
+  const links = document.getElementById('yd-links').value;
+  const idioma = document.getElementById('yd-idioma').value;
+  const ht = document.getElementById('yd-ht').value;
+  const tends = getTrends('yt');
+
+  const prompt = `Sos un experto en SEO de YouTube especializado en el nicho de terror en ${idioma}. Generame la descripción completa y optimizada para este video:
+
+TÍTULO: "${titulo}"
+TEMA: ${desc || 'video de terror sobre ' + titulo}
+DURACIÓN: ${dur}
+TENDENCIAS ACTUALES: ${tends}
+LINKS A INCLUIR: ${links}
+HASHTAGS: ${ht}
+
+Generá la descripción con este formato exacto:
+
+## DESCRIPCIÓN COMPLETA PARA YOUTUBE
+
+[PRIMERAS 2-3 LÍNEAS — LAS MÁS IMPORTANTES]
+[Estas líneas aparecen antes del "Ver más". Tienen que tener la keyword principal, generar curiosidad y tener gancho. Máximo 200 caracteres antes del corte.]
+
+[DESCRIPCIÓN EXTENDIDA]
+[3-4 párrafos desarrollando el tema con keywords naturales. Mencioná el tema principal, subtemas, personas/películas/leyendas relacionadas que la gente busca. Que suene humano, no keyword stuffing.]
+
+⏱️ TIMESTAMPS
+0:00 - Intro
+[timestamps estimados basados en la duración de ${dur} y el tema]
+
+🔗 LINKS
+[placeholder para ${links}]
+
+---
+
+## 🏷️ TAGS RECOMENDADOS
+[Lista de 20-25 tags separados por comas, mix de keywords amplias y específicas del nicho terror en ${idioma}]
+
+${ht}
+
+---
+
+## 💡 KEYWORDS PRINCIPALES
+[Las 5 keywords más importantes que tiene que rankear este video, con volumen de búsqueda estimado]`;
+
+  try {
+    const txt = await callAPI(prompt);
+    stopProg('yd', obj);
+    showResult('yd', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📝 Descripción SEO lista</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('yd', obj);
+    showResult('yd', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
 }
 
 // ── PWA ────────────────────────────────────────────────────────────────
