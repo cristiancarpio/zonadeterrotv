@@ -25,13 +25,25 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden}
-.app{display:flex;flex-direction:column;min-height:100vh;max-width:480px;margin:0 auto}
+.app{display:flex;flex-direction:column;min-height:100vh;max-width:900px;margin:0 auto}
+@media(min-width:600px){
+  .nav{grid-template-columns:repeat(5,1fr);gap:8px;padding:14px 28px}
+  .panel{padding:0 28px 100px}
+  .header{padding:22px 28px 0}
+  .live-bar,.install-banner{margin-left:28px;margin-right:28px}
+  .cfg-grid{grid-template-columns:repeat(4,1fr)}
+  .tbox,.schedule,.prog-wrap,.sc,.inc-card,.an-intro,.an-step{margin-bottom:14px}
+}
+@media(min-width:900px){
+  .cfg-grid{grid-template-columns:repeat(4,1fr)}
+  .type-grid-2{grid-template-columns:repeat(3,1fr)}
+}
 
 /* HEADER */
 .header{padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:var(--fd);font-size:26px;letter-spacing:2px}
+.logo{font-family:var(--fd);font-size:30px;letter-spacing:2px}
 .logo span{color:var(--red)}
-.date-badge{font-size:10px;color:var(--text-dim);background:var(--surface2);padding:4px 10px;border-radius:20px;border:0.5px solid var(--border)}
+.date-badge{font-size:12px;color:var(--text-dim);background:var(--surface2);padding:4px 10px;border-radius:20px;border:0.5px solid var(--border)}
 
 /* INSTALL */
 .install-banner{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:11px 14px;margin:10px 20px 0;display:none;align-items:center;gap:10px}
@@ -44,16 +56,16 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .live-bar{margin:10px 20px 0;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 14px;display:flex;align-items:center;gap:10px}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.live-text{flex:1;font-size:11px;color:var(--text-dim);line-height:1.4}
-.live-text strong{color:var(--text);display:block;font-size:12px}
+.live-text{flex:1;font-size:13px;color:var(--text-dim);line-height:1.4}
+.live-text strong{color:var(--text);display:block;font-size:14px}
 .refresh-btn{font-size:11px;padding:5px 10px;background:transparent;border:0.5px solid var(--border);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;white-space:nowrap}
 .refresh-btn:hover{border-color:var(--red);color:var(--red)}
 
 /* NAV */
 .nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:12px 20px}
 .nav-btn{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:8px 3px;text-align:center;cursor:pointer;transition:all 0.2s}
-.nav-btn .ni{font-size:16px;display:block;margin-bottom:2px}
-.nav-btn .nl{font-size:9px;color:var(--text-dim);font-weight:500;display:block;line-height:1.2}
+.nav-btn .ni{font-size:20px;display:block;margin-bottom:3px}
+.nav-btn .nl{font-size:11px;color:var(--text-dim);font-weight:500;display:block;line-height:1.2}
 .nav-btn.active.fb{border-color:var(--blue);background:var(--blue-dim)}
 .nav-btn.active.fb .nl{color:#5dade2}
 .nav-btn.active.rl{border-color:var(--red);background:var(--red-dim)}
@@ -70,47 +82,47 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .panel.active{display:block}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-.sec-title{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin-bottom:2px}
-.sec-sub{font-size:12px;color:var(--text-dim);margin-bottom:12px}
+.sec-title{font-family:var(--fd);font-size:24px;letter-spacing:1px;margin-bottom:2px}
+.sec-sub{font-size:14px;color:var(--text-dim);margin-bottom:12px}
 
 /* TRENDS BOX */
 .tbox{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
 .tbox-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.tbox-title{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);font-weight:500}
-.tstatus{font-size:10px;padding:2px 8px;border-radius:20px}
+.tbox-title{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);font-weight:500}
+.tstatus{font-size:12px;padding:2px 8px;border-radius:20px}
 .ts-loading{background:rgba(192,57,43,0.2);color:var(--red-bright)}
 .ts-live{background:rgba(29,158,117,0.2);color:#1abc9c}
 .ts-cache{background:rgba(136,136,136,0.15);color:var(--text-dim)}
 .tlist{display:flex;flex-direction:column;gap:6px;min-height:50px}
-.titem{display:flex;gap:7px;align-items:baseline;font-size:12px}
+.titem{display:flex;gap:7px;align-items:baseline;font-size:14px}
 .tname{font-weight:500;color:var(--text)}
-.tmeta{color:var(--text-dim);font-size:11px}
+.tmeta{color:var(--text-dim);font-size:13px}
 .skel{height:11px;background:var(--surface2);border-radius:4px;animation:sh 1.5s infinite}
 @keyframes sh{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
 
 /* CONFIG */
 .cfg-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .cfg-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 12px}
-.cfg-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:5px}
-select{width:100%;background:transparent;border:none;color:var(--text);font-size:12px;font-family:var(--fb);outline:none;cursor:pointer}
+.cfg-label{font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:5px}
+select{width:100%;background:transparent;border:none;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;cursor:pointer}
 select option{background:#1a1a1a;color:#f0f0f0}
 
 /* SCHEDULE PREVIEW */
 .schedule{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
-.schedule-title{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
+.schedule-title{font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
 .sched-grid{display:flex;flex-direction:column;gap:5px}
 .sched-row{display:flex;align-items:center;gap:8px}
-.sched-time{font-size:11px;color:var(--text-dim);min-width:52px;font-weight:500}
-.sched-type{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+.sched-time{font-size:13px;color:var(--text-dim);min-width:52px;font-weight:500}
+.sched-type{font-size:13px;padding:2px 8px;border-radius:20px;font-weight:500}
 .st-post{background:var(--blue-dim);color:#5dade2;border:0.5px solid rgba(41,128,185,0.3)}
 .st-reel{background:var(--red-dim);color:var(--red-bright);border:0.5px solid rgba(192,57,43,0.3)}
-.sched-desc{font-size:11px;color:var(--text-dim)}
+.sched-desc{font-size:13px;color:var(--text-dim)}
 
 /* PROGRESS */
 .prog-wrap{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:12px;display:none}
 .prog-wrap.show{display:block}
 .prog-steps{display:flex;flex-direction:column;gap:7px}
-.prog-step{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-dimmer);transition:color 0.3s}
+.prog-step{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--text-dimmer);transition:color 0.3s}
 .prog-step.done{color:var(--text-dim)}
 .prog-step.active{color:#1abc9c}
 .step-ic{font-size:13px;width:18px;text-align:center}
@@ -126,16 +138,16 @@ select option{background:#1a1a1a;color:#f0f0f0}
 .gen-btn.an{background:linear-gradient(135deg,#7a3a10,#e67e22);color:#fff}
 .gen-btn.yt{background:linear-gradient(135deg,#0d5c40,#1d9e75);color:#fff}
 .gen-btn.str{background:linear-gradient(135deg,#4a2070,#8e44ad);color:#fff}
-.gen-note{font-size:11px;color:var(--text-dimmer);text-align:center;margin-bottom:14px}
+.gen-note{font-size:13px;color:var(--text-dimmer);text-align:center;margin-bottom:14px}
 
 /* ANALYZER */
 .analyzer{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
 .an-intro{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
-.an-intro-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px}
-.an-intro-body{font-size:11px;color:var(--text-dim);line-height:1.6}
+.an-intro-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px}
+.an-intro-body{font-size:13px;color:var(--text-dim);line-height:1.6}
 .an-step{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
-.an-step-num{font-size:10px;font-weight:500;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
-.an-step-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:8px}
+.an-step-num{font-size:12px;font-weight:500;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.an-step-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:8px}
 .post-row{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
 .post-entry{background:var(--surface2);border-radius:var(--rs);padding:8px 10px}
 .post-entry-label{font-size:10px;color:var(--text-dim);margin-bottom:4px}
@@ -150,17 +162,21 @@ select option{background:#1a1a1a;color:#f0f0f0}
 /* STRATEGY */
 .sc{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px}
 .sc.hot{border-color:rgba(192,57,43,0.4);background:var(--red-dim)}
-.st{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.sb{font-size:12px;color:var(--text-dim);line-height:1.6}
-.sm{display:inline-block;font-size:11px;color:var(--red);font-weight:500;margin-top:5px;background:var(--red-dim);padding:2px 8px;border-radius:20px;border:0.5px solid rgba(192,57,43,0.3)}
-.ss-title{font-family:var(--fd);font-size:15px;letter-spacing:1px;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
-.pill{font-size:10px;padding:2px 8px;border-radius:20px;font-family:var(--fb);font-weight:500}
+.st{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.sb{font-size:14px;color:var(--text-dim);line-height:1.6}
+.sm{display:inline-block;font-size:13px;color:var(--red);font-weight:500;margin-top:5px;background:var(--red-dim);padding:2px 8px;border-radius:20px;border:0.5px solid rgba(192,57,43,0.3)}
+.ss-title{font-family:var(--fd);font-size:17px;letter-spacing:1px;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.pill{font-size:12px;padding:2px 8px;border-radius:20px;font-family:var(--fb);font-weight:500}
 .pfb{background:var(--blue-dim);color:#5dade2;border:0.5px solid var(--blue)}
 .pyt{background:var(--red-dim);color:var(--red-bright);border:0.5px solid var(--red)}
 .ptt{background:var(--green-dim);color:#1abc9c;border:0.5px solid var(--green)}
 .div{height:0.5px;background:var(--border);margin:16px 0}
 .inc-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
-.inc-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
+/* RESULT BOX */
+.result-copy{display:flex;justify-content:flex-end;margin-bottom:10px}
+.copy-btn{font-size:13px;padding:5px 14px;background:transparent;border:0.5px solid var(--border2);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;transition:all 0.2s}
+.copy-btn:hover{border-color:var(--red);color:var(--red)}
+.inc-label{font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
 .inc-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
 .inc-plat{font-size:12px;font-weight:500}
 .inc-range{font-size:11px;color:var(--text-dim)}
@@ -496,7 +512,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="sc"><div class="st">📧 Email list desde ya</div><div class="sb">Las plataformas pueden cambiar su algoritmo o cerrarte la cuenta. El email es tuyo para siempre. Ofrecé algo gratis: "Las 10 leyendas más perturbadoras que no se cuentan en internet" y empezá a construir tu lista hoy.</div></div>
 
     <br>
-    <button class="gen-btn str" onclick="genPlan()">PEDIRME UN PLAN PERSONALIZADO 💰</button>
+    <button class="gen-btn str" id="str-btn" onclick="genPlan()">PEDIRME UN PLAN PERSONALIZADO 💰</button>
     <div class="gen-note">Plan mes a mes para escalar tus $300 actuales</div>
   </div>
 
@@ -559,32 +575,33 @@ function getPostData() {
 // ── FETCH TRENDS ───────────────────────────────────────────────────────
 async function fetchTrends(force) {
   if (loaded && !force) return;
-  setLive('Buscando tendencias en internet...','Consultando qué está viral en terror hoy');
+  setLive('Cargando tendencias de terror...','Consultando la IA sobre lo que está viral');
   setStatus('ts-loading','Buscando...');
   showSkels();
 
-  const prompt = `Buscá en internet qué está trending HOY en el nicho de terror/horror para creadores de contenido en redes sociales. Buscá estrenos recientes y próximos, leyendas o noticias paranormales virales, formatos de Reels y video que funcionan en terror, debates activos.
+  const prompt = `Sos un experto en contenido de terror en redes sociales. Listá las tendencias actuales más importantes del nicho de terror/horror para creadores de contenido hispanohablantes en Facebook, Reels e YouTube. Incluí: estrenos recientes, películas de terror que se están discutiendo, formatos virales de video, leyendas urbanas populares, debates activos en el nicho.
 
-Respondé SOLO con este JSON sin texto extra ni backticks:
-{"resumen":"2 líneas con lo más importante","fb":[{"f":"🔥","n":"tendencia","m":"por qué es tendencia"},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."}],"rl":[{"f":"🔥","n":"...","m":"..."},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."}],"yt":[{"f":"🔥","n":"...","m":"..."},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."}]}`;
+Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
+{"resumen":"2 líneas con lo más importante del nicho terror ahora","fb":[{"f":"🔥","n":"nombre tendencia","m":"por qué es tendencia"},{"f":"🔥","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"}],"rl":[{"f":"🔥","n":"nombre","m":"motivo"},{"f":"🔥","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"}],"yt":[{"f":"🔥","n":"nombre","m":"motivo"},{"f":"🔥","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"}]}`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('/api/generate',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
         messages:[{role:'user',content:prompt}]
       })
     });
     const data = await res.json();
+    if(data.error) throw new Error(data.error);
     const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    const parsed = JSON.parse(txt.replace(/```json|```/g,'').trim());
+    const clean = txt.replace(/```json|```/g,'').trim();
+    const jsonStart = clean.indexOf('{');
+    const jsonEnd = clean.lastIndexOf('}');
+    const parsed = JSON.parse(clean.slice(jsonStart, jsonEnd+1));
     cache = parsed; loaded = true;
     renderTrends(parsed);
-    setLive('Tendencias actualizadas ✓', parsed.resumen||'Datos frescos de internet');
+    setLive('Tendencias cargadas ✓', parsed.resumen||'Terror está en tendencia');
     setStatus('ts-live','En vivo ✓');
   } catch(e) {
     const fb=[{f:'🔥',n:'Scream 7',m:'regresa Neve Campbell · debate activo'},{f:'🔥',n:'La Novia de Frankenstein',m:'Christian Bale · estrenada 6 mar'},{f:'🔥',n:'Whistle / El Silbido del Mal',m:'director de La Monja · estreno 27 mar'},{f:'📈',n:'Insidious 6',m:'agosto 2026'},{f:'📈',n:'Evil Dead nueva entrega',m:'julio 2026'}];
@@ -653,62 +670,112 @@ function stopProg(p,obj){
   setTimeout(()=>{obj.wrap.classList.remove('show');obj.bar.style.width='0';},600);
 }
 
-// ── SEND TO CHAT ───────────────────────────────────────────────────────
-function send(msg){window.parent.postMessage({type:'user-message',message:msg},'*');}
+// ── RESULT DISPLAY ─────────────────────────────────────────────────────
+function showResult(plat, html) {
+  let box = document.getElementById(plat+'-result');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = plat+'-result';
+    box.style.cssText = 'background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;font-size:15px;line-height:1.75;color:var(--text)';
+    const btn = document.getElementById(plat+'-btn');
+    btn.parentNode.insertBefore(box, btn);
+  }
+  box.innerHTML = '<div class="result-copy"><button class="copy-btn" onclick="copyResult(\''+plat+'\')">📋 Copiar todo</button></div>' + html;
+  box.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function copyResult(plat) {
+  const box = document.getElementById(plat+'-result');
+  if (!box) return;
+  const text = box.innerText.replace('📋 Copiar todo\n','');
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = box.querySelector('.copy-btn');
+    btn.textContent = '✅ Copiado';
+    setTimeout(()=>btn.textContent='📋 Copiar todo', 2000);
+  });
+}
+
+function mdToHtml(txt) {
+  return txt
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/^### (.+)$/gm,'<h4 style="font-family:var(--fd);font-size:17px;letter-spacing:1px;color:var(--red-bright);margin:18px 0 6px">$1</h4>')
+    .replace(/^## (.+)$/gm,'<h3 style="font-family:var(--fd);font-size:20px;letter-spacing:1px;color:var(--red-bright);margin:20px 0 8px">$1</h3>')
+    .replace(/^# (.+)$/gm,'<h2 style="font-family:var(--fd);font-size:24px;letter-spacing:1px;color:var(--red);margin:22px 0 10px">$1</h2>')
+    .replace(/^\d+\. (.+)$/gm,'<p style="margin:6px 0;padding-left:4px">$&</p>')
+    .replace(/^[-•] (.+)$/gm,'<p style="margin:4px 0;padding-left:12px">• $1</p>')
+    .replace(/\n{2,}/g,'</p><p style="margin:10px 0">')
+    .replace(/\n/g,'<br>');
+}
 
 function getTrends(p){
   if(!cache[p])return'tendencias actuales de terror';
   return cache[p].map(t=>t.n+': '+t.m).join('; ');
 }
 
-// ── GENERATORS ─────────────────────────────────────────────────────────
-function gen(plat) {
-  const btn=document.getElementById(plat+'-btn');
-  btn.disabled=true;
-  const obj=startProg(plat);
-  const tends=getTrends(plat==='rl'?'rl':plat==='yt'?'yt':'fb');
-  let msg='';
+// ── CALL API DIRECTLY ──────────────────────────────────────────────────
+async function callAPI(prompt) {
+  const res = await fetch('/api/generate', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ messages: [{role:'user', content: prompt}] })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(typeof data.error === 'string' ? data.error : (data.error.message || JSON.stringify(data.error)));
+  return (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+}
 
-  if(plat==='fb'){
+// ── GENERATORS ─────────────────────────────────────────────────────────
+async function gen(plat) {
+  const btn = document.getElementById(plat+'-btn');
+  btn.disabled = true;
+  const obj = startProg(plat);
+  const tends = getTrends(plat==='rl'?'rl':plat==='yt'?'yt':'fb');
+  let prompt = '';
+
+  if (plat==='fb') {
     const tono=document.getElementById('fb-tono').value;
     const tipo=document.getElementById('fb-tipo').value;
     const largo=document.getElementById('fb-largo').value;
     const ht=document.getElementById('fb-ht').value;
-    msg=`Generame 5 posts de terror para Facebook usando estas tendencias reales de hoy: ${tends}. Tono: ${tono}. Tipo: ${tipo}. Largo: ${largo}. Hashtags: ${ht}. Reglas: primera línea gancho brutal en menos de 8 palabras, voz 100% humana, no empezar con "Hola" ni "Hey" ni "¿Sabías que". Cada post numerado con su horario recomendado. El post 5 siempre es CTA invitando a un grupo privado de terror.`;
-  } else if(plat==='rl'){
+    prompt=`Generame 5 posts de terror para Facebook usando estas tendencias reales de hoy: ${tends}. Tono: ${tono}. Tipo: ${tipo}. Largo: ${largo}. Hashtags: ${ht}. Reglas: primera línea gancho brutal en menos de 8 palabras, voz 100% humana, no empezar con "Hola" ni "Hey" ni "¿Sabías que". Cada post numerado con su horario recomendado. El post 5 siempre es CTA invitando a un grupo privado de terror.`;
+  } else if (plat==='rl') {
     const formato=document.getElementById('rl-formato').value;
     const dur=document.getElementById('rl-dur').value;
     const gancho=document.getElementById('rl-gancho').value;
     const cta=document.getElementById('rl-cta').value;
-    msg=`Generame 3 scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}. Para cada Reel incluí: 1) GANCHO (primeras 3 palabras que aparecen en pantalla, las más impactantes posibles), 2) DESARROLLO (el cuerpo del Reel segundo a segundo, como si fuera un guión), 3) CTA FINAL (las últimas 5 segundos), 4) SUGERENCIA VISUAL (qué imagen o clip poner de fondo), 5) HORARIO RECOMENDADO de publicación. Cada Reel numerado y listo para producir.`;
+    prompt=`Generame 3 scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}. Para cada Reel incluí: 1) GANCHO (primeras 3 palabras en pantalla), 2) DESARROLLO (guión segundo a segundo), 3) CTA FINAL (últimos 5 segundos), 4) SUGERENCIA VISUAL, 5) HORARIO RECOMENDADO. Cada Reel numerado y listo para producir.`;
   } else {
     const plataforma=document.getElementById('vp-plat').value;
     const formato=document.getElementById('vp-formato').value;
-    msg=`Generame 5 ideas de videos de terror para ${plataforma} basadas en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Para cada idea: 1) Título optimizado para SEO con gancho fuerte, 2) Primeros 30 segundos que retengan al espectador, 3) Estructura completa en 4-5 puntos, 4) Tip de thumbnail, 5) 5 hashtags. Numeradas del 1 al 5.`;
+    prompt=`Generame 5 ideas de videos de terror para ${plataforma} basadas en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Para cada idea: 1) Título SEO con gancho fuerte, 2) Primeros 30 segundos, 3) Estructura completa en 4-5 puntos, 4) Tip de thumbnail, 5) 5 hashtags. Numeradas del 1 al 5.`;
   }
 
-  setTimeout(()=>{
-    stopProg(plat,obj);
-    btn.disabled=false;
-    send(msg);
-  },5800);
+  try {
+    const txt = await callAPI(prompt, plat);
+    stopProg(plat, obj);
+    showResult(plat, '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">✅ Contenido generado</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg(plat, obj);
+    showResult(plat, '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
 }
 
-function analizarPosts(){
+async function analizarPosts(){
   const btn=document.getElementById('an-btn');
   const postData=getPostData();
   const ingresos=document.getElementById('an-ingresos').value;
   const freq=document.getElementById('an-freq').value;
 
-  if(postData.includes('alcance=0,comentarios=0,reacciones=0')){
-    const allZero=[...document.querySelectorAll('[data-field="alcance"]')].every(i=>!i.value||i.value==='0');
-    if(allZero){alert('Ingresá al menos algunos datos de tus posts para poder analizarlos.');return;}
-  }
+  const allZero=[...document.querySelectorAll('[data-field="alcance"]')].every(i=>!i.value||i.value==='0');
+  if(allZero){alert('Ingresá al menos algunos datos de tus posts para poder analizarlos.');return;}
 
   btn.disabled=true;
   const obj=startProg('an');
 
-  const msg=`Analizá el rendimiento de mis posts de terror en Facebook y decime exactamente qué tengo que cambiar para aumentar mis ingresos.
+  const prompt=`Analizá el rendimiento de mis posts de terror en Facebook y decime exactamente qué tengo que cambiar para aumentar mis ingresos.
 
 MIS DATOS:
 Ingresos actuales: ${ingresos}
@@ -716,23 +783,37 @@ Frecuencia de publicación: ${freq}
 Posts recientes: ${postData}
 
 Quiero que me digas:
-1. QUÉ TIPO DE POST me está funcionando mejor (el que tiene más comentarios o alcance) y por qué
+1. QUÉ TIPO DE POST me está funcionando mejor y por qué
 2. QUÉ TIPO DE POST está fallando y qué debería reemplazarlo
-3. PATRÓN que detectás en mis números (horarios, tipos, frecuencia)
-4. LAS 3 ACCIONES CONCRETAS que debería hacer esta semana para mejorar el engagement
-5. PROYECCIÓN: si implemento tus recomendaciones, ¿cuánto podría crecer mi alcance y mis ingresos en 30 días?
+3. PATRÓN que detectás en mis números
+4. LAS 3 ACCIONES CONCRETAS que debería hacer esta semana
+5. PROYECCIÓN: cuánto podría crecer mi alcance e ingresos en 30 días si implemento tus recomendaciones
 
 Sé específico con los números, no me des consejos genéricos.`;
 
-  setTimeout(()=>{
-    stopProg('an',obj);
-    btn.disabled=false;
-    send(msg);
-  },5800);
+  try {
+    const txt = await callAPI(prompt, 'an');
+    stopProg('an', obj);
+    showResult('an', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📊 Análisis listo</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('an', obj);
+    showResult('an', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled=false;
 }
 
-function genPlan(){
-  send('Armame un plan de monetización mes a mes para los próximos 3 meses, partiendo de que ya gano $300/mes con mi página de terror en Facebook y voy a implementar 5 posts diarios + 3 Reels diarios. Quiero saber exactamente qué hacer cada mes en Facebook, YouTube y TikTok para llegar a $1.000/mes. Dame pasos concretos, métricas que seguir y señales de que voy por el camino correcto.');
+async function genPlan(){
+  const btn=document.getElementById('str-btn');
+  if(btn) btn.disabled=true;
+  const prompt='Armame un plan de monetización mes a mes para los próximos 3 meses, partiendo de que ya gano $300/mes con mi página de terror en Facebook y voy a implementar 5 posts diarios + 3 Reels diarios. Quiero saber exactamente qué hacer cada mes en Facebook, YouTube y TikTok para llegar a $1.000/mes. Dame pasos concretos, métricas que seguir y señales de que voy por el camino correcto.';
+  showResult('str','<p style="color:var(--text-dim);font-size:14px">⏳ Generando tu plan personalizado...</p>');
+  try {
+    const txt = await callAPI(prompt, 'str');
+    showResult('str', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">💰 Tu plan personalizado</p>' + mdToHtml(txt));
+  } catch(e) {
+    showResult('str','<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  if(btn) btn.disabled=false;
 }
 
 // ── PWA ────────────────────────────────────────────────────────────────
