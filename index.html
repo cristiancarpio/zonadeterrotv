@@ -152,6 +152,8 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .nav-btn.active.gs .nl{color:#f4a261}
 .nav-btn.active.yd{border-color:#2dc653;background:rgba(45,198,83,0.15)}
 .nav-btn.active.yd .nl{color:#2dc653}
+.nav-btn.active.cs{border-color:#9b5de5;background:rgba(155,93,229,0.15)}
+.nav-btn.active.cs .nl{color:#9b5de5}
 
 /* PANELS */
 .panel{display:none;padding:0 20px 100px;animation:fi 0.2s ease}
@@ -284,20 +286,21 @@ select option{background:#1a1a1a;color:#f0f0f0}
   </div>
 
   <nav class="nav">
-    <button class="nav-btn fb active" onclick="setPanel('fb',this)"><span class="ni">📘</span><span class="nl">Posts FB</span></button>
-    <button class="nav-btn rl" onclick="setPanel('rl',this)"><span class="ni">🎬</span><span class="nl">Reels FB</span></button>
-    <button class="nav-btn an" onclick="setPanel('an',this)"><span class="ni">📊</span><span class="nl">Análisis</span></button>
-    <button class="nav-btn yt" onclick="setPanel('yt',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
-    <button class="nav-btn str" onclick="setPanel('str',this)"><span class="ni">💰</span><span class="nl">Estrategia</span></button>
-    <button class="nav-btn cm" onclick="setPanel('cm',this)"><span class="ni">💬</span><span class="nl">Comentarios</span></button>
-    <button class="nav-btn im" onclick="setPanel('im',this)"><span class="ni">🖼️</span><span class="nl">Imágenes</span></button>
+    <button class="nav-btn cs active" onclick="setPanel('cs',this)"><span class="ni">🎬</span><span class="nl">Casos</span></button>
+    <button class="nav-btn rl" onclick="setPanel('rl',this)"><span class="ni">📹</span><span class="nl">Reels FB</span></button>
+    <button class="nav-btn fb" onclick="setPanel('fb',this)"><span class="ni">📘</span><span class="nl">Posts FB</span></button>
     <button class="nav-btn wk" onclick="setPanel('wk',this)"><span class="ni">🗓️</span><span class="nl">Semana</span></button>
+    <button class="nav-btn im" onclick="setPanel('im',this)"><span class="ni">🖼️</span><span class="nl">Imágenes</span></button>
+    <button class="nav-btn yt" onclick="setPanel('yt',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
     <button class="nav-btn gs" onclick="setPanel('gs',this)"><span class="ni">🎥</span><span class="nl">Guión YT</span></button>
     <button class="nav-btn yd" onclick="setPanel('yd',this)"><span class="ni">📝</span><span class="nl">Desc YT</span></button>
+    <button class="nav-btn cm" onclick="setPanel('cm',this)"><span class="ni">💬</span><span class="nl">Comentarios</span></button>
+    <button class="nav-btn an" onclick="setPanel('an',this)"><span class="ni">📊</span><span class="nl">Análisis</span></button>
+    <button class="nav-btn str" onclick="setPanel('str',this)"><span class="ni">💰</span><span class="nl">Estrategia</span></button>
   </nav>
 
   <!-- ═══════════════════════════════════════════════ FACEBOOK POSTS -->
-  <div class="panel active" id="panel-fb">
+  <div class="panel" id="panel-fb">
     <div class="sec-title">POSTS FACEBOOK</div>
     <div class="sec-sub">5 posts de texto · tendencias reales de hoy</div>
 
@@ -910,6 +913,116 @@ select option{background:#1a1a1a;color:#f0f0f0}
   </div>
 
 
+  <!-- ═══════════════════════════════════════════════ REELS DE CASOS -->
+  <div class="panel active" id="panel-cs">
+    <div class="sec-title">REELS DE CASOS</div>
+    <div class="sec-sub">Video de fondo + imagen del caso arriba + texto completo · 15 segundos</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">⚡ Por qué es el formato más viral ahora</span></div>
+      <div style="font-size:15px;color:var(--text-dim);line-height:1.8">
+        <strong style="color:var(--text)">Video de fondo</strong> que retiene · <strong style="color:var(--text)">imagen fija arriba</strong> del caso/persona/lugar · <strong style="color:var(--text)">texto completo de una vez</strong> abajo que el espectador lee en 15 segundos.<br><br>
+        El cerebro quiere terminar de leer — eso genera <strong style="color:var(--red-bright)">watch time casi completo</strong>, que es la métrica que más premia el algoritmo. Sin bloques, sin transiciones — todo junto, directo, impactante.
+      </div>
+    </div>
+
+    <div class="tbox">
+      <div class="tbox-head">
+        <span class="tbox-title">🔥 Casos virales ahora · true crime</span>
+        <span class="tstatus ts-loading" id="cs-ts">Buscando...</span>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:6px">
+        <button class="refresh-btn" onclick="fetchCasosTrends(true)">↺ Actualizar casos</button>
+      </div>
+      <div class="tlist" id="cs-tlist">
+        <div class="skel" style="width:80%"></div>
+        <div class="skel" style="width:65%"></div>
+        <div class="skel" style="width:75%"></div>
+        <div class="skel" style="width:55%"></div>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Tipo de caso</div>
+        <select id="cs-tipo">
+          <option value="caso policial sin resolver narrado en tercera persona, estilo periodístico perturbador">Caso sin resolver</option>
+          <option value="leyenda urbana latinoamericana narrada como si fuera un testimonio real">Leyenda urbana</option>
+          <option value="últimas palabras o mensajes de una víctima, narrado con respeto y tensión">Últimas palabras</option>
+          <option value="expediente clasificado o experimento oscuro, narrado como si fuera filtrado">Expediente/experimento</option>
+          <option value="testimonio paranormal en primera persona, narrado como experiencia vivida">Testimonio paranormal</option>
+          <option value="grabación o evidencia perturbadora descripta en detalle, sin mostrar violencia">Grabación real</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Duración</div>
+        <select id="cs-dur">
+          <option value="15 segundos — texto completo de una sola pantalla, máximo 180 caracteres, que se lea en 15 segundos">15 segundos ✓</option>
+          <option value="20 segundos — texto completo de una sola pantalla, máximo 240 caracteres">20 segundos</option>
+          <option value="30 segundos — texto completo de una sola pantalla, máximo 350 caracteres">30 segundos</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Ritmo narrativo</div>
+        <select id="cs-ritmo">
+          <option value="tensión creciente: empieza tranquilo y termina con revelación perturbadora">Tensión creciente</option>
+          <option value="impacto desde el primer segundo: arranca con lo más perturbador">Impacto inmediato</option>
+          <option value="misterio sin resolver: termina con pregunta abierta que genera comentarios">Misterio abierto</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Región</div>
+        <select id="cs-region">
+          <option value="latinoamérica (Argentina, México, Colombia, Chile, Perú)">Latinoamérica</option>
+          <option value="mundial, casos internacionales famosos">Mundial</option>
+          <option value="España y Europa hispanohablante">España</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Video de fondo</div>
+        <select id="cs-video">
+          <option value="bosque nocturno o lugar abandonado">Bosque / abandonado</option>
+          <option value="lluvia nocturna en ciudad vacía">Lluvia nocturna</option>
+          <option value="niebla densa en camino solitario">Niebla / camino</option>
+          <option value="mar oscuro de noche">Mar de noche</option>
+          <option value="habitación oscura con luz tenue">Habitación oscura</option>
+          <option value="ciudad vacía de madrugada">Ciudad madrugada</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Cantidad</div>
+        <select id="cs-cant">
+          <option value="3">3 Reels</option>
+          <option value="5">5 Reels</option>
+          <option value="7">7 Reels</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
+        <select id="cs-ht">
+          <option value="con 8 hashtags de terror y casos en español">8 hashtags</option>
+          <option value="con 5 hashtags de terror en español">5 hashtags</option>
+          <option value="sin hashtags">Sin hashtags</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">CTA final</div>
+        <select id="cs-cta">
+          <option value="pregunta perturbadora que invite a comentar la opinión">Pregunta (comentarios)</option>
+          <option value="invitar al grupo privado de terror para más casos">Al grupo privado</option>
+          <option value="seguir la página para ver el caso completo">Seguir la página</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="cs-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="cs-s1"><span class="step-ic">🔍</span>Buscando casos y leyendas perturbadoras</div>
+        <div class="prog-step" id="cs-s2"><span class="step-ic">✂️</span>Adaptando texto para leer en pantalla</div>
+        <div class="prog-step" id="cs-s3"><span class="step-ic">🎬</span>Generando instrucciones de producción en CapCut</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="cs-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="cs-btn" style="background:linear-gradient(135deg,#2d0050,#9b5de5)" onclick="genCasos()">GENERAR REELS DE CASOS 🎬</button>
+    <div class="gen-note">Texto en pantalla · video sugerido · instrucciones CapCut · caption · hashtags</div>
+  </div>
+
+
 </div>
 <script>
 // ── DATE ───────────────────────────────────────────────────────────────
@@ -926,6 +1039,7 @@ function setPanel(id,el) {
   el.classList.add('active');
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
+  if(id==='cs' && !casosLoaded) fetchCasosTrends();
 }
 
 // ── POST ROWS (analyzer) ───────────────────────────────────────────────
@@ -1010,7 +1124,7 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
 }
 
 function renderTrends(d) {
-  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist']].forEach(([k,id])=>{
+  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist'],['yt','cs-tlist']].forEach(([k,id])=>{
     const el=document.getElementById(id);
     if(!el||!d[k])return;
     el.innerHTML=d[k].map(t=>`<div class="titem"><span>${t.f}</span><span class="tname">${t.n}</span><span class="tmeta"> · ${t.m}</span></div>`).join('');
@@ -1018,7 +1132,7 @@ function renderTrends(d) {
 }
 
 function showSkels() {
-  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist']].forEach(([,id])=>{
+  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist'],['yt','cs-tlist']].forEach(([,id])=>{
     const el=document.getElementById(id);
     if(el) el.innerHTML=[80,65,75,55].map(w=>`<div class="skel" style="width:${w}%"></div>`).join('');
   });
@@ -1029,7 +1143,7 @@ function setLive(t,d){
   document.getElementById('liveDesc').textContent=d;
 }
 function setStatus(cls,lbl){
-  ['fb','rl','yt'].forEach(p=>{
+  ['fb','rl','yt','cs'].forEach(p=>{
     const el=document.getElementById(p+'-ts');
     if(el){el.className='tstatus '+cls;el.textContent=lbl;}
   });
@@ -1511,6 +1625,153 @@ ${ht}
   btn.disabled = false;
 }
 
+
+// ── REELS DE CASOS ────────────────────────────────────────────────────
+async function genCasos() {
+  const btn = document.getElementById('cs-btn');
+  btn.disabled = true;
+  const obj = startProg('cs');
+  const tipo = document.getElementById('cs-tipo').value;
+  const dur = document.getElementById('cs-dur').value;
+  const ritmo = document.getElementById('cs-ritmo').value;
+  const region = document.getElementById('cs-region').value;
+  const video = document.getElementById('cs-video').value;
+  const cant = document.getElementById('cs-cant').value;
+  const ht = document.getElementById('cs-ht').value;
+  const cta = document.getElementById('cs-cta').value;
+  const tends = getCasosTrends();
+
+  const prompt = `Sos un creador de contenido de terror viral especializado en el formato más efectivo ahora mismo: video de fondo + imagen fija del caso arriba + texto completo de una sola vez abajo. El espectador ve todo el texto junto y lo lee en ${dur}. Eso genera watch time casi completo, que es lo que más premia el algoritmo.
+
+Generame ${cant} Reels completos con este formato.
+
+Tendencias actuales: ${tends}
+Tipo de caso: ${tipo}
+Duración: ${dur}
+Ritmo: ${ritmo}
+Región: ${region}
+Video de fondo: ${video}
+CTA: ${cta}
+Hashtags: ${ht}
+
+Para cada Reel usá este formato exacto:
+
+---
+🎬 REEL [N] — [título del caso]
+
+📱 TEXTO EN PANTALLA (una sola pantalla, todo junto)
+[El texto completo que aparece de una vez en la parte inferior del Reel. Tiene que poderse leer en ${dur} a ritmo normal. Sin dividir en bloques. Empezá con las 3 palabras más impactantes posibles — son las que aparecen primero y retienen al espectador. Estilo narrativo directo, sin adornos. Que termine en suspenso o con la revelación más perturbadora al final para que la gente lo relea.]
+
+🖼️ IMAGEN FIJA ARRIBA
+[Qué imagen poner en la parte superior del Reel: foto del caso, de la persona, del lugar, o descripción de qué buscar en Google Images / Pinterest. Que sea perturbadora pero sin gore.]
+
+🎥 VIDEO DE FONDO
+[Descripción exacta de qué buscar en Pexels. Ej: "bosque de noche con niebla, cámara lenta" o "pasillo hospital abandonado". Que complemente la imagen y el texto sin distraer.]
+
+🎵 AUDIO
+[Mood exacto para buscar en CapCut: tipo de sonido ambiente o música, que genere tensión sin tapar la atención del texto]
+
+⚙️ PRODUCCIÓN EN CAPCUT
+[Instrucciones exactas: dónde poner la imagen (arriba, tamaño sugerido), dónde el texto (abajo, fuente sugerida, color recomendado para que se lea bien sobre el video), velocidad de aparición del texto si aplica]
+
+📝 CAPTION
+[Texto para la descripción del Reel. Gancho en la primera línea, desarrollo breve, termina con ${cta}. ${ht}]
+
+📅 PUBLICAR: [horario recomendado]
+---
+
+Reglas:
+- El texto en pantalla es UNA SOLA PANTALLA — no se divide, aparece todo junto
+- Máximo caracteres según la duración elegida — respetalo estrictamente
+- Las primeras 3 palabras son las más importantes — tienen que parar el scroll
+- Sin violencia explícita — la perturbación viene de la narrativa
+- Voseo latinoamericano en el caption
+- Cada Reel con un caso diferente`;
+
+  try {
+    const txt = await callAPI(prompt);
+    stopProg('cs', obj);
+    showResult('cs', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🎬 Reels de casos listos</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('cs', obj);
+    showResult('cs', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
+}
+
+
+// ── FETCH CASOS TRENDS ─────────────────────────────────────────────────
+let casosLoaded = false;
+let casosCache = null;
+
+async function fetchCasosTrends(force) {
+  if (casosLoaded && !force) return;
+  document.getElementById('cs-ts').className = 'tstatus ts-loading';
+  document.getElementById('cs-ts').textContent = 'Buscando...';
+  const tlist = document.getElementById('cs-tlist');
+  if(tlist) tlist.innerHTML = [80,65,75,55].map(w=>`<div class="skel" style="width:${w}%"></div>`).join('');
+
+  const prompt = `Buscá en internet qué casos, leyendas y crímenes están siendo más comentados y virales AHORA en redes sociales en español, especialmente en Facebook, TikTok e Instagram en el nicho de terror y true crime latinoamericano. Buscá: casos criminales sin resolver que están siendo discutidos esta semana, leyendas urbanas latinoamericanas que están virales ahora, documentales o series de casos reales recién estrenados, casos con aniversario esta semana, crímenes o misterios que están en boca de todos en América Latina.
+
+Respondé SOLO con este JSON exacto sin texto extra ni backticks:
+{"resumen":"2 líneas de lo más viral ahora en casos y terror","casos":[{"f":"🔥","n":"nombre del caso o leyenda","m":"por qué está viral ahora"},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"💀","n":"...","m":"..."},{"f":"💀","n":"...","m":"..."}]}`;
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        useSearch: true,
+        messages: [{role:'user', content: prompt}]
+      })
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+    const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const clean = txt.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean.slice(clean.indexOf('{'), clean.lastIndexOf('}')+1));
+    casosCache = parsed;
+    casosLoaded = true;
+    renderCasosTrends(parsed);
+    document.getElementById('cs-ts').className = 'tstatus ts-live';
+    document.getElementById('cs-ts').textContent = 'En vivo ✓';
+    // Update live bar
+    setLive('Casos virales actualizados ✓', parsed.resumen || 'True crime y terror en tendencia');
+  } catch(e) {
+    // Fallback con casos siempre relevantes
+    const fallback = {
+      resumen: 'Casos latinoamericanos y true crime internacional dominan el engagement.',
+      casos: [
+        {f:'🔥',n:'Caso Debanhi Escobar',m:'sigue generando debate en México · alta búsqueda'},
+        {f:'🔥',n:'Leyenda La Llorona',m:'versiones regionales virales en TikTok'},
+        {f:'📈',n:'El Silencio de los Inocentes',m:'aniversario · documental viral'},
+        {f:'📈',n:'Caso Marita Verón',m:'Argentina · debate activo en redes'},
+        {f:'📈',n:'Duendes y apariciones',m:'testimonios paranormales latinoamericanos viral'},
+        {f:'💀',n:'Casos FBI sin resolver',m:'documentales Netflix reactivaron búsquedas'},
+        {f:'💀',n:'Cementerio de los Inocentes',m:'leyenda urbana Colombia · muy compartida'}
+      ]
+    };
+    casosCache = fallback;
+    casosLoaded = true;
+    renderCasosTrends(fallback);
+    document.getElementById('cs-ts').className = 'tstatus ts-cache';
+    document.getElementById('cs-ts').textContent = 'Cache ⚡';
+  }
+}
+
+function renderCasosTrends(d) {
+  const el = document.getElementById('cs-tlist');
+  if (!el || !d.casos) return;
+  el.innerHTML = d.casos.map(t =>
+    `<div class="titem"><span>${t.f}</span><span class="tname">${t.n}</span><span class="tmeta"> · ${t.m}</span></div>`
+  ).join('');
+}
+
+function getCasosTrends() {
+  if (!casosCache) return 'casos virales de terror y true crime latinoamericano';
+  return casosCache.casos.map(t => t.n + ': ' + t.m).join('; ');
+}
+
 // ── PWA ────────────────────────────────────────────────────────────────
 let dProm;
 window.addEventListener('beforeinstallprompt',e=>{
@@ -1525,6 +1786,7 @@ document.getElementById('installBtn').addEventListener('click',async()=>{
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
 fetchTrends();
+fetchCasosTrends();
 </script>
 </body>
 </html>
