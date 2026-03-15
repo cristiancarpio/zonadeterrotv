@@ -17,12 +17,13 @@ export default async function handler(req, res) {
 
   try {
     const body = {
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 2048,
+      // Haiku para tendencias (más rápido, menos tokens, suficiente para JSON)
+      // Sonnet para generación de contenido (mejor calidad)
+      model: useSearch ? 'claude-haiku-4-5-20251001' : 'claude-sonnet-4-20250514',
+      max_tokens: useSearch ? 800 : 1500,
       messages: req.body.messages
     };
 
-    // Web search real para tendencias
     if (useSearch) {
       body.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
     }
@@ -37,18 +38,27 @@ export default async function handler(req, res) {
       headers['anthropic-beta'] = 'web-search-2025-03-05';
     }
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(body)
-    });
+    const fetchWithRetry = async (retries = 3, delay = 8000) => {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body)
+      });
+
+      if (response.status === 429 && retries > 0) {
+        await new Promise(r => setTimeout(r, delay));
+        return fetchWithRetry(retries - 1, delay + 4000);
+      }
+      return response;
+    };
+
+    const response = await fetchWithRetry();
 
     const data = await response.json();
     if (!response.ok) {
       return res.status(response.status).json({ error: data.error?.message || JSON.stringify(data) });
     }
 
-    // Extraer solo bloques de texto (ignorar tool_use y tool_result)
     const text = (data.content || [])
       .filter(b => b.type === 'text')
       .map(b => b.text)
