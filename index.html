@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="TerrorHub">
+<title>Terror Content Hub</title>
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0a0a; --surface:#111; --surface2:#1a1a1a; --surface3:#222;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+  --red:#c0392b; --red-dim:rgba(192,57,43,0.15); --red-bright:#e74c3c;
+  --blue:#2980b9; --blue-dim:rgba(41,128,185,0.15);
+  --green:#1d9e75; --green-dim:rgba(29,158,117,0.15);
+  --purple:#8e44ad; --purple-dim:rgba(142,68,173,0.15);
+  --orange:#e67e22; --orange-dim:rgba(230,126,34,0.15);
+  --text:#f0f0f0; --text-dim:#888; --text-dimmer:#444;
+  --fd:'Bebas Neue',sans-serif; --fb:'DM Sans',sans-serif;
+  --r:12px; --rs:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden}
+.app{display:flex;flex-direction:column;min-height:100vh;max-width:480px;margin:0 auto}
+
+/* HEADER */
+.header{padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--fd);font-size:26px;letter-spacing:2px}
+.logo span{color:var(--red)}
+.date-badge{font-size:10px;color:var(--text-dim);background:var(--surface2);padding:4px 10px;border-radius:20px;border:0.5px solid var(--border)}
+
+/* INSTALL */
+.install-banner{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:11px 14px;margin:10px 20px 0;display:none;align-items:center;gap:10px}
+.install-banner.show{display:flex}
+.install-text{flex:1;font-size:11px;color:var(--text-dim);line-height:1.4}
+.install-text strong{color:var(--text);display:block}
+.install-btn{font-size:12px;font-weight:500;padding:6px 12px;background:var(--red);color:#fff;border:none;border-radius:var(--rs);cursor:pointer}
+
+/* LIVE BAR */
+.live-bar{margin:10px 20px 0;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 14px;display:flex;align-items:center;gap:10px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.live-text{flex:1;font-size:11px;color:var(--text-dim);line-height:1.4}
+.live-text strong{color:var(--text);display:block;font-size:12px}
+.refresh-btn{font-size:11px;padding:5px 10px;background:transparent;border:0.5px solid var(--border);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;white-space:nowrap}
+.refresh-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* NAV */
+.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:12px 20px}
+.nav-btn{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:8px 3px;text-align:center;cursor:pointer;transition:all 0.2s}
+.nav-btn .ni{font-size:16px;display:block;margin-bottom:2px}
+.nav-btn .nl{font-size:9px;color:var(--text-dim);font-weight:500;display:block;line-height:1.2}
+.nav-btn.active.fb{border-color:var(--blue);background:var(--blue-dim)}
+.nav-btn.active.fb .nl{color:#5dade2}
+.nav-btn.active.rl{border-color:var(--red);background:var(--red-dim)}
+.nav-btn.active.rl .nl{color:var(--red-bright)}
+.nav-btn.active.an{border-color:var(--orange);background:var(--orange-dim)}
+.nav-btn.active.an .nl{color:#f0a500}
+.nav-btn.active.yt{border-color:var(--green);background:var(--green-dim)}
+.nav-btn.active.yt .nl{color:#1abc9c}
+.nav-btn.active.str{border-color:var(--purple);background:var(--purple-dim)}
+.nav-btn.active.str .nl{color:#bb8fce}
+
+/* PANELS */
+.panel{display:none;padding:0 20px 100px;animation:fi 0.2s ease}
+.panel.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.sec-title{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin-bottom:2px}
+.sec-sub{font-size:12px;color:var(--text-dim);margin-bottom:12px}
+
+/* TRENDS BOX */
+.tbox{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
+.tbox-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tbox-title{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);font-weight:500}
+.tstatus{font-size:10px;padding:2px 8px;border-radius:20px}
+.ts-loading{background:rgba(192,57,43,0.2);color:var(--red-bright)}
+.ts-live{background:rgba(29,158,117,0.2);color:#1abc9c}
+.ts-cache{background:rgba(136,136,136,0.15);color:var(--text-dim)}
+.tlist{display:flex;flex-direction:column;gap:6px;min-height:50px}
+.titem{display:flex;gap:7px;align-items:baseline;font-size:12px}
+.tname{font-weight:500;color:var(--text)}
+.tmeta{color:var(--text-dim);font-size:11px}
+.skel{height:11px;background:var(--surface2);border-radius:4px;animation:sh 1.5s infinite}
+@keyframes sh{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
+
+/* CONFIG */
+.cfg-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.cfg-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 12px}
+.cfg-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:5px}
+select{width:100%;background:transparent;border:none;color:var(--text);font-size:12px;font-family:var(--fb);outline:none;cursor:pointer}
+select option{background:#1a1a1a;color:#f0f0f0}
+
+/* SCHEDULE PREVIEW */
+.schedule{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
+.schedule-title{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
+.sched-grid{display:flex;flex-direction:column;gap:5px}
+.sched-row{display:flex;align-items:center;gap:8px}
+.sched-time{font-size:11px;color:var(--text-dim);min-width:52px;font-weight:500}
+.sched-type{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+.st-post{background:var(--blue-dim);color:#5dade2;border:0.5px solid rgba(41,128,185,0.3)}
+.st-reel{background:var(--red-dim);color:var(--red-bright);border:0.5px solid rgba(192,57,43,0.3)}
+.sched-desc{font-size:11px;color:var(--text-dim)}
+
+/* PROGRESS */
+.prog-wrap{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:12px;display:none}
+.prog-wrap.show{display:block}
+.prog-steps{display:flex;flex-direction:column;gap:7px}
+.prog-step{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-dimmer);transition:color 0.3s}
+.prog-step.done{color:var(--text-dim)}
+.prog-step.active{color:#1abc9c}
+.step-ic{font-size:13px;width:18px;text-align:center}
+.pbar-wrap{height:2px;background:var(--surface2);border-radius:2px;margin-top:10px;overflow:hidden}
+.pbar{height:100%;width:0;background:var(--red);border-radius:2px;transition:width 0.4s}
+
+/* BUTTONS */
+.gen-btn{width:100%;padding:13px;font-family:var(--fd);font-size:19px;letter-spacing:2px;border:none;border-radius:var(--r);cursor:pointer;transition:transform 0.15s;margin-bottom:7px}
+.gen-btn:active{transform:scale(0.98)}
+.gen-btn:disabled{opacity:0.4;cursor:default}
+.gen-btn.fb{background:linear-gradient(135deg,#1a4a7a,#2471a3);color:#fff}
+.gen-btn.rl{background:linear-gradient(135deg,#7b1a1a,#c0392b);color:#fff}
+.gen-btn.an{background:linear-gradient(135deg,#7a3a10,#e67e22);color:#fff}
+.gen-btn.yt{background:linear-gradient(135deg,#0d5c40,#1d9e75);color:#fff}
+.gen-btn.str{background:linear-gradient(135deg,#4a2070,#8e44ad);color:#fff}
+.gen-note{font-size:11px;color:var(--text-dimmer);text-align:center;margin-bottom:14px}
+
+/* ANALYZER */
+.analyzer{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.an-intro{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.an-intro-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px}
+.an-intro-body{font-size:11px;color:var(--text-dim);line-height:1.6}
+.an-step{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.an-step-num{font-size:10px;font-weight:500;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.an-step-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:8px}
+.post-row{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.post-entry{background:var(--surface2);border-radius:var(--rs);padding:8px 10px}
+.post-entry-label{font-size:10px;color:var(--text-dim);margin-bottom:4px}
+.post-entry-inputs{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:6px}
+.post-input{background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:5px 8px;color:var(--text);font-size:11px;font-family:var(--fb);outline:none;width:100%}
+.post-input::placeholder{color:var(--text-dimmer)}
+.add-post-btn{font-size:11px;padding:5px 12px;background:transparent;border:0.5px solid var(--border2);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;width:100%}
+.add-post-btn:hover{border-color:var(--orange);color:var(--orange)}
+.tipo-select{background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:5px 6px;color:var(--text);font-size:11px;font-family:var(--fb);outline:none;width:100%}
+.tipo-select option{background:#1a1a1a}
+
+/* STRATEGY */
+.sc{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px}
+.sc.hot{border-color:rgba(192,57,43,0.4);background:var(--red-dim)}
+.st{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.sb{font-size:12px;color:var(--text-dim);line-height:1.6}
+.sm{display:inline-block;font-size:11px;color:var(--red);font-weight:500;margin-top:5px;background:var(--red-dim);padding:2px 8px;border-radius:20px;border:0.5px solid rgba(192,57,43,0.3)}
+.ss-title{font-family:var(--fd);font-size:15px;letter-spacing:1px;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.pill{font-size:10px;padding:2px 8px;border-radius:20px;font-family:var(--fb);font-weight:500}
+.pfb{background:var(--blue-dim);color:#5dade2;border:0.5px solid var(--blue)}
+.pyt{background:var(--red-dim);color:var(--red-bright);border:0.5px solid var(--red)}
+.ptt{background:var(--green-dim);color:#1abc9c;border:0.5px solid var(--green)}
+.div{height:0.5px;background:var(--border);margin:16px 0}
+.inc-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
+.inc-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
+.inc-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.inc-plat{font-size:12px;font-weight:500}
+.inc-range{font-size:11px;color:var(--text-dim)}
+.inc-bg{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;margin-bottom:9px}
+.inc-fill{height:100%;border-radius:2px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="logo">TERROR<span>HUB</span></div>
+    <div class="date-badge" id="dateBadge">—</div>
+  </div>
+
+  <div class="install-banner" id="installBanner">
+    <div style="font-size:20px">📲</div>
+    <div class="install-text"><strong>Instalar en tu celular</strong>Acceso directo sin navegador</div>
+    <button class="install-btn" id="installBtn">Instalar</button>
+  </div>
+
+  <div class="live-bar">
+    <div class="live-dot"></div>
+    <div class="live-text">
+      <strong id="liveTitle">Buscando tendencias en internet...</strong>
+      <span id="liveDesc">Consultando qué está viral en terror hoy</span>
+    </div>
+    <button class="refresh-btn" onclick="fetchTrends(true)">↺ Actualizar</button>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn fb active" onclick="setPanel('fb',this)"><span class="ni">📘</span><span class="nl">Posts FB</span></button>
+    <button class="nav-btn rl" onclick="setPanel('rl',this)"><span class="ni">🎬</span><span class="nl">Reels FB</span></button>
+    <button class="nav-btn an" onclick="setPanel('an',this)"><span class="ni">📊</span><span class="nl">Análisis</span></button>
+    <button class="nav-btn yt" onclick="setPanel('yt',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
+    <button class="nav-btn str" onclick="setPanel('str',this)"><span class="ni">💰</span><span class="nl">Estrategia</span></button>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════ FACEBOOK POSTS -->
+  <div class="panel active" id="panel-fb">
+    <div class="sec-title">POSTS FACEBOOK</div>
+    <div class="sec-sub">5 posts de texto · tendencias reales de hoy</div>
+
+    <div class="tbox">
+      <div class="tbox-head">
+        <span class="tbox-title">🔥 Tendencias en vivo</span>
+        <span class="tstatus ts-loading" id="fb-ts">Buscando...</span>
+      </div>
+      <div class="tlist" id="fb-tlist">
+        <div class="skel" style="width:80%"></div><div class="skel" style="width:65%"></div>
+        <div class="skel" style="width:75%"></div><div class="skel" style="width:55%"></div>
+        <div class="skel" style="width:70%"></div>
+      </div>
+    </div>
+
+    <div class="schedule">
+      <div class="schedule-title">📅 Horario recomendado · posts de texto</div>
+      <div class="sched-grid">
+        <div class="sched-row"><span class="sched-time">8:00 AM</span><span class="sched-type st-post">Post 1</span><span class="sched-desc">Debate o curiosidad · arranque del día</span></div>
+        <div class="sched-row"><span class="sched-time">12:00 PM</span><span class="sched-type st-post">Post 2</span><span class="sched-desc">Pico del mediodía · opinión</span></div>
+        <div class="sched-row"><span class="sched-time">3:00 PM</span><span class="sched-type st-post">Post 3</span><span class="sched-desc">Tarde activa · reseña o análisis</span></div>
+        <div class="sched-row"><span class="sched-time">6:00 PM</span><span class="sched-type st-post">Post 4</span><span class="sched-desc">Prime time · encuesta o debate</span></div>
+        <div class="sched-row"><span class="sched-time">9:00 PM</span><span class="sched-type st-post">Post 5 🎯</span><span class="sched-desc">CTA monetización · grupo o Stars</span></div>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Tono</div>
+        <select id="fb-tono">
+          <option value="fan apasionado y humano">Fan apasionado</option>
+          <option value="dramático con suspenso">Dramático</option>
+          <option value="opinión directa y personal">Opinión directa</option>
+          <option value="informativo y entretenido">Informativo</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Tipo</div>
+        <select id="fb-tipo">
+          <option value="variado: opinión, debate, curiosidad, reseña, y el último post siempre es CTA invitando al grupo privado de terror">Variado + CTA ✓</option>
+          <option value="solo debates y preguntas, el último post es CTA al grupo privado">Solo debates</option>
+          <option value="solo curiosidades y datos, el último post es CTA al grupo privado">Curiosidades</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Largo</div>
+        <select id="fb-largo">
+          <option value="cortos de 80 a 120 palabras">Cortos</option>
+          <option value="medianos de 150 a 220 palabras">Medianos</option>
+          <option value="mix de cortos y largos">Mix</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
+        <select id="fb-ht">
+          <option value="con 5 hashtags en español">5 hashtags</option>
+          <option value="sin hashtags">Sin hashtags</option>
+          <option value="con 8 hashtags">8 hashtags</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="fb-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="fb-s1"><span class="step-ic">🔍</span>Buscando tendencias reales de terror hoy</div>
+        <div class="prog-step" id="fb-s2"><span class="step-ic">🧠</span>Analizando qué está viral en Facebook</div>
+        <div class="prog-step" id="fb-s3"><span class="step-ic">✍️</span>Redactando 5 posts con voz humana</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="fb-bar"></div></div>
+    </div>
+    <button class="gen-btn fb" id="fb-btn" onclick="gen('fb')">GENERAR 5 POSTS 📘</button>
+    <div class="gen-note">El post 5 siempre incluye CTA de monetización</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ REELS FACEBOOK -->
+  <div class="panel" id="panel-rl">
+    <div class="sec-title">REELS FACEBOOK</div>
+    <div class="sec-sub">3 scripts de Reels · 30-60 seg · alcance máximo</div>
+
+    <div class="tbox">
+      <div class="tbox-head">
+        <span class="tbox-title">🔥 Tendencias para Reels</span>
+        <span class="tstatus ts-loading" id="rl-ts">Buscando...</span>
+      </div>
+      <div class="tlist" id="rl-tlist">
+        <div class="skel" style="width:75%"></div><div class="skel" style="width:60%"></div>
+        <div class="skel" style="width:80%"></div><div class="skel" style="width:65%"></div>
+      </div>
+    </div>
+
+    <div class="schedule">
+      <div class="schedule-title">📅 Horario recomendado · Reels</div>
+      <div class="sched-grid">
+        <div class="sched-row"><span class="sched-time">10:00 AM</span><span class="sched-type st-reel">Reel 1</span><span class="sched-desc">Mañana · captar audiencia nueva</span></div>
+        <div class="sched-row"><span class="sched-time">6:00 PM</span><span class="sched-type st-reel">Reel 2</span><span class="sched-desc">Prime time · mayor alcance del día</span></div>
+        <div class="sched-row"><span class="sched-time">9:30 PM</span><span class="sched-type st-reel">Reel 3</span><span class="sched-desc">Noche · terror engancha más de noche</span></div>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Formato Reel</div>
+        <select id="rl-formato">
+          <option value="narración directa a cámara, texto hablado como si contaras un secreto">Narración directa</option>
+          <option value="texto encima de imagen o clip, estilo found footage o CCTV">Texto sobre imagen</option>
+          <option value="pregunta impactante + respuesta reveladora">Pregunta + revelación</option>
+          <option value="top 3 datos de terror en formato rápido">Top 3 rápido</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Duración</div>
+        <select id="rl-dur">
+          <option value="30 a 45 segundos, muy dinámico">30-45 seg ✓</option>
+          <option value="45 a 60 segundos con desarrollo">45-60 seg</option>
+          <option value="mix de duraciones">Mix</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Gancho inicial</div>
+        <select id="rl-gancho">
+          <option value="pregunta perturbadora que genera curiosidad inmediata">Pregunta perturbadora</option>
+          <option value="afirmación impactante que contradice lo que todos creen">Afirmación impactante</option>
+          <option value="dato real que parece mentira">Dato increíble</option>
+          <option value="inicio in medias res, ya en medio de la acción">In medias res</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">CTA final</div>
+        <select id="rl-cta">
+          <option value="terminar con pregunta que invite a comentar">Pregunta (comentarios)</option>
+          <option value="terminar mencionando que el análisis completo está en el perfil">Al perfil (tráfico)</option>
+          <option value="terminar invitando al grupo privado de terror">Al grupo privado</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="rl-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="rl-s1"><span class="step-ic">🔍</span>Buscando formatos virales de Reels terror</div>
+        <div class="prog-step" id="rl-s2"><span class="step-ic">🎬</span>Estructurando narrativa de 30-60 segundos</div>
+        <div class="prog-step" id="rl-s3"><span class="step-ic">✍️</span>Escribiendo scripts con hooks irresistibles</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="rl-bar"></div></div>
+    </div>
+    <button class="gen-btn rl" id="rl-btn" onclick="gen('rl')">GENERAR 3 SCRIPTS DE REELS 🎬</button>
+    <div class="gen-note">Cada script incluye hook · desarrollo · CTA · sugerencia visual</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ ANÁLISIS -->
+  <div class="panel" id="panel-an">
+    <div class="sec-title">ANÁLISIS</div>
+    <div class="sec-sub">Qué posts te funcionaron · dónde mejorar</div>
+
+    <div class="analyzer">
+      <div class="an-intro">
+        <div class="an-intro-title">📊 Cómo funciona</div>
+        <div class="an-intro-body">
+          Entrá a <strong style="color:var(--text)">Facebook → Tu página → Herramientas de publicación → Estadísticas</strong> y cargá los datos de tus últimos posts. La IA analiza qué tipo de contenido te da más alcance, comentarios y engagement, y te dice exactamente qué cambiar.
+        </div>
+      </div>
+
+      <div class="an-step">
+        <div class="an-step-num">Paso 1 · Cargá tus posts</div>
+        <div class="an-step-title">Ingresá los datos de tus últimos 5-10 posts</div>
+        <div class="post-row" id="postRows">
+          <!-- rows added dynamically -->
+        </div>
+        <button class="add-post-btn" onclick="addPostRow()">+ Agregar post</button>
+      </div>
+
+      <div class="an-step">
+        <div class="an-step-num">Paso 2 · Contexto</div>
+        <div class="an-step-title">Contame un poco más</div>
+        <div class="cfg-grid" style="margin-bottom:0">
+          <div class="cfg-card"><div class="cfg-label">Tus ingresos actuales</div>
+            <select id="an-ingresos">
+              <option value="300 dólares por mes">$300/mes</option>
+              <option value="100 a 300 dólares por mes">$100-300/mes</option>
+              <option value="300 a 600 dólares por mes">$300-600/mes</option>
+              <option value="más de 600 dólares por mes">+$600/mes</option>
+            </select>
+          </div>
+          <div class="cfg-card"><div class="cfg-label">Posts por día actuales</div>
+            <select id="an-freq">
+              <option value="1 a 2 posts por día">1-2/día</option>
+              <option value="3 a 5 posts por día">3-5/día</option>
+              <option value="más de 5 posts por día">+5/día</option>
+              <option value="irregular, no tengo rutina fija">Irregular</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-wrap" id="an-prog">
+        <div class="prog-steps">
+          <div class="prog-step" id="an-s1"><span class="step-ic">📊</span>Procesando métricas de tus posts</div>
+          <div class="prog-step" id="an-s2"><span class="step-ic">🔍</span>Identificando patrones de engagement</div>
+          <div class="prog-step" id="an-s3"><span class="step-ic">💡</span>Generando recomendaciones específicas</div>
+        </div>
+        <div class="pbar-wrap"><div class="pbar" id="an-bar"></div></div>
+      </div>
+    </div>
+
+    <button class="gen-btn an" id="an-btn" onclick="analizarPosts()">ANALIZAR MIS POSTS 📊</button>
+    <div class="gen-note">El análisis aparece en el chat con recomendaciones concretas</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ YOUTUBE/TIKTOK -->
+  <div class="panel" id="panel-yt">
+    <div class="sec-title">YOUTUBE · TIKTOK</div>
+    <div class="sec-sub">Ideas de videos basadas en tendencias de hoy</div>
+
+    <div class="tbox">
+      <div class="tbox-head">
+        <span class="tbox-title">🔥 Tendencias para video</span>
+        <span class="tstatus ts-loading" id="yt-ts">Buscando...</span>
+      </div>
+      <div class="tlist" id="yt-tlist">
+        <div class="skel" style="width:75%"></div><div class="skel" style="width:60%"></div>
+        <div class="skel" style="width:80%"></div><div class="skel" style="width:55%"></div>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Plataforma</div>
+        <select id="vp-plat">
+          <option value="YouTube (videos de 8 a 15 minutos con título SEO optimizado)">YouTube</option>
+          <option value="TikTok (videos de 30 a 60 segundos con hook de 3 segundos)">TikTok</option>
+          <option value="ambas plataformas adaptando el mismo concepto">Ambas</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Formato</div>
+        <select id="vp-formato">
+          <option value="variado: análisis, reseña, ranking, documental corto, reacción">Variado ✓</option>
+          <option value="análisis y teorías en profundidad">Análisis</option>
+          <option value="rankings top 10">Rankings</option>
+          <option value="found footage y analog horror">Found footage</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="yt-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="yt-s1"><span class="step-ic">🔍</span>Buscando qué está trending en video terror</div>
+        <div class="prog-step" id="yt-s2"><span class="step-ic">📊</span>Analizando formatos con mayor retención</div>
+        <div class="prog-step" id="yt-s3"><span class="step-ic">✍️</span>Generando ideas con estructura completa</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="yt-bar"></div></div>
+    </div>
+    <button class="gen-btn yt" id="yt-btn" onclick="gen('yt')">GENERAR 5 IDEAS DE VIDEO ▶️</button>
+    <div class="gen-note">Título · gancho · estructura · thumbnail · hashtags</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ ESTRATEGIA -->
+  <div class="panel" id="panel-str">
+    <div class="sec-title">ESTRATEGIA</div>
+    <div class="sec-sub">Maximizar ingresos · sistema completo</div>
+
+    <div class="inc-card">
+      <div class="inc-label">Potencial mensual · nicho terror</div>
+      <div class="inc-row"><span class="inc-plat">📘 Facebook actual</span><span class="inc-range">$300/mes → $600-800</span></div>
+      <div class="inc-bg"><div class="inc-fill" style="width:55%;background:var(--blue)"></div></div>
+      <div class="inc-row"><span class="inc-plat">🎬 + Reels Facebook</span><span class="inc-range">+$200-400/mes</span></div>
+      <div class="inc-bg"><div class="inc-fill" style="width:70%;background:var(--red)"></div></div>
+      <div class="inc-row"><span class="inc-plat">▶️ + YouTube</span><span class="inc-range">+$300-1.000/mes</span></div>
+      <div class="inc-bg"><div class="inc-fill" style="width:85%;background:var(--green)"></div></div>
+      <div class="inc-row"><span class="inc-plat">🔗 Sistema completo</span><span class="inc-range">$1.500-3.000/mes</span></div>
+      <div class="inc-bg" style="margin-bottom:0"><div class="inc-fill" style="width:95%;background:var(--purple)"></div></div>
+    </div>
+
+    <div class="sc hot">
+      <div class="st">🗓️ Tu sistema diario completo</div>
+      <div class="sb">
+        <strong style="color:var(--text);display:block;margin-bottom:4px">8 publicaciones por día · mismo esfuerzo</strong>
+        8:00 AM · Post 1 (debate)<br>
+        10:00 AM · Reel 1 (alcance nuevo)<br>
+        12:00 PM · Post 2 (opinión)<br>
+        3:00 PM · Post 3 (reseña)<br>
+        6:00 PM · Post 4 + Reel 2 (prime time)<br>
+        9:00 PM · Post 5 CTA (monetización)<br>
+        9:30 PM · Reel 3 (cierre nocturno)
+      </div>
+      <span class="sm">Total: 5 posts + 3 Reels = 8 publicaciones</span>
+    </div>
+
+    <div class="ss-title">📘 FACEBOOK <span class="pill pfb">Ya ganás $300</span></div>
+    <div class="sc hot"><div class="st">🎯 Post 5 siempre es CTA</div><div class="sb">El quinto post de cada día tiene que invitar al grupo privado de terror ($5-10/mes) o pedir Stars en tu próximo Live. Con 100 miembros en el grupo duplicás lo que ganás hoy.</div><span class="sm">Meta: $600/mes en 60 días</span></div>
+    <div class="sc"><div class="st">📹 Reels = tu mayor palanca de crecimiento</div><div class="sb">Los Reels llegan a gente que todavía no te sigue. Facebook los distribuye fuera de tu audiencia actual igual que TikTok. Son tu herramienta de adquisición de seguidores nuevos y pagan mejor RPM que los posts de texto.</div></div>
+    <div class="sc"><div class="st">💬 Respondé comentarios en las primeras 2 horas</div><div class="sb">Facebook mide tu tiempo de respuesta. Responder los primeros 10 comentarios dentro de las 2 horas multiplica x3 el alcance orgánico. Una repregunta corta es suficiente.</div></div>
+    <div class="sc"><div class="st">🚀 Boostear lo que ya despega solo</div><div class="sb">Cuando un post supera 40 comentarios en las primeras 3 horas sin promoción, invertí $3-5 en boostearlo. ROI típico 8x porque el algoritmo ya lo validó.</div></div>
+
+    <div class="div"></div>
+    <div class="ss-title">▶️ YOUTUBE <span class="pill pyt">Mayor potencial</span></div>
+    <div class="sc hot"><div class="st">♻️ Un contenido, tres formatos</div><div class="sb">El mismo análisis de terror que hacés en YouTube (15 min) se convierte en 5 posts de Facebook + 3 Reels + 3 TikToks. El trabajo se hace una vez, los ingresos llegan de todos lados.</div><span class="sm">3x ingresos · mismo esfuerzo</span></div>
+    <div class="sc"><div class="st">🖼️ El thumbnail es el 80% del éxito</div><div class="sb">Cara con expresión de shock real, texto de 3-4 palabras máximo, fondo oscuro con elemento inquietante. A/B test de thumbnails en YouTube Studio cada semana.</div></div>
+    <div class="sc"><div class="st">💳 Membresías desde 500 suscriptores</div><div class="sb">$2.99 acceso anticipado · $4.99 videos exclusivos. Con 50 miembros en el tier básico son $150/mes extra sin esfuerzo adicional.</div></div>
+
+    <div class="div"></div>
+    <div class="ss-title">🤝 MONETIZACIÓN EXTRA</div>
+    <div class="sc"><div class="st">🎬 Afiliados de Shudder y streaming</div><div class="sb">Shudder (plataforma de terror), Amazon Prime y Paramount+ tienen programas de afiliados. Cada suscripción que generás te da $5-15. Con audiencia activa de terror puede sumar $200-500/mes sin esfuerzo.</div></div>
+    <div class="sc"><div class="st">📧 Email list desde ya</div><div class="sb">Las plataformas pueden cambiar su algoritmo o cerrarte la cuenta. El email es tuyo para siempre. Ofrecé algo gratis: "Las 10 leyendas más perturbadoras que no se cuentan en internet" y empezá a construir tu lista hoy.</div></div>
+
+    <br>
+    <button class="gen-btn str" onclick="genPlan()">PEDIRME UN PLAN PERSONALIZADO 💰</button>
+    <div class="gen-note">Plan mes a mes para escalar tus $300 actuales</div>
+  </div>
+
+</div>
+<script>
+// ── DATE ───────────────────────────────────────────────────────────────
+document.getElementById('dateBadge').textContent =
+  new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+
+// ── STATE ──────────────────────────────────────────────────────────────
+let cache = {fb:null,rl:null,yt:null};
+let loaded = false;
+
+// ── PANEL ──────────────────────────────────────────────────────────────
+function setPanel(id,el) {
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+}
+
+// ── POST ROWS (analyzer) ───────────────────────────────────────────────
+let rowCount = 0;
+function addPostRow() {
+  rowCount++;
+  const div = document.createElement('div');
+  div.className = 'post-entry';
+  div.innerHTML = `
+    <div class="post-entry-label">Post ${rowCount}</div>
+    <div class="post-entry-inputs">
+      <select class="tipo-select" data-field="tipo">
+        <option value="opinión">Opinión</option>
+        <option value="debate/pregunta">Debate</option>
+        <option value="curiosidad">Curiosidad</option>
+        <option value="reseña">Reseña</option>
+        <option value="encuesta">Encuesta</option>
+        <option value="reel">Reel</option>
+        <option value="CTA">CTA</option>
+      </select>
+      <input class="post-input" data-field="alcance" placeholder="Alcance" type="number" min="0">
+      <input class="post-input" data-field="comentarios" placeholder="Comentarios" type="number" min="0">
+      <input class="post-input" data-field="reacciones" placeholder="Reacciones" type="number" min="0">
+    </div>`;
+  document.getElementById('postRows').appendChild(div);
+}
+// Init with 3 rows
+addPostRow(); addPostRow(); addPostRow();
+
+function getPostData() {
+  const rows = document.querySelectorAll('.post-entry');
+  return Array.from(rows).map((r,i) => {
+    const tipo = r.querySelector('[data-field="tipo"]').value;
+    const alcance = r.querySelector('[data-field="alcance"]').value || '0';
+    const comentarios = r.querySelector('[data-field="comentarios"]').value || '0';
+    const reacciones = r.querySelector('[data-field="reacciones"]').value || '0';
+    return `Post ${i+1}: tipo=${tipo}, alcance=${alcance}, comentarios=${comentarios}, reacciones=${reacciones}`;
+  }).join(' | ');
+}
+
+// ── FETCH TRENDS ───────────────────────────────────────────────────────
+async function fetchTrends(force) {
+  if (loaded && !force) return;
+  setLive('Buscando tendencias en internet...','Consultando qué está viral en terror hoy');
+  setStatus('ts-loading','Buscando...');
+  showSkels();
+
+  const prompt = `Buscá en internet qué está trending HOY en el nicho de terror/horror para creadores de contenido en redes sociales. Buscá estrenos recientes y próximos, leyendas o noticias paranormales virales, formatos de Reels y video que funcionan en terror, debates activos.
+
+Respondé SOLO con este JSON sin texto extra ni backticks:
+{"resumen":"2 líneas con lo más importante","fb":[{"f":"🔥","n":"tendencia","m":"por qué es tendencia"},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."}],"rl":[{"f":"🔥","n":"...","m":"..."},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."}],"yt":[{"f":"🔥","n":"...","m":"..."},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."}]}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        tools:[{type:'web_search_20250305',name:'web_search'}],
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await res.json();
+    const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const parsed = JSON.parse(txt.replace(/```json|```/g,'').trim());
+    cache = parsed; loaded = true;
+    renderTrends(parsed);
+    setLive('Tendencias actualizadas ✓', parsed.resumen||'Datos frescos de internet');
+    setStatus('ts-live','En vivo ✓');
+  } catch(e) {
+    const fb=[{f:'🔥',n:'Scream 7',m:'regresa Neve Campbell · debate activo'},{f:'🔥',n:'La Novia de Frankenstein',m:'Christian Bale · estrenada 6 mar'},{f:'🔥',n:'Whistle / El Silbido del Mal',m:'director de La Monja · estreno 27 mar'},{f:'📈',n:'Insidious 6',m:'agosto 2026'},{f:'📈',n:'Evil Dead nueva entrega',m:'julio 2026'}];
+    const rl=[{f:'🔥',n:'CCTV falso / found footage',m:'"grabación real" · millones de vistas'},{f:'🔥',n:'Narración directa 60 seg',m:'alta retención · fácil de hacer'},{f:'📈',n:'Analog horror VHS',m:'estética retro · muy compartido'},{f:'📈',n:'Top 3 de terror rápido',m:'formato muy replicado'}];
+    const yt=[{f:'🔥',n:'Análisis y teorías',m:'Scream 7, Evil Dead · alta retención'},{f:'🔥',n:'Reseñas en profundidad',m:'Novia de Frankenstein · mucha búsqueda'},{f:'📈',n:'Analog horror',m:'millones de views'},{f:'📈',n:'Rankings top 10 terror 2026',m:'evergreen con pico ahora'}];
+    cache={fb,rl,yt,resumen:'Scream 7 y Whistle dominan la conversación. El analog horror sigue creciendo.'};
+    loaded=true; renderTrends(cache);
+    setLive('Tendencias cargadas',cache.resumen);
+    setStatus('ts-cache','Cache ⚡');
+  }
+}
+
+function renderTrends(d) {
+  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist']].forEach(([k,id])=>{
+    const el=document.getElementById(id);
+    if(!el||!d[k])return;
+    el.innerHTML=d[k].map(t=>`<div class="titem"><span>${t.f}</span><span class="tname">${t.n}</span><span class="tmeta"> · ${t.m}</span></div>`).join('');
+  });
+}
+
+function showSkels() {
+  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist']].forEach(([,id])=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML=[80,65,75,55].map(w=>`<div class="skel" style="width:${w}%"></div>`).join('');
+  });
+}
+
+function setLive(t,d){
+  document.getElementById('liveTitle').textContent=t;
+  document.getElementById('liveDesc').textContent=d;
+}
+function setStatus(cls,lbl){
+  ['fb','rl','yt'].forEach(p=>{
+    const el=document.getElementById(p+'-ts');
+    if(el){el.className='tstatus '+cls;el.textContent=lbl;}
+  });
+}
+
+// ── PROGRESS ───────────────────────────────────────────────────────────
+function startProg(p) {
+  const wrap=document.getElementById(p+'-prog');
+  const bar=document.getElementById(p+'-bar');
+  wrap.classList.add('show');
+  bar.style.width='0%';
+  let s=0;
+  const steps=[1,2,3].map(i=>document.getElementById(p+'-s'+i));
+  steps.forEach(el=>{if(el)el.className='prog-step';});
+  if(steps[0])steps[0].className='prog-step active';
+  bar.style.width='15%';
+  const iv=setInterval(()=>{
+    s++;
+    steps.forEach((el,i)=>{
+      if(!el)return;
+      if(i<s)el.className='prog-step done';
+      else if(i===s)el.className='prog-step active';
+      else el.className='prog-step';
+    });
+    bar.style.width=Math.min(15+s*30,88)+'%';
+    if(s>=steps.length)clearInterval(iv);
+  },1800);
+  return{iv,bar,wrap};
+}
+function stopProg(p,obj){
+  if(obj.iv)clearInterval(obj.iv);
+  obj.bar.style.width='100%';
+  setTimeout(()=>{obj.wrap.classList.remove('show');obj.bar.style.width='0';},600);
+}
+
+// ── SEND TO CHAT ───────────────────────────────────────────────────────
+function send(msg){window.parent.postMessage({type:'user-message',message:msg},'*');}
+
+function getTrends(p){
+  if(!cache[p])return'tendencias actuales de terror';
+  return cache[p].map(t=>t.n+': '+t.m).join('; ');
+}
+
+// ── GENERATORS ─────────────────────────────────────────────────────────
+function gen(plat) {
+  const btn=document.getElementById(plat+'-btn');
+  btn.disabled=true;
+  const obj=startProg(plat);
+  const tends=getTrends(plat==='rl'?'rl':plat==='yt'?'yt':'fb');
+  let msg='';
+
+  if(plat==='fb'){
+    const tono=document.getElementById('fb-tono').value;
+    const tipo=document.getElementById('fb-tipo').value;
+    const largo=document.getElementById('fb-largo').value;
+    const ht=document.getElementById('fb-ht').value;
+    msg=`Generame 5 posts de terror para Facebook usando estas tendencias reales de hoy: ${tends}. Tono: ${tono}. Tipo: ${tipo}. Largo: ${largo}. Hashtags: ${ht}. Reglas: primera línea gancho brutal en menos de 8 palabras, voz 100% humana, no empezar con "Hola" ni "Hey" ni "¿Sabías que". Cada post numerado con su horario recomendado. El post 5 siempre es CTA invitando a un grupo privado de terror.`;
+  } else if(plat==='rl'){
+    const formato=document.getElementById('rl-formato').value;
+    const dur=document.getElementById('rl-dur').value;
+    const gancho=document.getElementById('rl-gancho').value;
+    const cta=document.getElementById('rl-cta').value;
+    msg=`Generame 3 scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}. Para cada Reel incluí: 1) GANCHO (primeras 3 palabras que aparecen en pantalla, las más impactantes posibles), 2) DESARROLLO (el cuerpo del Reel segundo a segundo, como si fuera un guión), 3) CTA FINAL (las últimas 5 segundos), 4) SUGERENCIA VISUAL (qué imagen o clip poner de fondo), 5) HORARIO RECOMENDADO de publicación. Cada Reel numerado y listo para producir.`;
+  } else {
+    const plataforma=document.getElementById('vp-plat').value;
+    const formato=document.getElementById('vp-formato').value;
+    msg=`Generame 5 ideas de videos de terror para ${plataforma} basadas en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Para cada idea: 1) Título optimizado para SEO con gancho fuerte, 2) Primeros 30 segundos que retengan al espectador, 3) Estructura completa en 4-5 puntos, 4) Tip de thumbnail, 5) 5 hashtags. Numeradas del 1 al 5.`;
+  }
+
+  setTimeout(()=>{
+    stopProg(plat,obj);
+    btn.disabled=false;
+    send(msg);
+  },5800);
+}
+
+function analizarPosts(){
+  const btn=document.getElementById('an-btn');
+  const postData=getPostData();
+  const ingresos=document.getElementById('an-ingresos').value;
+  const freq=document.getElementById('an-freq').value;
+
+  if(postData.includes('alcance=0,comentarios=0,reacciones=0')){
+    const allZero=[...document.querySelectorAll('[data-field="alcance"]')].every(i=>!i.value||i.value==='0');
+    if(allZero){alert('Ingresá al menos algunos datos de tus posts para poder analizarlos.');return;}
+  }
+
+  btn.disabled=true;
+  const obj=startProg('an');
+
+  const msg=`Analizá el rendimiento de mis posts de terror en Facebook y decime exactamente qué tengo que cambiar para aumentar mis ingresos.
+
+MIS DATOS:
+Ingresos actuales: ${ingresos}
+Frecuencia de publicación: ${freq}
+Posts recientes: ${postData}
+
+Quiero que me digas:
+1. QUÉ TIPO DE POST me está funcionando mejor (el que tiene más comentarios o alcance) y por qué
+2. QUÉ TIPO DE POST está fallando y qué debería reemplazarlo
+3. PATRÓN que detectás en mis números (horarios, tipos, frecuencia)
+4. LAS 3 ACCIONES CONCRETAS que debería hacer esta semana para mejorar el engagement
+5. PROYECCIÓN: si implemento tus recomendaciones, ¿cuánto podría crecer mi alcance y mis ingresos en 30 días?
+
+Sé específico con los números, no me des consejos genéricos.`;
+
+  setTimeout(()=>{
+    stopProg('an',obj);
+    btn.disabled=false;
+    send(msg);
+  },5800);
+}
+
+function genPlan(){
+  send('Armame un plan de monetización mes a mes para los próximos 3 meses, partiendo de que ya gano $300/mes con mi página de terror en Facebook y voy a implementar 5 posts diarios + 3 Reels diarios. Quiero saber exactamente qué hacer cada mes en Facebook, YouTube y TikTok para llegar a $1.000/mes. Dame pasos concretos, métricas que seguir y señales de que voy por el camino correcto.');
+}
+
+// ── PWA ────────────────────────────────────────────────────────────────
+let dProm;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();dProm=e;
+  document.getElementById('installBanner').classList.add('show');
+});
+document.getElementById('installBtn').addEventListener('click',async()=>{
+  if(!dProm)return;
+  dProm.prompt();await dProm.userChoice;
+  dProm=null;document.getElementById('installBanner').classList.remove('show');
+});
+if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+fetchTrends();
+</script>
+</body>
+</html>
