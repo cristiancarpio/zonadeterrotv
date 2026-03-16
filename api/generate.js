@@ -65,30 +65,11 @@ export default async function handler(req, res) {
 
   let text = '';
 
-  // ── GEMINI para tendencias (web search) ─────────────────────────────
-  if (useSearch && GEMINI_KEY) {
-    try {
-      const bodyPayload = {
-        contents: req.body.messages.map(m => ({
-          role: m.role === 'assistant' ? 'model' : 'user',
-          parts: [{ text: m.content }]
-        })),
-        generationConfig: { maxOutputTokens: 800, temperature: 0.7 },
-        tools: [{ google_search: {} }]
-      };
-
-      const r = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-        { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(bodyPayload) }
-      );
-      const d = await r.json();
-      if (r.ok) {
-        text = d.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
-      }
-    } catch(e) {}
-
-    // Fallback a Groq si Gemini falla
-    if (!text && GROQ_KEY) {
+  // ── GEMINI para tendencias (useSearch=true) ────────────────────────
+  if (useSearch) {
+    if (!GEMINI_KEY) {
+      // Sin Gemini, usar Groq sin web search como fallback
+      if (!GROQ_KEY) return res.status(500).json({ error: 'Configurá GROQ_API_KEY o GEMINI_API_KEY en Vercel.' });
       try {
         const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -98,10 +79,53 @@ export default async function handler(req, res) {
         const d = await r.json();
         text = d.choices?.[0]?.message?.content || '';
       } catch(e) {}
+    } else {
+      try {
+        const bodyPayload = {
+          contents: req.body.messages.map(m => ({
+            role: m.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: m.content }]
+          })),
+          generationConfig: { maxOutputTokens: 800, temperature: 0.7 },
+          tools: [{ google_search: {} }]
+        };
+        const r = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+          { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(bodyPayload) }
+        );
+        const d = await r.json();
+        if (r.ok) {
+          text = d.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
+        } else {
+          // Gemini falló, fallback a Groq
+          if (GROQ_KEY) {
+            const r2 = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
+              body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 800, messages: req.body.messages })
+            });
+            const d2 = await r2.json();
+            text = d2.choices?.[0]?.message?.content || '';
+          }
+        }
+      } catch(e) {
+        // Fallback a Groq
+        if (GROQ_KEY) {
+          try {
+            const r2 = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
+              body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 800, messages: req.body.messages })
+            });
+            const d2 = await r2.json();
+            text = d2.choices?.[0]?.message?.content || '';
+          } catch(e2) {}
+        }
+      }
     }
   }
 
-  // ── GROQ para generación de contenido ───────────────────────────────
+  // ── GROQ para generación de contenido (useSearch=false) ─────────────
   if (!useSearch) {
     if (!GROQ_KEY) {
       return res.status(500).json({
