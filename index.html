@@ -393,10 +393,33 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="gen-note">El post 5 siempre incluye CTA de monetización</div>
 
     <div style="height:1px;background:var(--border);margin:16px 0"></div>
-    <div class="sec-title" style="font-size:18px">ENCUESTAS VIRALES</div>
-    <div class="sec-sub">Las encuestas tienen el mayor alcance orgánico en Facebook</div>
-    <button class="gen-btn" id="enc-btn" style="background:linear-gradient(135deg,#4a0e2a,#e63946)" onclick="genEncuestas()">GENERAR 5 ENCUESTAS 📊</button>
-    <div class="gen-note">Preguntas que dividen la audiencia · máximo debate · máximo alcance</div>
+    <div class="sec-title" style="font-size:18px">AMPLIAR POST</div>
+    <div class="sec-sub">Tomá un post y expandilo con más datos, más tensión y más gancho</div>
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Pegá el post que querés ampliar</div>
+        <textarea id="amp-post" placeholder="Pegá acá el post que generaste o uno que ya publicaste..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:80px;margin-top:4px"></textarea>
+      </div>
+    </div>
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card"><div class="cfg-label">Cómo ampliarlo</div>
+        <select id="amp-modo">
+          <option value="más datos reales y específicos: fechas, nombres, lugares, números concretos que no estaban">Más datos reales</option>
+          <option value="más tensión narrativa y suspenso creciente, con giro perturbador al final">Más tensión</option>
+          <option value="más contexto histórico y científico que haga el caso más creíble e impactante">Más contexto</option>
+          <option value="más emocional y cercano, que conecte con la experiencia del lector">Más emocional</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Largo final</div>
+        <select id="amp-largo">
+          <option value="150 a 200 palabras">150-200 palabras</option>
+          <option value="200 a 300 palabras">200-300 palabras</option>
+          <option value="300 a 400 palabras">300-400 palabras</option>
+        </select>
+      </div>
+    </div>
+    <button class="gen-btn" id="amp-btn" style="background:linear-gradient(135deg,#1a0a3a,#7c3aed)" onclick="genAmpliar()">AMPLIAR POST ✨</button>
+    <div class="gen-note">Mismo post · más datos · más impacto · más comentarios</div>
   
     </div>
     <div class="hub-sub" id="hub-fb-reels">
@@ -1622,36 +1645,43 @@ Reglas: voz 100% humana, voseo latinoamericano, cada día temáticamente distint
   btn.disabled = false;
 }
 
-// ── ENCUESTAS VIRALES ──────────────────────────────────────────────────
-async function genEncuestas() {
-  const btn = document.getElementById('enc-btn');
+// ── AMPLIAR POST ──────────────────────────────────────────────────────
+async function genAmpliar() {
+  const btn = document.getElementById('amp-btn');
+  const post = document.getElementById('amp-post').value.trim();
+  if (!post) { alert('Pegá el post que querés ampliar primero.'); return; }
   btn.disabled = true;
   const obj = startProg('fb');
-  const tends = getTrends('fb');
+  const modo = document.getElementById('amp-modo').value;
+  const largo = document.getElementById('amp-largo').value;
 
-  const prompt = `Sos experto en engagement de páginas de terror en Facebook. Generame 5 encuestas/preguntas virales para publicar hoy, basadas en estas tendencias: ${tends}.
+  const prompt = `Sos el creador de Zona de Terror TV con 230.000 seguidores en Facebook. Tengo este post que quiero mejorar y ampliar:
 
-Para cada encuesta:
-- Una pregunta que genere debate inmediato y opiniones divididas
-- 2 a 4 opciones de respuesta (para usar en encuesta de Facebook o en los comentarios)
-- Una línea de contexto para pegar antes de la pregunta (el gancho)
-- Que sean sobre terror: películas, experiencias, miedos, leyendas, debates del género
+--- POST ACTUAL ---
+${post}
+--- FIN DEL POST ---
 
-Formato por cada encuesta:
-**ENCUESTA X**
-🎬 GANCHO: [texto gancho de 1 línea]
-❓ PREGUNTA: [la pregunta]
-📊 OPCIONES: [opción A] / [opción B] / [opción C si aplica]
+Amplialó con ${modo}. Largo final: ${largo}.
 
-Reglas: voseo latinoamericano, preguntas que dividan la audiencia al 50/50 para generar más debate, nada genérico.`;
+REGLAS PARA LA VERSION AMPLIADA:
+- Mantene el mismo tema y caso pero hacelo mucho mas rico en detalles
+- Primera linea tiene que seguir siendo un gancho brutal que para el scroll
+- Agrega datos reales especificos: nombres completos, anos, lugares exactos, numeros concretos
+- Narrativa en parrafos cortos con saltos de linea, maximo 2 lineas por bloque
+- Tension creciente — lo mas perturbador siempre al final
+- Cierre con pregunta o dato que invite a comentar
+- Voz humana, cercana, periodistica
+- LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron
+
+Dame SOLO el post ampliado, sin explicaciones ni comentarios previos.`;
 
   try {
-    const txt = await callAPI(prompt, true, 'th_enc');
+    const txt = await callAPI(prompt, false, 'th_amp');
     stopProg('fb', obj);
-    showResult('enc', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📊 5 encuestas listas</p>' + mdToHtml(txt));
+    showResult('amp', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">✨ Post ampliado</p>' + mdToHtml(txt));
   } catch(e) {
     stopProg('fb', obj);
-    showResult('enc', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+    showResult('amp', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
   }
   btn.disabled = false;
 }
