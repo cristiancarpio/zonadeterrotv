@@ -293,7 +293,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="live-text">
       <strong id="liveTitle">Buscando tendencias en internet...</strong>
       <span id="liveDesc">Consultando qué está viral en terror hoy</span>
-      <span id="trendTimer" style="font-size:12px;color:#555;margin-top:2px;display:block"></span>
+      <span id="trendTimer" style="font-size:12px;color:#666;margin-top:3px;display:block"></span>
     </div>
     <button class="refresh-btn" onclick="fetchTrends(true)">↺ Actualizar</button>
   </div>
@@ -2090,7 +2090,7 @@ function updateTimerDisplay() {
   const elStr = em < 60 ? `hace ${em}min` : `hace ${Math.floor(em/60)}h ${em%60}min`;
   const rmStr = rm < 60 ? `en ${rm}min` : `en ${Math.floor(rm/60)}h ${rm%60}min`;
   el.textContent = `⏱ Actualizado ${elStr} · próxima ${rmStr}`;
-  el.style.color = remaining < 30*60*1000 ? '#e67e22' : '#555';
+  el.style.color = remaining < 30*60*1000 ? '#e67e22' : '#888';
 }
 
 // ── PWA ────────────────────────────────────────────────────────────────
