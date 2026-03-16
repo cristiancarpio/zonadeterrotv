@@ -24,7 +24,7 @@
   --r:12px; --rs:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden;font-size:16px;min-height:100%}
+html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden;font-size:16px}
 .app{display:block;max-width:900px;margin:0 auto}
 
 /* ── MOBILE BASE (ya estaban, los dejamos) ─────────────────────────── */
@@ -293,6 +293,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="live-text">
       <strong id="liveTitle">Buscando tendencias en internet...</strong>
       <span id="liveDesc">Consultando qué está viral en terror hoy</span>
+      <span id="trendTimer" style="font-size:12px;color:#555;margin-top:2px;display:block"></span>
     </div>
     <button class="refresh-btn" onclick="fetchTrends(true)">↺ Actualizar</button>
   </div>
@@ -1416,6 +1417,7 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
     renderTrends(parsed);
     setLive('Tendencias actualizadas ✓', parsed.resumen||'Terror está en tendencia');
     setStatus('ts-live','En vivo ✓');
+    startTrendTimer();
   } catch(e) {
     const fb=[{f:'🔥',n:'Scream 7',m:'regresa Neve Campbell · debate activo'},{f:'🔥',n:'La Novia de Frankenstein',m:'Christian Bale · estrenada 6 mar'},{f:'🔥',n:'Whistle / El Silbido del Mal',m:'director de La Monja · estreno 27 mar'},{f:'📈',n:'Insidious 6',m:'agosto 2026'},{f:'📈',n:'Evil Dead nueva entrega',m:'julio 2026'}];
     const rl=[{f:'🔥',n:'CCTV falso / found footage',m:'"grabación real" · millones de vistas'},{f:'🔥',n:'Narración directa 60 seg',m:'alta retención · fácil de hacer'},{f:'📈',n:'Analog horror VHS',m:'estética retro · muy compartido'},{f:'📈',n:'Top 3 de terror rápido',m:'formato muy replicado'}];
@@ -1424,6 +1426,7 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
     loaded=true; renderTrends(cache);
     setLive('Tendencias cargadas',cache.resumen);
     setStatus('ts-cache','Cache ⚡');
+    updateTimerDisplay();
   }
 }
 
@@ -2147,6 +2150,52 @@ function getCasosTrends() {
   return casosCache.casos.map(t => t.n + ': ' + t.m).join('; ');
 }
 
+
+// ── TREND TIMER ────────────────────────────────────────────────────────
+let timerInterval = null;
+
+function startTrendTimer() {
+  const now = Date.now();
+  try { localStorage.setItem('trends_updated_at', now); } catch(e){}
+  updateTimerDisplay();
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(updateTimerDisplay, 60000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('trendTimer');
+  if (!el) return;
+  let savedAt;
+  try { savedAt = parseInt(localStorage.getItem('trends_updated_at')); } catch(e){}
+  if (!savedAt) { el.textContent = ''; return; }
+
+  const elapsed = Date.now() - savedAt;
+  const ttl = 6 * 60 * 60 * 1000;
+  const remaining = ttl - elapsed;
+
+  if (remaining <= 0) {
+    el.textContent = '🔄 Tendencias vencidas · actualizá para refrescar';
+    el.style.color = '#c0392b';
+    return;
+  }
+
+  const elapsedMin = Math.floor(elapsed / 60000);
+  const remainMin = Math.floor(remaining / 60000);
+  const remainHrs = Math.floor(remainMin / 60);
+  const remainMins = remainMin % 60;
+
+  const elapsedStr = elapsedMin < 60
+    ? `hace ${elapsedMin} min`
+    : `hace ${Math.floor(elapsedMin/60)}h ${elapsedMin%60}min`;
+
+  const nextStr = remainHrs > 0
+    ? `próxima en ${remainHrs}h ${remainMins}min`
+    : `próxima en ${remainMins}min`;
+
+  el.textContent = `⏱ Actualizado ${elapsedStr} · ${nextStr}`;
+  el.style.color = remaining < 30*60*1000 ? '#e67e22' : '#555';
+}
+
 // ── PWA ────────────────────────────────────────────────────────────────
 let dProm;
 window.addEventListener('beforeinstallprompt',e=>{
@@ -2163,6 +2212,7 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch
 fetchTrends();
 fetchCasosTrends();
 restoreResults();
+updateTimerDisplay();
 </script>
 </body>
 </html>

@@ -41,11 +41,23 @@ export default async function handler(req, res) {
     } catch(e) {}
   }
 
-  // ── GET — leer de Redis ─────────────────────────────────────────────
+  // ── GET — leer de Redis (con TTL opcional) ─────────────────────────
   if (req.method === 'GET') {
-    const { key } = req.query;
+    const { key, ttl } = req.query;
     if (!key) return res.status(400).json({ error: 'key requerida' });
     const value = await redisGet(key);
+    if (ttl === '1' && REDIS_URL && REDIS_TOKEN) {
+      // Get TTL from Redis
+      try {
+        const r = await fetch(`${REDIS_URL}/ttl/${encodeURIComponent(key)}`, {
+          headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
+        });
+        const j = await r.json();
+        return res.status(200).json({ value, ttl: j.result ?? 0 });
+      } catch(e) {
+        return res.status(200).json({ value, ttl: 0 });
+      }
+    }
     return res.status(200).json({ value });
   }
 
@@ -85,7 +97,7 @@ export default async function handler(req, res) {
       bodyPayload.tools = [{ google_search: {} }];
     }
 
-    const fetchGemini = async (retries = 3, delay = 15000) => {
+    const fetchGemini = async (retries = 2, delay = 4000) => {
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
         {
@@ -97,7 +109,7 @@ export default async function handler(req, res) {
 
       if (response.status === 429 && retries > 0) {
         await new Promise(r => setTimeout(r, delay));
-        return fetchGemini(retries - 1, delay + 10000);
+        return fetchGemini(retries - 1, delay + 3000);
       }
       return response;
     };
