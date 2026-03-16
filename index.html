@@ -156,6 +156,8 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .nav-btn.active.yh .nl{color:#ff4444}
 .nav-btn.active.cs{border-color:#9b5de5;background:rgba(155,93,229,0.15)}
 .nav-btn.active.cs .nl{color:#9b5de5}
+.nav-btn.active.co{border-color:#f0a500;background:rgba(230,126,34,0.15)}
+.nav-btn.active.co .nl{color:#f0a500}
 
 /* PANELS */
 .panel{display:none;padding:10px 20px 40px;animation:fi 0.2s ease}
@@ -303,7 +305,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <button class="nav-btn fb" onclick="setPanel('fb',this)"><span class="ni">📘</span><span class="nl">Facebook</span></button>
     <button class="nav-btn yh" onclick="setPanel('yh',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
     <button class="nav-btn wk" onclick="setPanel('wk',this)"><span class="ni">🗓️</span><span class="nl">Semana</span></button>
-    <button class="nav-btn an" onclick="setPanel('an',this)"><span class="ni">📊</span><span class="nl">Análisis</span></button>
+    <button class="nav-btn co" onclick="setPanel('co',this)"><span class="ni">🧠</span><span class="nl">Coach</span></button>
     </nav>
 
   <!-- ═══════════════════════════════════════════════ FACEBOOK HUB -->
@@ -558,64 +560,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
     </div><!-- /hub-fb-imgs -->
   </div><!-- /panel-fb -->
 
-  <!-- ═══════════════════════════════════════════════ ANÁLISIS -->
-  <div class="panel" id="panel-an">
-    <div class="sec-title">ANÁLISIS</div>
-    <div class="sec-sub">Qué posts te funcionaron · dónde mejorar</div>
 
-    <div class="analyzer">
-      <div class="an-intro">
-        <div class="an-intro-title">📊 Cómo funciona</div>
-        <div class="an-intro-body">
-          Entrá a <strong style="color:var(--text)">Facebook → Tu página → Herramientas de publicación → Estadísticas</strong> y cargá los datos de tus últimos posts. La IA analiza qué tipo de contenido te da más alcance, comentarios y engagement, y te dice exactamente qué cambiar.
-        </div>
-      </div>
-
-      <div class="an-step">
-        <div class="an-step-num">Paso 1 · Cargá tus posts</div>
-        <div class="an-step-title">Ingresá los datos de tus últimos 5-10 posts</div>
-        <div class="post-row" id="postRows">
-          <!-- rows added dynamically -->
-        </div>
-        <button class="add-post-btn" onclick="addPostRow()">+ Agregar post</button>
-      </div>
-
-      <div class="an-step">
-        <div class="an-step-num">Paso 2 · Contexto</div>
-        <div class="an-step-title">Contame un poco más</div>
-        <div class="cfg-grid" style="margin-bottom:0">
-          <div class="cfg-card"><div class="cfg-label">Tus ingresos actuales</div>
-            <select id="an-ingresos">
-              <option value="300 dólares por mes">$300/mes</option>
-              <option value="100 a 300 dólares por mes">$100-300/mes</option>
-              <option value="300 a 600 dólares por mes">$300-600/mes</option>
-              <option value="más de 600 dólares por mes">+$600/mes</option>
-            </select>
-          </div>
-          <div class="cfg-card"><div class="cfg-label">Posts por día actuales</div>
-            <select id="an-freq">
-              <option value="1 a 2 posts por día">1-2/día</option>
-              <option value="3 a 5 posts por día">3-5/día</option>
-              <option value="más de 5 posts por día">+5/día</option>
-              <option value="irregular, no tengo rutina fija">Irregular</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-wrap" id="an-prog">
-        <div class="prog-steps">
-          <div class="prog-step" id="an-s1"><span class="step-ic">📊</span>Procesando métricas de tus posts</div>
-          <div class="prog-step" id="an-s2"><span class="step-ic">🔍</span>Identificando patrones de engagement</div>
-          <div class="prog-step" id="an-s3"><span class="step-ic">💡</span>Generando recomendaciones específicas</div>
-        </div>
-        <div class="pbar-wrap"><div class="pbar" id="an-bar"></div></div>
-      </div>
-    </div>
-
-    <button class="gen-btn an" id="an-btn" onclick="analizarPosts()">ANALIZAR MIS POSTS 📊</button>
-    <div class="gen-note">El análisis aparece en el chat con recomendaciones concretas</div>
-  </div>
 
   <!-- ═══════════════════════════════════════════════ YOUTUBE HUB -->
   <div class="panel" id="panel-yh">
@@ -1081,6 +1026,100 @@ select option{background:#1a1a1a;color:#f0f0f0}
     </div>
     <button class="gen-btn" id="cs-btn" style="background:linear-gradient(135deg,#2d0050,#9b5de5)" onclick="genCasos()">GENERAR REELS DE CASOS 🎬</button>
     <div class="gen-note">Texto en pantalla · video sugerido · instrucciones CapCut · caption · hashtags</div>
+
+    <div style="height:1px;background:var(--border);margin:16px 0"></div>
+    <div class="sec-title" style="font-size:18px">AMPLIAR REEL</div>
+    <div class="sec-sub">Expandí un texto con más datos reales y más impacto</div>
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Pegá el texto del Reel que querés ampliar</div>
+        <textarea id="arl-post" placeholder="Pegá acá el texto del Reel generado arriba..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:80px;margin-top:4px"></textarea>
+      </div>
+    </div>
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card"><div class="cfg-label">Cómo ampliarlo</div>
+        <select id="arl-modo">
+          <option value="más datos reales específicos: fechas exactas, nombres completos, detalles concretos del caso que no estaban">Más datos reales</option>
+          <option value="más tensión narrativa con suspense creciente y el dato más perturbador al final">Más tensión</option>
+          <option value="más contexto del caso: qué pasó antes, investigación, reacciones de la familia o la justicia">Más contexto</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Duración final</div>
+        <select id="arl-dur">
+          <option value="15 segundos — máximo 180 caracteres">15 seg</option>
+          <option value="20 segundos — máximo 240 caracteres">20 seg</option>
+          <option value="30 segundos — máximo 350 caracteres">30 seg</option>
+        </select>
+      </div>
+    </div>
+    <button class="gen-btn" id="arl-btn" style="background:linear-gradient(135deg,#1a0050,#7c3aed)" onclick="genAmpliarReel()">AMPLIAR REEL ✨</button>
+    <div class="gen-note">Mismo caso · más datos reales · más impacto</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ COACH -->
+  <div class="panel" id="panel-co">
+    <div class="sec-title">COACH DE ESTRATEGIA</div>
+    <div class="sec-sub">Guía de estrategia + consultas concretas</div>
+
+    <div class="tbox" style="margin-bottom:14px">
+      <div class="tbox-head"><span class="tbox-title">⚡ Los 6 tips que más impactan en tu página</span></div>
+      <div style="font-size:15px;color:var(--text-dim);line-height:1.9">
+        <p style="margin-bottom:10px"><strong style="color:var(--text)">1. Respondé comentarios en las primeras 2 horas.</strong> Facebook mide tu tiempo de respuesta. Responder los primeros 10 comentarios multiplica x3 el alcance orgánico.</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--text)">2. El Reel de casos es tu motor de crecimiento.</strong> 3 Reels por día — 10AM, 6PM, 9:30PM. Llegan a gente que no te sigue todavía.</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--text)">3. Post 5 siempre es CTA.</strong> El último post del día invita al grupo privado. Con 100 miembros duplicás lo que ganás hoy.</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--text)">4. Boosteá lo que ya despega solo.</strong> Más de 40 comentarios en 3 horas sin promoción → invertí $3-5. ROI típico 8x.</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--text)">5. Nunca borres posts con alto engagement.</strong> El historial de comentarios le dice al algoritmo que tu página genera conversación.</p>
+        <p style="margin-bottom:0"><strong style="color:var(--text)">6. Un caso, tres formatos.</strong> Reel 15 seg + post largo + idea YouTube. El trabajo se hace una vez.</p>
+      </div>
+    </div>
+
+    <div class="tbox" style="margin-bottom:14px">
+      <div class="tbox-head"><span class="tbox-title">📅 Tu sistema diario ideal</span></div>
+      <div style="font-size:15px;color:var(--text-dim);line-height:1.9">
+        🕗 8:00 AM — Post 1 (caso o debate)<br>
+        🕙 10:00 AM — Reel 1 (caso 15 seg)<br>
+        🕛 12:00 PM — Post 2 (fenómeno o curiosidad)<br>
+        🕒 3:00 PM — Post 3 (historia real)<br>
+        🕕 6:00 PM — Post 4 + Reel 2 (prime time)<br>
+        🕘 9:00 PM — Post 5 CTA (grupo privado)<br>
+        🕤 9:30 PM — Reel 3 (cierre nocturno)
+      </div>
+    </div>
+
+    <div class="tbox" style="margin-bottom:14px">
+      <div class="tbox-head"><span class="tbox-title">💰 Potencial con 230k seguidores</span></div>
+      <div style="font-size:15px;color:var(--text-dim);line-height:1.9">
+        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">Facebook actual</span><span style="float:right">$300 → $600-800/mes</span></div>
+        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:10px"><div style="width:55%;height:100%;background:var(--blue);border-radius:2px"></div></div>
+        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">+ Reels de Casos diarios</span><span style="float:right">+$200-400/mes</span></div>
+        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:10px"><div style="width:70%;height:100%;background:var(--red);border-radius:2px"></div></div>
+        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">+ YouTube con guiones</span><span style="float:right">+$300-1.000/mes</span></div>
+        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:10px"><div style="width:85%;height:100%;background:var(--green);border-radius:2px"></div></div>
+        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">Sistema completo</span><span style="float:right">$1.500-3.000/mes</span></div>
+        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:0"><div style="width:95%;height:100%;background:var(--purple);border-radius:2px"></div></div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="font-size:20px;margin-top:4px">PREGUNTALE AL COACH</div>
+    <div class="sec-sub">Estrategia, crecimiento, monetización — respuestas concretas para tu caso</div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Tu pregunta o situación</div>
+        <textarea id="co-pregunta" placeholder="Ej: Tengo 230k y gano $300/mes. Qué cambio esta semana para crecer más rápido?&#10;Ej: Un post tuvo 15 comentarios y 800 alcance, está bien?&#10;Ej: Cómo monetizo mejor el grupo privado?" style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:100px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="co-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="co-s1"><span class="step-ic">🧠</span>Analizando tu situación</div>
+        <div class="prog-step" id="co-s2"><span class="step-ic">📊</span>Evaluando estrategia óptima</div>
+        <div class="prog-step" id="co-s3"><span class="step-ic">💡</span>Generando recomendaciones concretas</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="co-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="co-btn" style="background:linear-gradient(135deg,#7a3a00,#f0a500)" onclick="genCoach()">CONSULTAR AL COACH 🧠</button>
+    <div class="gen-note">Respuestas específicas para tu página · sin consejos genéricos</div>
   </div>
 
 
@@ -1112,41 +1151,9 @@ function setHub(panel, sub, el) {
 
 // ── POST ROWS (analyzer) ───────────────────────────────────────────────
 let rowCount = 0;
-function addPostRow() {
-  rowCount++;
-  const div = document.createElement('div');
-  div.className = 'post-entry';
-  div.innerHTML = `
-    <div class="post-entry-label">Post ${rowCount}</div>
-    <div class="post-entry-inputs">
-      <select class="tipo-select" data-field="tipo">
-        <option value="opinión">Opinión</option>
-        <option value="debate/pregunta">Debate</option>
-        <option value="curiosidad">Curiosidad</option>
-        <option value="reseña">Reseña</option>
-        <option value="encuesta">Encuesta</option>
-        <option value="reel">Reel</option>
-        <option value="CTA">CTA</option>
-      </select>
-      <input class="post-input" data-field="alcance" placeholder="Alcance" type="number" min="0">
-      <input class="post-input" data-field="comentarios" placeholder="Comentarios" type="number" min="0">
-      <input class="post-input" data-field="reacciones" placeholder="Reacciones" type="number" min="0">
-    </div>`;
-  document.getElementById('postRows').appendChild(div);
-}
-// Init with 3 rows
-addPostRow(); addPostRow(); addPostRow();
 
-function getPostData() {
-  const rows = document.querySelectorAll('.post-entry');
-  return Array.from(rows).map((r,i) => {
-    const tipo = r.querySelector('[data-field="tipo"]').value;
-    const alcance = r.querySelector('[data-field="alcance"]').value || '0';
-    const comentarios = r.querySelector('[data-field="comentarios"]').value || '0';
-    const reacciones = r.querySelector('[data-field="reacciones"]').value || '0';
-    return `Post ${i+1}: tipo=${tipo}, alcance=${alcance}, comentarios=${comentarios}, reacciones=${reacciones}`;
-  }).join(' | ');
-}
+
+
 
 // ── FETCH TRENDS ───────────────────────────────────────────────────────
 async function fetchTrends(force) {
@@ -1476,44 +1483,6 @@ Cada Reel numerado y listo para producir. Los tiempos tienen que ser realistas p
   btn.disabled = false;
 }
 
-async function analizarPosts(){
-  const btn=document.getElementById('an-btn');
-  const postData=getPostData();
-  const ingresos=document.getElementById('an-ingresos').value;
-  const freq=document.getElementById('an-freq').value;
-
-  const allZero=[...document.querySelectorAll('[data-field="alcance"]')].every(i=>!i.value||i.value==='0');
-  if(allZero){alert('Ingresá al menos algunos datos de tus posts para poder analizarlos.');return;}
-
-  btn.disabled=true;
-  const obj=startProg('an');
-
-  const prompt=`Analizá el rendimiento de mis posts de terror en Facebook y decime exactamente qué tengo que cambiar para aumentar mis ingresos.
-
-MIS DATOS:
-Ingresos actuales: ${ingresos}
-Frecuencia de publicación: ${freq}
-Posts recientes: ${postData}
-
-Quiero que me digas:
-1. QUÉ TIPO DE POST me está funcionando mejor y por qué
-2. QUÉ TIPO DE POST está fallando y qué debería reemplazarlo
-3. PATRÓN que detectás en mis números
-4. LAS 3 ACCIONES CONCRETAS que debería hacer esta semana
-5. PROYECCIÓN: cuánto podría crecer mi alcance e ingresos en 30 días si implemento tus recomendaciones
-
-Sé específico con los números, no me des consejos genéricos.`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_an');
-    stopProg('an', obj);
-    showResult('an', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📊 Análisis listo</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('an', obj);
-    showResult('an', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled=false;
-}
 
 async function genPlan(){
   const btn=document.getElementById('str-btn');
@@ -1830,6 +1799,7 @@ async function genCasos() {
   const btn = document.getElementById('cs-btn');
   btn.disabled = true;
   const obj = startProg('cs');
+  if (!casosLoaded) await fetchCasosTrends();
   const tipo = document.getElementById('cs-tipo').value;
   const dur = document.getElementById('cs-dur').value;
   const ritmo = document.getElementById('cs-ritmo').value;
@@ -2015,6 +1985,75 @@ function updateTimerDisplay() {
   const rmStr = rm < 60 ? `en ${rm}min` : `en ${Math.floor(rm/60)}h ${rm%60}min`;
   el.textContent = `⏱ Actualizado ${elStr} · próxima ${rmStr}`;
   el.style.color = remaining < 30*60*1000 ? '#e67e22' : '#888';
+}
+
+
+// ── COACH ──────────────────────────────────────────────────────────────
+async function genCoach() {
+  const btn = document.getElementById('co-btn');
+  const pregunta = document.getElementById('co-pregunta').value.trim();
+  if (!pregunta) { alert('Escribí tu pregunta primero.'); return; }
+  btn.disabled = true;
+  const obj = startProg('co');
+
+  const prompt = `Sos un coach experto en monetizacion de paginas de terror en Facebook con mas de 5 anos de experiencia. Trabajas con la pagina Zona de Terror TV que tiene 230.000 seguidores en Facebook, gana actualmente $300/mes, publica contenido de terror (casos reales, leyendas, fenomenos perturbadores) y usa Reels de casos de 15 segundos como principal herramienta de crecimiento.
+
+El creador te hace esta consulta:
+${pregunta}
+
+Respondele de forma directa, concreta y especifica para SU situacion. No des consejos genericos. Si menciona numeros o metricas, analizalos en contexto de una pagina de terror de 230k seguidores. Dame pasos accionables que pueda implementar esta semana. Maximo 300 palabras, en espanol latinoamericano con voseo.`;
+
+  try {
+    const txt = await callAPI(prompt, false, 'th_co');
+    stopProg('co', obj);
+    showResult('co', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🧠 Respuesta del coach</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('co', obj);
+    showResult('co', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
+}
+
+
+// ── AMPLIAR REEL ──────────────────────────────────────────────────────
+async function genAmpliarReel() {
+  const btn = document.getElementById('arl-btn');
+  const post = document.getElementById('arl-post').value.trim();
+  if (!post) { alert('Pegá el texto del Reel que querés ampliar primero.'); return; }
+  btn.disabled = true;
+  const obj = startProg('cs');
+  const modo = document.getElementById('arl-modo').value;
+  const dur = document.getElementById('arl-dur').value;
+
+  const prompt = `Sos el creador de Zona de Terror TV. Tengo este texto de Reel que quiero mejorar:
+
+--- TEXTO ACTUAL ---
+${post}
+--- FIN ---
+
+Amplialó con ${modo}. Duracion final: ${dur}.
+
+REGLAS:
+- Mantene el mismo caso pero con MUCHO MAS detalle real y especifico
+- Narrativa fluida, frases cortas, una idea por linea
+- NUNCA uses frases vagas como "algo extrano ocurrio" o "encontraron lo que nadie esperaba" - siempre decis EXACTAMENTE que fue
+- Datos reales: nombres completos, anos exactos, lugares especificos, numeros concretos
+- Tension creciente, lo mas perturbador al final
+- Puntos suspensivos en los momentos de tension
+- Sin emojis
+- LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron
+
+Dame SOLO el texto ampliado, sin explicaciones.`;
+
+  try {
+    const txt = await callAPI(prompt, false, 'th_arl');
+    stopProg('cs', obj);
+    showResult('arl', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">✨ Reel ampliado</p>' + mdToHtml(txt));
+  } catch(e) {
+    stopProg('cs', obj);
+    showResult('arl', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
+  }
+  btn.disabled = false;
 }
 
 // ── PWA ────────────────────────────────────────────────────────────────
