@@ -1840,21 +1840,11 @@ async function genCasos() {
   const cta = document.getElementById('cs-cta').value;
   const tends = getCasosTrends();
 
-  const prompt = `Sos el creador de Zona de Terror TV con 230.000 seguidores en Facebook. Generame ${cant} textos para Reels de casos reales. SOLO el texto que va en pantalla — nada de instrucciones de produccion, nada de imagen, audio, capcut, caption. Solo el texto narrativo.
+  const prompt = `Sos el creador de Zona de Terror TV con 230.000 seguidores. Generame ${cant} textos para Reels usando CASOS REALES DOCUMENTADOS con nombres, fechas y detalles especificos verificables. PROHIBIDO inventar casos vagos o usar frases como "algo estaba muy mal", "encontraron lo que nadie esperaba", "un misterio sin resolver" sin dar el detalle concreto de que fue ese misterio.
 
-ESTOS SON TUS REELS MAS VISTOS — imitá este estilo exacto:
+EJEMPLOS EXACTOS DE LO QUE TENES QUE GENERAR:
 
-EJEMPLO 1:
-La historia de Jewel Shuping genero un debate mundial.
-Desde nina estaba convencida de que debia ser ciega.
-Aunque veia perfectamente, aprendio braille y caminaba con baston.
-Anos despues explico que padecia Body Integrity Identity Disorder, un trastorno en el que la persona siente que su cuerpo no coincide con su identidad.
-En 2006, con 21 anos, provoco un dano irreversible en sus ojos y perdio la vision.
-Cuando su familia supo que habia sido intencional, la rechazo.
-Pero ella aseguro algo que impacto a todos: Por primera vez siento que mi cuerpo coincide con quien soy.
-Un caso real que aun divide opiniones en todo el mundo.
-
-EJEMPLO 2:
+EJEMPLO CORRECTO 1 — datos reales especificos:
 En 1991, Konerak Sinthasomphone, de 14 anos, logro escapar del apartamento de Jeffrey Dahmer.
 Desorientado y en la calle, dos mujeres llamaron a la policia para ayudarlo.
 Pero cuando los agentes llegaron, Dahmer afirmo que el joven era su pareja y que solo habian discutido.
@@ -1863,22 +1853,26 @@ y devolvieron al adolescente al apartamento.
 Horas despues, Konerak perdio la vida alli.
 Un error policial que sigue generando indignacion decadas despues.
 
-EJEMPLO 3:
+EJEMPLO CORRECTO 2 — datos reales especificos:
 En 2016, Mike Mansholt, un joven aleman de 17 anos, salio a recorrer Malta en bicicleta con una GoPro.
 A las 10:11 envio su ultimo mensaje a sus padres.
 Despues... desaparecio.
 Ocho dias mas tarde, su cuerpo fue encontrado al pie de los acantilados de Dingli.
-Pero algo no tenia sentido: su bicicleta estaba arriba, sus zapatos colocados a un lado.
-La autopsia revelo algo mas extrano: faltaban la mayoria de sus organos internos y su cuerpo pesaba apenas 16 kilos.
+Su bicicleta estaba arriba. Sus zapatos, colocados prolijamente a un lado.
+La autopsia revelo algo aun mas extrano: faltaban la mayoria de sus organos internos y su cuerpo pesaba apenas 16 kilos.
 Hasta hoy, nadie ha podido explicar exactamente que ocurrio.
 
-REGLAS ABSOLUTAS:
-- Narrativa fluida y cronologica — NUNCA formato de ficha con "Lugar:", "Ano:", "Nombre:", "Crimenes:" — eso destruye el efecto
+EJEMPLOS DE LO QUE NO DEBES HACER:
+MAL: "En 2011, tres jovenes desaparecieron en Mexico. La ultima vez que se los vio fue en una fiesta. Dias despues, lo que encontraron fue un misterio." — VAGO, sin nombres, sin el dato especifico de que fue lo que encontraron.
+MAL: "Algo estaba muy mal en esa casa. Un dia la policia recibio una llamada y encontraron lo que nadie esperaba." — NO DICE NADA.
+
+REGLAS:
+- Usar CASOS REALES con nombres completos de personas y lugares reales
+- Cada caso tiene que tener AL MENOS: nombre real de la persona, ano exacto, lugar especifico, y EL DATO PERTURBADOR CONCRETO que hace que el caso sea impactante
 - Frases cortas, una idea por linea
-- Datos reales especificos integrados naturalmente en la narracion: nombres, anos, edades, lugares
-- Tension creciente — lo mas perturbador siempre al final
-- Puntos suspensivos (...) en los momentos de mayor tension
-- Ultima linea que genera debate o deja pregunta abierta
+- Tension creciente — el dato mas perturbador siempre al final
+- Puntos suspensivos en los momentos de mayor tension
+- Ultima linea que genera debate o deja pregunta abierta con datos concretos
 - Sin emojis
 - Que se lea en ${dur}
 
@@ -1886,17 +1880,16 @@ Tendencias: ${tends}
 Tipo: ${tipo}
 Ritmo: ${ritmo}
 Region: ${region}
-CTA final: ${cta}
-Hashtags para el caption: ${ht}
+CTA: ${cta}
+Hashtags: ${ht}
 
-Formato de salida para cada Reel:
-
+Formato:
 ---
-REEL [N] — [titulo del caso]
+REEL [N] — [nombre real del caso]
 
-[El texto narrativo completo, listo para poner en pantalla]
+[texto narrativo completo con datos reales especificos]
 
-CAPTION: [primera linea gancho + cierre con ${cta} + ${ht}]
+CAPTION: [gancho + CTA + hashtags]
 ---
 
 LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron, asesino=el responsable.`;
