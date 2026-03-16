@@ -2011,7 +2011,7 @@ function renderCasosTrends(d) {
 }
 
 function getCasosTrends() {
-  if (!casosCache) return 'casos virales de terror y true crime latinoamericano';
+  if (!casosCache || !casosCache.casos) return 'casos virales de terror y true crime latinoamericano';
   return casosCache.casos.map(t => t.n + ': ' + t.m).join('; ');
 }
 
