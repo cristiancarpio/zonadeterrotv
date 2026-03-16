@@ -32,7 +32,7 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 /* ── TABLET / DESKTOP 600px+ ───────────────────────────────────────── */
 @media(min-width:600px){
   .nav{gap:8px;padding:14px 28px}
-  .panel{padding:0 28px 100px}
+  .panel{padding:0 28px 40px}
   .header{padding:22px 28px 0}
   .live-bar,.install-banner{margin-left:28px;margin-right:28px}
   .cfg-grid{grid-template-columns:repeat(4,1fr)}
@@ -104,7 +104,7 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 }
 
 /* HEADER */
-.header{padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.header{padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:var(--fd);font-size:36px;letter-spacing:2px}
 .logo span{color:var(--red)}
 .date-badge{font-size:14px;color:var(--text-dim);background:var(--surface2);padding:4px 10px;border-radius:20px;border:0.5px solid var(--border)}
@@ -117,7 +117,7 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .install-btn{font-size:14px;font-weight:500;padding:6px 12px;background:var(--red);color:#fff;border:none;border-radius:var(--rs);cursor:pointer}
 
 /* LIVE BAR */
-.live-bar{margin:10px 20px 0;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 14px;display:flex;align-items:center;gap:10px}
+.live-bar{margin:6px 20px 0;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 14px;display:flex;align-items:center;gap:10px}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 .live-text{flex:1;font-size:15px;color:var(--text-dim);line-height:1.4}
@@ -126,7 +126,7 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .refresh-btn:hover{border-color:var(--red);color:var(--red)}
 
 /* NAV */
-.nav{display:flex;overflow-x:auto;gap:5px;padding:12px 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nav{display:flex;overflow-x:auto;gap:5px;padding:8px 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .nav::-webkit-scrollbar{display:none}
 .nav-btn{flex:0 0 auto;min-width:64px;}
 .nav-btn{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:8px 3px;text-align:center;cursor:pointer;transition:all 0.2s}
@@ -158,7 +158,7 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .nav-btn.active.cs .nl{color:#9b5de5}
 
 /* PANELS */
-.panel{display:none;padding:0 20px 100px;animation:fi 0.2s ease}
+.panel{display:none;padding:10px 20px 40px;animation:fi 0.2s ease}
 .panel.active{display:block}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
@@ -476,7 +476,65 @@ select option{background:#1a1a1a;color:#f0f0f0}
     </div>
     <button class="gen-btn rl" id="rl-btn" onclick="gen('rl')">GENERAR SCRIPTS DE REELS 🎬</button>
     <div class="gen-note">Cada script incluye hook · desarrollo · CTA · sugerencia visual</div>
-  </div>
+    </div><!-- /hub-fb-reels -->
+    <div class="hub-sub" id="hub-fb-imgs">
+    <div class="sec-title">COPY PARA IMÁGENES</div>
+    <div class="sec-sub">Texto para fotos FB · texto en Reels · títulos de thumbnails YT</div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Tipo de contenido</div>
+        <select id="im-tipo">
+          <option value="post con imagen en Facebook">Post con imagen FB</option>
+          <option value="thumbnail de YouTube">Thumbnail YouTube</option>
+          <option value="texto superpuesto en Reel de terror">Texto en Reel</option>
+          <option value="portada de grupo privado de terror">Portada de grupo</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Tema de la imagen</div>
+        <select id="im-tema">
+          <option value="escena de película de terror">Película de terror</option>
+          <option value="lugar abandonado o perturbador">Lugar perturbador</option>
+          <option value="leyenda urbana o criatura">Leyenda / criatura</option>
+          <option value="experiencia paranormal personal">Experiencia paranormal</option>
+          <option value="noticia o hecho real perturbador">Hecho real</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Objetivo</div>
+        <select id="im-objetivo">
+          <option value="maximizar comentarios y debate">Más comentarios</option>
+          <option value="maximizar clicks y CTR">Más clicks / CTR</option>
+          <option value="maximizar shares y viralidad">Más compartidos</option>
+          <option value="llevar al grupo privado de terror">Al grupo privado</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Largo del texto</div>
+        <select id="im-largo">
+          <option value="muy corto: 1 sola línea impactante de máximo 6 palabras">1 línea · 6 palabras</option>
+          <option value="corto: 2 a 3 líneas con gancho y pregunta">2-3 líneas</option>
+          <option value="descripción completa de 60 a 90 palabras para el post de la imagen">Descripción completa</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Describí tu imagen (opcional pero mejora el resultado)</div>
+        <textarea id="im-desc" placeholder="Ej: foto de una casa abandonada de noche con una ventana iluminada..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:60px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="im-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="im-s1"><span class="step-ic">🔍</span>Analizando tipo de imagen y objetivo</div>
+        <div class="prog-step" id="im-s2"><span class="step-ic">🧠</span>Generando copies optimizados para alcance</div>
+        <div class="prog-step" id="im-s3"><span class="step-ic">✍️</span>Refinando con ganchos de terror irresistibles</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="im-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="im-btn" style="background:linear-gradient(135deg,#7b0e4e,#f72585)" onclick="genImagen()">GENERAR 5 COPIES 🖼️</button>
+    <div class="gen-note">5 opciones de texto · elegís la que más te gusta</div>
+    </div><!-- /hub-fb-imgs -->
+  </div><!-- /panel-fb -->
 
   <!-- ═══════════════════════════════════════════════ ANÁLISIS -->
   <div class="panel" id="panel-an">
@@ -649,13 +707,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="sec-title">RESPUESTAS A COMENTARIOS</div>
     <div class="sec-sub">Respondé rápido · el algoritmo te premia en las primeras 2 hs</div>
 
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">⚡ Por qué importa</span></div>
-      <div style="font-size:14px;color:var(--text-dim);line-height:1.7">
-        Facebook mide cuánto tardás en responder. Responder los primeros 10 comentarios dentro de las 2 horas <strong style="color:var(--text)">multiplica x3 el alcance orgánico</strong>. Una repregunta corta alcanza.
-      </div>
-    </div>
-
     <div class="cfg-grid" style="margin-bottom:12px">
       <div class="cfg-card" style="grid-column:1/-1">
         <div class="cfg-label">Pegá el comentario que recibiste</div>
@@ -693,114 +744,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="gen-note">Cada respuesta lista para copiar y pegar</div>
   
     </div>
-    <div class="hub-sub" id="hub-fb-imgs">
 
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════ ANÁLISIS -->
-  <div class="panel" id="panel-an">
-    <div class="sec-title">ANÁLISIS</div>
-    <div class="sec-sub">Qué posts te funcionaron · dónde mejorar</div>
-
-    <div class="analyzer">
-      <div class="an-intro">
-        <div class="an-intro-title">📊 Cómo funciona</div>
-        <div class="an-intro-body">
-          Entrá a <strong style="color:var(--text)">Facebook → Tu página → Herramientas de publicación → Estadísticas</strong> y cargá los datos de tus últimos posts. La IA analiza qué tipo de contenido te da más alcance, comentarios y engagement, y te dice exactamente qué cambiar.
-        </div>
-      </div>
-
-      <div class="an-step">
-        <div class="an-step-num">Paso 1 · Cargá tus posts</div>
-        <div class="an-step-title">Ingresá los datos de tus últimos 5-10 posts</div>
-        <div class="post-row" id="postRows">
-          <!-- rows added dynamically -->
-        </div>
-        <button class="add-post-btn" onclick="addPostRow()">+ Agregar post</button>
-      </div>
-
-      <div class="an-step">
-        <div class="an-step-num">Paso 2 · Contexto</div>
-        <div class="an-step-title">Contame un poco más</div>
-        <div class="cfg-grid" style="margin-bottom:0">
-          <div class="cfg-card"><div class="cfg-label">Tus ingresos actuales</div>
-            <select id="an-ingresos">
-              <option value="300 dólares por mes">$300/mes</option>
-              <option value="100 a 300 dólares por mes">$100-300/mes</option>
-              <option value="300 a 600 dólares por mes">$300-600/mes</option>
-              <option value="más de 600 dólares por mes">+$600/mes</option>
-            </select>
-          </div>
-          <div class="cfg-card"><div class="cfg-label">Posts por día actuales</div>
-            <select id="an-freq">
-              <option value="1 a 2 posts por día">1-2/día</option>
-              <option value="3 a 5 posts por día">3-5/día</option>
-              <option value="más de 5 posts por día">+5/día</option>
-              <option value="irregular, no tengo rutina fija">Irregular</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-wrap" id="an-prog">
-        <div class="prog-steps">
-          <div class="prog-step" id="an-s1"><span class="step-ic">📊</span>Procesando métricas de tus posts</div>
-          <div class="prog-step" id="an-s2"><span class="step-ic">🔍</span>Identificando patrones de engagement</div>
-          <div class="prog-step" id="an-s3"><span class="step-ic">💡</span>Generando recomendaciones específicas</div>
-        </div>
-        <div class="pbar-wrap"><div class="pbar" id="an-bar"></div></div>
-      </div>
-    </div>
-
-    <button class="gen-btn an" id="an-btn" onclick="analizarPosts()">ANALIZAR MIS POSTS 📊</button>
-    <div class="gen-note">El análisis aparece en el chat con recomendaciones concretas</div>
-  </div>
-
-
-    <div class="sec-title">YOUTUBE · TIKTOK</div>
-    <div class="sec-sub">Ideas de videos basadas en tendencias de hoy</div>
-
-    <div class="tbox">
-      <div class="tbox-head">
-        <span class="tbox-title">🔥 Tendencias para video</span>
-        <span class="tstatus ts-loading" id="yt-ts">Buscando...</span>
-      </div>
-      <div class="tlist" id="yt-tlist">
-        <div class="skel" style="width:75%"></div><div class="skel" style="width:60%"></div>
-        <div class="skel" style="width:80%"></div><div class="skel" style="width:55%"></div>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Plataforma</div>
-        <select id="vp-plat">
-          <option value="YouTube (videos de 8 a 15 minutos con título SEO optimizado)">YouTube</option>
-          <option value="TikTok (videos de 30 a 60 segundos con hook de 3 segundos)">TikTok</option>
-          <option value="ambas plataformas adaptando el mismo concepto">Ambas</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Formato</div>
-        <select id="vp-formato">
-          <option value="variado: análisis, reseña, ranking, documental corto, reacción">Variado ✓</option>
-          <option value="análisis y teorías en profundidad">Análisis</option>
-          <option value="rankings top 10">Rankings</option>
-          <option value="found footage y analog horror">Found footage</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="yt-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="yt-s1"><span class="step-ic">🔍</span>Buscando qué está trending en video terror</div>
-        <div class="prog-step" id="yt-s2"><span class="step-ic">📊</span>Analizando formatos con mayor retención</div>
-        <div class="prog-step" id="yt-s3"><span class="step-ic">✍️</span>Generando ideas con estructura completa</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="yt-bar"></div></div>
-    </div>
-    <button class="gen-btn yt" id="yt-btn" onclick="gen('yt')">GENERAR 5 IDEAS DE VIDEO ▶️</button>
-    <div class="gen-note">Título · gancho · estructura · thumbnail · hashtags</div>
-  </div>
 
   <!-- ═══════════════════════════════════════════════ ESTRATEGIA -->
   <div class="panel" id="panel-str">
@@ -861,13 +805,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="sec-title">RESPUESTAS A COMENTARIOS</div>
     <div class="sec-sub">Respondé rápido · el algoritmo te premia en las primeras 2 hs</div>
 
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">⚡ Por qué importa</span></div>
-      <div style="font-size:14px;color:var(--text-dim);line-height:1.7">
-        Facebook mide cuánto tardás en responder. Responder los primeros 10 comentarios dentro de las 2 horas <strong style="color:var(--text)">multiplica x3 el alcance orgánico</strong>. Una repregunta corta alcanza.
-      </div>
-    </div>
-
     <div class="cfg-grid" style="margin-bottom:12px">
       <div class="cfg-card" style="grid-column:1/-1">
         <div class="cfg-label">Pegá el comentario que recibiste</div>
@@ -904,10 +841,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <button class="gen-btn" id="cm-btn" style="background:linear-gradient(135deg,#005f73,#00b4d8)" onclick="genComentarios()">GENERAR 5 RESPUESTAS 💬</button>
     <div class="gen-note">Cada respuesta lista para copiar y pegar</div>
   </div>
-
-  <!-- ═══════════════════════════════════════════════ IMÁGENES -->
-  <div class="panel" id="panel-im">
-    <div class="sec-title">COPY PARA IMÁGENES</div>
     <div class="sec-sub">Texto para fotos FB · texto en Reels · títulos de thumbnails YT</div>
 
     <div class="cfg-grid">
@@ -969,17 +902,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="sec-title">PLAN SEMANAL</div>
     <div class="sec-sub">Bloques de 2 días · calidad consistente en cada post y Reel</div>
 
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">📅 Qué incluye</span></div>
-      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
-        Generá <strong style="color:var(--text)">bloques de 2 días</strong> para mantener calidad máxima en cada post:<br>
-        · 5 posts × 2 días = <strong style="color:var(--text)">10 posts</strong> con ganchos frescos<br>
-        · 3 Reels × 2 días = <strong style="color:var(--text)">6 scripts</strong> con estructuras variadas<br>
-        · La IA mantiene creatividad alta en bloques cortos<br>
-        · <strong style="color:var(--red-bright)">⚠️ Semana completa disponible pero calidad puede decaer desde post 10</strong>
-      </div>
-    </div>
-
     <div class="cfg-grid">
       <div class="cfg-card"><div class="cfg-label">Bloque a generar</div>
         <select id="wk-bloque">
@@ -1037,13 +959,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
 
     <div class="sec-title">GUIÓN YOUTUBE</div>
     <div class="sec-sub">Video completo de 10-15 min · listo para grabar</div>
-
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">🎥 Cómo usarlo</span></div>
-      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
-        Generá el guión completo del video → grabás leyendo o improvisando sobre la estructura → ese mismo contenido se convierte en <strong style="color:var(--text)">5 posts FB + 3 Reels + descripción SEO</strong> con las otras herramientas de la app.
-      </div>
-    </div>
 
     <div class="cfg-grid" style="margin-bottom:12px">
       <div class="cfg-card" style="grid-column:1/-1">
@@ -1108,17 +1023,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="sec-title">PLAN SEMANAL</div>
     <div class="sec-sub">Bloques de 2 días · calidad consistente en cada post y Reel</div>
 
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">📅 Qué incluye</span></div>
-      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
-        Generá <strong style="color:var(--text)">bloques de 2 días</strong> para mantener calidad máxima en cada post:<br>
-        · 5 posts × 2 días = <strong style="color:var(--text)">10 posts</strong> con ganchos frescos<br>
-        · 3 Reels × 2 días = <strong style="color:var(--text)">6 scripts</strong> con estructuras variadas<br>
-        · La IA mantiene creatividad alta en bloques cortos<br>
-        · <strong style="color:var(--red-bright)">⚠️ Semana completa disponible pero calidad puede decaer desde post 10</strong>
-      </div>
-    </div>
-
     <div class="cfg-grid">
       <div class="cfg-card"><div class="cfg-label">Bloque a generar</div>
         <select id="wk-bloque">
@@ -1178,13 +1082,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="sec-title">GUIÓN YOUTUBE</div>
     <div class="sec-sub">Video completo de 10-15 min · listo para grabar</div>
 
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">🎥 Cómo usarlo</span></div>
-      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
-        Generá el guión completo del video → grabás leyendo o improvisando sobre la estructura → ese mismo contenido se convierte en <strong style="color:var(--text)">5 posts FB + 3 Reels + descripción SEO</strong> con las otras herramientas de la app.
-      </div>
-    </div>
-
     <div class="cfg-grid" style="margin-bottom:12px">
       <div class="cfg-card" style="grid-column:1/-1">
         <div class="cfg-label">Tema del video (podés ser específico)</div>
@@ -1242,13 +1139,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
   <div class="panel" id="panel-yd">
     <div class="sec-title">DESCRIPCIÓN YOUTUBE</div>
     <div class="sec-sub">SEO optimizado · keywords · timestamps · links</div>
-
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">📈 Por qué importa el SEO</span></div>
-      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
-        YouTube es el <strong style="color:var(--text)">segundo buscador más usado del mundo</strong>. Una descripción bien optimizada con keywords correctas puede traerte vistas orgánicas durante años sin publicidad. La mayoría de creadores la ignora — eso es tu ventaja.
-      </div>
-    </div>
 
     <div class="cfg-grid" style="margin-bottom:12px">
       <div class="cfg-card" style="grid-column:1/-1">
@@ -1315,14 +1205,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
   <div class="panel active" id="panel-cs">
     <div class="sec-title">REELS DE CASOS</div>
     <div class="sec-sub">Video de fondo + imagen del caso arriba + texto completo · 15 segundos</div>
-
-    <div class="tbox">
-      <div class="tbox-head"><span class="tbox-title">⚡ Por qué es el formato más viral ahora</span></div>
-      <div style="font-size:15px;color:var(--text-dim);line-height:1.8">
-        <strong style="color:var(--text)">Video de fondo</strong> que retiene · <strong style="color:var(--text)">imagen fija arriba</strong> del caso/persona/lugar · <strong style="color:var(--text)">texto completo de una vez</strong> abajo que el espectador lee en 15 segundos.<br><br>
-        El cerebro quiere terminar de leer — eso genera <strong style="color:var(--red-bright)">watch time casi completo</strong>, que es la métrica que más premia el algoritmo. Sin bloques, sin transiciones — todo junto, directo, impactante.
-      </div>
-    </div>
 
     <div class="tbox">
       <div class="tbox-head">
@@ -1421,7 +1303,6 @@ select option{background:#1a1a1a;color:#f0f0f0}
   </div>
 
 
-</div>
 <script>
 // ── DATE ───────────────────────────────────────────────────────────────
 document.getElementById('dateBadge').textContent =
