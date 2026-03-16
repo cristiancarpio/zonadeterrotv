@@ -7,7 +7,6 @@ export default async function handler(req, res) {
 
   const REDIS_URL   = process.env.UPSTASH_REDIS_REST_URL;
   const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
-  const GROQ_KEY    = process.env.GROQ_API_KEY;
   const GEMINI_KEY  = process.env.GEMINI_API_KEY;
 
   // ── REDIS ───────────────────────────────────────────────────────────
@@ -60,100 +59,68 @@ export default async function handler(req, res) {
   // ── POST ─────────────────────────────────────────────────────────────
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
+  if (!GEMINI_KEY) {
+    return res.status(500).json({
+      error: 'GEMINI_API_KEY no configurada. Vercel → Settings → Environment Variables. La conseguís gratis en aistudio.google.com'
+    });
+  }
+
   const useSearch = req.body.useSearch || false;
   const saveKey   = req.body.saveKey   || null;
 
-  let text = '';
-
-  // ── GEMINI para tendencias (useSearch=true) ────────────────────────
-  if (useSearch) {
-    if (!GEMINI_KEY) {
-      // Sin Gemini, usar Groq sin web search como fallback
-      if (!GROQ_KEY) return res.status(500).json({ error: 'Configurá GROQ_API_KEY o GEMINI_API_KEY en Vercel.' });
-      try {
-        const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
-          body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 800, messages: req.body.messages })
-        });
-        const d = await r.json();
-        text = d.choices?.[0]?.message?.content || '';
-      } catch(e) {}
-    } else {
-      try {
-        const bodyPayload = {
-          contents: req.body.messages.map(m => ({
-            role: m.role === 'assistant' ? 'model' : 'user',
-            parts: [{ text: m.content }]
-          })),
-          generationConfig: { maxOutputTokens: 800, temperature: 0.7 },
-          tools: [{ google_search: {} }]
-        };
-        const r = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-          { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(bodyPayload) }
-        );
-        const d = await r.json();
-        if (r.ok) {
-          text = d.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
-        } else {
-          // Gemini falló, fallback a Groq
-          if (GROQ_KEY) {
-            const r2 = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
-              body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 800, messages: req.body.messages })
-            });
-            const d2 = await r2.json();
-            text = d2.choices?.[0]?.message?.content || '';
-          }
-        }
-      } catch(e) {
-        // Fallback a Groq
-        if (GROQ_KEY) {
-          try {
-            const r2 = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
-              body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 800, messages: req.body.messages })
-            });
-            const d2 = await r2.json();
-            text = d2.choices?.[0]?.message?.content || '';
-          } catch(e2) {}
-        }
+  try {
+    const bodyPayload = {
+      contents: req.body.messages.map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }]
+      })),
+      generationConfig: {
+        maxOutputTokens: useSearch ? 800 : 2048,
+        temperature: 0.9
       }
-    }
-  }
+    };
 
-  // ── GROQ para generación de contenido (useSearch=false) ─────────────
-  if (!useSearch) {
-    if (!GROQ_KEY) {
-      return res.status(500).json({
-        error: 'GROQ_API_KEY no configurada. Vercel → Settings → Environment Variables. Conseguís la key gratis en console.groq.com'
+    // Google Search solo para tendencias
+    if (useSearch) {
+      bodyPayload.tools = [{ google_search: {} }];
+    }
+
+    const fetchGemini = async (retries = 3, delay = 8000) => {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bodyPayload)
+        }
+      );
+      if (response.status === 429 && retries > 0) {
+        await new Promise(r => setTimeout(r, delay));
+        return fetchGemini(retries - 1, delay + 5000);
+      }
+      return response;
+    };
+
+    const response = await fetchGemini();
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: data.error?.message || JSON.stringify(data)
       });
     }
-    try {
-      const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          max_tokens: 2048,
-          temperature: 0.9,
-          messages: req.body.messages
-        })
-      });
-      const d = await r.json();
-      if (!r.ok) return res.status(r.status).json({ error: d.error?.message || JSON.stringify(d) });
-      text = d.choices?.[0]?.message?.content || '';
-    } catch(e) {
-      return res.status(500).json({ error: e.message });
+
+    const text = data.candidates?.[0]?.content?.parts
+      ?.map(p => p.text || '')
+      .join('') || '';
+
+    if (saveKey && REDIS_URL && REDIS_TOKEN && text) {
+      await redisSet(saveKey, text);
     }
-  }
 
-  if (saveKey && REDIS_URL && REDIS_TOKEN && text) {
-    await redisSet(saveKey, text);
-  }
+    return res.status(200).json({ content: [{ type: 'text', text }] });
 
-  return res.status(200).json({ content: [{ type: 'text', text }] });
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
 }
