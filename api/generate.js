@@ -85,14 +85,24 @@ export default async function handler(req, res) {
       bodyPayload.tools = [{ google_search: {} }];
     }
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bodyPayload)
+    const fetchGemini = async (retries = 3, delay = 15000) => {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bodyPayload)
+        }
+      );
+
+      if (response.status === 429 && retries > 0) {
+        await new Promise(r => setTimeout(r, delay));
+        return fetchGemini(retries - 1, delay + 10000);
       }
-    );
+      return response;
+    };
+
+    const response = await fetchGemini();
 
     const data = await response.json();
     if (!response.ok) {
