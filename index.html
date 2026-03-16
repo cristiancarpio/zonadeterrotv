@@ -357,6 +357,14 @@ select option{background:#1a1a1a;color:#f0f0f0}
           <option value="con 8 hashtags">8 hashtags</option>
         </select>
       </div>
+      <div class="cfg-card"><div class="cfg-label">Cantidad de posts</div>
+        <select id="fb-cant">
+          <option value="5">5 posts</option>
+          <option value="3">3 posts</option>
+          <option value="7">7 posts</option>
+          <option value="10">10 posts</option>
+        </select>
+      </div>
     </div>
 
     <div class="prog-wrap" id="fb-prog">
@@ -367,7 +375,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
       </div>
       <div class="pbar-wrap"><div class="pbar" id="fb-bar"></div></div>
     </div>
-    <button class="gen-btn fb" id="fb-btn" onclick="gen('fb')">GENERAR 5 POSTS 📘</button>
+    <button class="gen-btn fb" id="fb-btn" onclick="gen('fb')">GENERAR POSTS 📘</button>
     <div class="gen-note">El post 5 siempre incluye CTA de monetización</div>
 
     <div style="height:1px;background:var(--border);margin:16px 0"></div>
@@ -433,6 +441,14 @@ select option{background:#1a1a1a;color:#f0f0f0}
           <option value="terminar invitando al grupo privado de terror">Al grupo privado</option>
         </select>
       </div>
+      <div class="cfg-card"><div class="cfg-label">Cantidad de Reels</div>
+        <select id="rl-cant">
+          <option value="3">3 Reels</option>
+          <option value="1">1 Reel</option>
+          <option value="5">5 Reels</option>
+          <option value="7">7 Reels</option>
+        </select>
+      </div>
     </div>
 
     <div class="prog-wrap" id="rl-prog">
@@ -443,7 +459,7 @@ select option{background:#1a1a1a;color:#f0f0f0}
       </div>
       <div class="pbar-wrap"><div class="pbar" id="rl-bar"></div></div>
     </div>
-    <button class="gen-btn rl" id="rl-btn" onclick="gen('rl')">GENERAR 3 SCRIPTS DE REELS 🎬</button>
+    <button class="gen-btn rl" id="rl-btn" onclick="gen('rl')">GENERAR SCRIPTS DE REELS 🎬</button>
     <div class="gen-note">Cada script incluye hook · desarrollo · CTA · sugerencia visual</div>
   </div>
 
@@ -1083,9 +1099,25 @@ function getPostData() {
 // ── FETCH TRENDS ───────────────────────────────────────────────────────
 async function fetchTrends(force) {
   if (loaded && !force) return;
-  setLive('Cargando tendencias de terror...','Consultando la IA sobre lo que está viral');
+  setLive('Cargando tendencias...','Verificando caché compartido');
   setStatus('ts-loading','Buscando...');
   showSkels();
+
+  // Try Redis cache first (shared between users, TTL 6hs)
+  if (!force) {
+    try {
+      const cr = await fetch('/api/generate?key=trends_terror');
+      const cj = await cr.json();
+      if (cj.value) {
+        const parsed = JSON.parse(cj.value);
+        cache = parsed; loaded = true;
+        renderTrends(parsed);
+        setLive('Tendencias cargadas ✓', parsed.resumen||'Terror está en tendencia');
+        setStatus('ts-cache','Cache ⚡');
+        return;
+      }
+    } catch(e){}
+  }
 
   const prompt = `Sos un experto en contenido de terror en redes sociales. Listá las tendencias actuales más importantes del nicho de terror/horror para creadores de contenido hispanohablantes en Facebook, Reels e YouTube. Incluí: estrenos recientes, películas de terror que se están discutiendo, formatos virales de video, leyendas urbanas populares, debates activos en el nicho.
 
@@ -1098,6 +1130,7 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         useSearch: true,
+        saveKey: 'trends_terror',
         messages:[{role:'user',content:prompt}]
       })
     });
@@ -1110,7 +1143,7 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
     const parsed = JSON.parse(clean.slice(jsonStart, jsonEnd+1));
     cache = parsed; loaded = true;
     renderTrends(parsed);
-    setLive('Tendencias cargadas ✓', parsed.resumen||'Terror está en tendencia');
+    setLive('Tendencias actualizadas ✓', parsed.resumen||'Terror está en tendencia');
     setStatus('ts-live','En vivo ✓');
   } catch(e) {
     const fb=[{f:'🔥',n:'Scream 7',m:'regresa Neve Campbell · debate activo'},{f:'🔥',n:'La Novia de Frankenstein',m:'Christian Bale · estrenada 6 mar'},{f:'🔥',n:'Whistle / El Silbido del Mal',m:'director de La Monja · estreno 27 mar'},{f:'📈',n:'Insidious 6',m:'agosto 2026'},{f:'📈',n:'Evil Dead nueva entrega',m:'julio 2026'}];
@@ -1180,23 +1213,74 @@ function stopProg(p,obj){
 }
 
 // ── RESULT DISPLAY ─────────────────────────────────────────────────────
-function showResult(plat, html) {
+function _renderResult(plat, html) {
   let box = document.getElementById(plat+'-result');
   if (!box) {
     box = document.createElement('div');
     box.id = plat+'-result';
     box.style.cssText = 'background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;font-size:15px;line-height:1.75;color:var(--text)';
     const btn = document.getElementById(plat+'-btn');
-    btn.parentNode.insertBefore(box, btn);
+    if(btn) btn.parentNode.insertBefore(box, btn);
   }
-  box.innerHTML = '<div class="result-copy"><button class="copy-btn" onclick="copyResult(\''+plat+'\')">📋 Copiar todo</button></div>' + html;
+  box.innerHTML = `<div class="result-copy"><button class="copy-btn" onclick="copyResult('${plat}')">&#128203; Copiar</button> <button class="copy-btn" style="margin-left:6px;border-color:#c0392b;color:#c0392b" onclick="clearResult('${plat}')">&#128465; Borrar</button></div>` + html;
+  return box;
+}
+
+function showResult(plat, html) {
+  const box = _renderResult(plat, html);
   box.scrollIntoView({behavior:'smooth', block:'start'});
+  try { localStorage.setItem('th_'+plat, html); } catch(e){}
+  // Cloud save happens via saveKey in callAPI
+}
+
+function clearResult(plat) {
+  const box = document.getElementById(plat+'-result');
+  if (box) box.remove();
+  try { localStorage.removeItem('th_'+plat); } catch(e){}
+  deleteFromCloud(plat);
+}
+
+// ── SHARED PERSISTENCE (Upstash Redis) ────────────────────────────────
+async function restoreResults() {
+  const panels = ['cs','rl','fb','wk','im','yt','gs','yd','cm','an','str','enc'];
+  for (const plat of panels) {
+    try {
+      // Try cloud first, fall back to localStorage
+      const r = await fetch(`/api/generate?key=th_${plat}`);
+      const j = await r.json();
+      if (j.value) {
+        _renderResult(plat, j.value);
+        localStorage.setItem('th_'+plat, j.value); // sync local
+      } else {
+        const local = localStorage.getItem('th_'+plat);
+        if (local) _renderResult(plat, local);
+      }
+    } catch(e) {
+      try {
+        const local = localStorage.getItem('th_'+plat);
+        if (local) _renderResult(plat, local);
+      } catch(e2){}
+    }
+  }
+}
+
+async function saveToCloud(plat, html) {
+  try {
+    await fetch(`/api/generate?key=th_${plat}`, { method: 'DELETE' });
+  } catch(e){}
+  // saved via saveKey in generate POST
+}
+
+async function deleteFromCloud(plat) {
+  try {
+    await fetch(`/api/generate?key=th_${plat}`, { method: 'DELETE' });
+  } catch(e){}
 }
 
 function copyResult(plat) {
   const box = document.getElementById(plat+'-result');
   if (!box) return;
-  const text = box.innerText.replace('📋 Copiar todo\n','');
+  const text = box.innerText.replace('📋 Copiar\n','').replace('🗑️ Borrar\n','');
   navigator.clipboard.writeText(text).then(()=>{
     const btn = box.querySelector('.copy-btn');
     btn.textContent = '✅ Copiado';
@@ -1224,11 +1308,11 @@ function getTrends(p){
 }
 
 // ── CALL API DIRECTLY ──────────────────────────────────────────────────
-async function callAPI(prompt) {
+async function callAPI(prompt, useHaiku=false, saveKey=null) {
   const res = await fetch('/api/generate', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ messages: [{role:'user', content: prompt}] })
+    body: JSON.stringify({ useHaiku, saveKey, messages: [{role:'user', content: prompt}] })
   });
   const data = await res.json();
   if (data.error) throw new Error(typeof data.error === 'string' ? data.error : (data.error.message || JSON.stringify(data.error)));
@@ -1248,13 +1332,15 @@ async function gen(plat) {
     const tipo=document.getElementById('fb-tipo').value;
     const largo=document.getElementById('fb-largo').value;
     const ht=document.getElementById('fb-ht').value;
-    prompt=`Generame 5 posts de terror para Facebook usando estas tendencias reales de hoy: ${tends}. Tono: ${tono}. Tipo: ${tipo}. Largo: ${largo}. Hashtags: ${ht}. Reglas: primera línea gancho brutal en menos de 8 palabras, voz 100% humana, no empezar con "Hola" ni "Hey" ni "¿Sabías que". Cada post numerado con su horario recomendado. El post 5 siempre es CTA invitando a un grupo privado de terror.`;
+    const fbCant=document.getElementById('fb-cant').value;
+    prompt=`Generame ${fbCant} posts de terror para Facebook usando estas tendencias reales de hoy: ${tends}. Tono: ${tono}. Tipo: ${tipo}. Largo: ${largo}. Hashtags: ${ht}. Reglas: primera línea gancho brutal en menos de 8 palabras, voz 100% humana, no empezar con "Hola" ni "Hey" ni "¿Sabías que". Cada post numerado con su horario recomendado. El último post siempre es CTA invitando a un grupo privado de terror.`;
   } else if (plat==='rl') {
     const formato=document.getElementById('rl-formato').value;
     const dur=document.getElementById('rl-dur').value;
     const gancho=document.getElementById('rl-gancho').value;
     const cta=document.getElementById('rl-cta').value;
-    prompt=`Generame 3 scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}.
+    const rlCant=document.getElementById('rl-cant').value;
+    prompt=`Generame ${rlCant} scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}.
 
 Para cada Reel usá este formato exacto:
 
@@ -1275,7 +1361,7 @@ Cada Reel numerado y listo para producir. Los tiempos tienen que ser realistas p
   }
 
   try {
-    const txt = await callAPI(prompt, plat);
+    const txt = await callAPI(prompt, false, 'th_'+plat);
     stopProg(plat, obj);
     showResult(plat, '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">✅ Contenido generado</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1314,7 +1400,7 @@ Quiero que me digas:
 Sé específico con los números, no me des consejos genéricos.`;
 
   try {
-    const txt = await callAPI(prompt, 'an');
+    const txt = await callAPI(prompt, false, 'th_an');
     stopProg('an', obj);
     showResult('an', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📊 Análisis listo</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1330,7 +1416,7 @@ async function genPlan(){
   const prompt='Armame un plan de monetización mes a mes para los próximos 3 meses, partiendo de que ya gano $300/mes con mi página de terror en Facebook y voy a implementar 5 posts diarios + 3 Reels diarios. Quiero saber exactamente qué hacer cada mes en Facebook, YouTube y TikTok para llegar a $1.000/mes. Dame pasos concretos, métricas que seguir y señales de que voy por el camino correcto.';
   showResult('str','<p style="color:var(--text-dim);font-size:14px">⏳ Generando tu plan personalizado...</p>');
   try {
-    const txt = await callAPI(prompt, 'str');
+    const txt = await callAPI(prompt, false, 'th_str');
     showResult('str', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">💰 Tu plan personalizado</p>' + mdToHtml(txt));
   } catch(e) {
     showResult('str','<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
@@ -1362,7 +1448,7 @@ Reglas importantes:
 - Que inviten a seguir interactuando sin ser forzadas`;
 
   try {
-    const txt = await callAPI(prompt);
+    const txt = await callAPI(prompt, true, 'th_cm');
     stopProg('cm', obj);
     showResult('cm', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">💬 5 respuestas listas</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1400,7 +1486,7 @@ Reglas:
 - Numeradas del 1 al 5, cada una con un enfoque distinto`;
 
   try {
-    const txt = await callAPI(prompt);
+    const txt = await callAPI(prompt, true, 'th_im');
     stopProg('im', obj);
     showResult('im', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🖼️ 5 copies listos</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1443,7 +1529,7 @@ Para cada día generá:
 Reglas: voz 100% humana, voseo latinoamericano, cada día temáticamente distinto, ganchos brutales en menos de 8 palabras, nunca empezar con "Hola", "Hey" ni "¿Sabías que".`;
 
   try {
-    const txt = await callAPI(prompt);
+    const txt = await callAPI(prompt, false, 'th_wk');
     stopProg('wk', obj);
     showResult('wk', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🗓️ Semana completa generada</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1477,7 +1563,7 @@ Formato por cada encuesta:
 Reglas: voseo latinoamericano, preguntas que dividan la audiencia al 50/50 para generar más debate, nada genérico.`;
 
   try {
-    const txt = await callAPI(prompt);
+    const txt = await callAPI(prompt, true, 'th_enc');
     stopProg('fb', obj);
     showResult('enc', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📊 5 encuestas listas</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1552,7 +1638,7 @@ Estructurá el guión así:
 Escribí el guión en voseo latinoamericano, voz humana y apasionada. El texto tiene que poder leerse directamente ante la cámara.`;
 
   try {
-    const txt = await callAPI(prompt);
+    const txt = await callAPI(prompt, false, 'th_gs');
     stopProg('gs', obj);
     showResult('gs', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🎥 Guión completo listo</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1615,7 +1701,7 @@ ${ht}
 [Las 5 keywords más importantes que tiene que rankear este video, con volumen de búsqueda estimado]`;
 
   try {
-    const txt = await callAPI(prompt);
+    const txt = await callAPI(prompt, false, 'th_yd');
     stopProg('yd', obj);
     showResult('yd', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📝 Descripción SEO lista</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1689,7 +1775,7 @@ Reglas:
 - Cada Reel con un caso diferente`;
 
   try {
-    const txt = await callAPI(prompt);
+    const txt = await callAPI(prompt, false, 'th_cs');
     stopProg('cs', obj);
     showResult('cs', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🎬 Reels de casos listos</p>' + mdToHtml(txt));
   } catch(e) {
@@ -1711,6 +1797,22 @@ async function fetchCasosTrends(force) {
   const tlist = document.getElementById('cs-tlist');
   if(tlist) tlist.innerHTML = [80,65,75,55].map(w=>`<div class="skel" style="width:${w}%"></div>`).join('');
 
+  // Try Redis cache first (TTL 6hs)
+  if (!force) {
+    try {
+      const cr = await fetch('/api/generate?key=trends_casos');
+      const cj = await cr.json();
+      if (cj.value) {
+        const parsed = JSON.parse(cj.value);
+        casosCache = parsed; casosLoaded = true;
+        renderCasosTrends(parsed);
+        document.getElementById('cs-ts').className = 'tstatus ts-cache';
+        document.getElementById('cs-ts').textContent = 'Cache ⚡';
+        return;
+      }
+    } catch(e){}
+  }
+
   const prompt = `Buscá en internet qué casos, leyendas y crímenes están siendo más comentados y virales AHORA en redes sociales en español, especialmente en Facebook, TikTok e Instagram en el nicho de terror y true crime latinoamericano. Buscá: casos criminales sin resolver que están siendo discutidos esta semana, leyendas urbanas latinoamericanas que están virales ahora, documentales o series de casos reales recién estrenados, casos con aniversario esta semana, crímenes o misterios que están en boca de todos en América Latina.
 
 Respondé SOLO con este JSON exacto sin texto extra ni backticks:
@@ -1722,6 +1824,7 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks:
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         useSearch: true,
+        saveKey: 'trends_casos',
         messages: [{role:'user', content: prompt}]
       })
     });
@@ -1730,15 +1833,12 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks:
     const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
     const clean = txt.replace(/```json|```/g,'').trim();
     const parsed = JSON.parse(clean.slice(clean.indexOf('{'), clean.lastIndexOf('}')+1));
-    casosCache = parsed;
-    casosLoaded = true;
+    casosCache = parsed; casosLoaded = true;
     renderCasosTrends(parsed);
     document.getElementById('cs-ts').className = 'tstatus ts-live';
     document.getElementById('cs-ts').textContent = 'En vivo ✓';
-    // Update live bar
     setLive('Casos virales actualizados ✓', parsed.resumen || 'True crime y terror en tendencia');
   } catch(e) {
-    // Fallback con casos siempre relevantes
     const fallback = {
       resumen: 'Casos latinoamericanos y true crime internacional dominan el engagement.',
       casos: [
@@ -1751,8 +1851,7 @@ Respondé SOLO con este JSON exacto sin texto extra ni backticks:
         {f:'💀',n:'Cementerio de los Inocentes',m:'leyenda urbana Colombia · muy compartida'}
       ]
     };
-    casosCache = fallback;
-    casosLoaded = true;
+    casosCache = fallback; casosLoaded = true;
     renderCasosTrends(fallback);
     document.getElementById('cs-ts').className = 'tstatus ts-cache';
     document.getElementById('cs-ts').textContent = 'Cache ⚡';
@@ -1787,6 +1886,7 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch
 
 fetchTrends();
 fetchCasosTrends();
+restoreResults();
 </script>
 </body>
 </html>
