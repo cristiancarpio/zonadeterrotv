@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   const REDIS_URL   = process.env.UPSTASH_REDIS_REST_URL;
   const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
-  const GEMINI_KEY  = process.env.GEMINI_API_KEY;
+  const GROQ_KEY    = process.env.GROQ_API_KEY;
 
   // ── REDIS HELPERS ───────────────────────────────────────────────────
   async function redisGet(key) {
@@ -21,8 +21,7 @@ export default async function handler(req, res) {
   }
 
   async function redisSet(key, value) {
-    const isTrend = key.startsWith('trends_');
-    const ttl = isTrend ? 21600 : 604800;
+    const ttl = key.startsWith('trends_') ? 21600 : 604800;
     try {
       await fetch(`${REDIS_URL}/set/${encodeURIComponent(key)}`, {
         method: 'POST',
@@ -41,27 +40,15 @@ export default async function handler(req, res) {
     } catch(e) {}
   }
 
-  // ── GET — leer de Redis (con TTL opcional) ─────────────────────────
+  // ── GET ─────────────────────────────────────────────────────────────
   if (req.method === 'GET') {
-    const { key, ttl } = req.query;
+    const { key } = req.query;
     if (!key) return res.status(400).json({ error: 'key requerida' });
     const value = await redisGet(key);
-    if (ttl === '1' && REDIS_URL && REDIS_TOKEN) {
-      // Get TTL from Redis
-      try {
-        const r = await fetch(`${REDIS_URL}/ttl/${encodeURIComponent(key)}`, {
-          headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
-        });
-        const j = await r.json();
-        return res.status(200).json({ value, ttl: j.result ?? 0 });
-      } catch(e) {
-        return res.status(200).json({ value, ttl: 0 });
-      }
-    }
     return res.status(200).json({ value });
   }
 
-  // ── DELETE — borrar de Redis ────────────────────────────────────────
+  // ── DELETE ──────────────────────────────────────────────────────────
   if (req.method === 'DELETE') {
     const { key } = req.query;
     if (!key) return res.status(400).json({ error: 'key requerida' });
@@ -69,65 +56,42 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
-  // ── POST — generar con Gemini ───────────────────────────────────────
+  // ── POST ─────────────────────────────────────────────────────────────
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  if (!GEMINI_KEY) {
+  if (!GROQ_KEY) {
     return res.status(500).json({
-      error: 'API key no configurada. Vercel → Settings → Environment Variables → GEMINI_API_KEY. La conseguís gratis en aistudio.google.com'
+      error: 'API key no configurada. Vercel → Settings → Environment Variables → GROQ_API_KEY. La conseguís gratis en console.groq.com'
     });
   }
 
-  const useSearch = req.body.useSearch || false;
-  const saveKey   = req.body.saveKey   || null;
+  const saveKey = req.body.saveKey || null;
 
   try {
-    const bodyPayload = {
-      contents: req.body.messages.map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }]
-      })),
-      generationConfig: {
-        maxOutputTokens: useSearch ? 800 : 1500,
-        temperature: 0.9
-      }
-    };
-
-    if (useSearch) {
-      bodyPayload.tools = [{ google_search: {} }];
-    }
-
-    const fetchGemini = async (retries = 2, delay = 4000) => {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bodyPayload)
-        }
-      );
-
-      if (response.status === 429 && retries > 0) {
-        await new Promise(r => setTimeout(r, delay));
-        return fetchGemini(retries - 1, delay + 3000);
-      }
-      return response;
-    };
-
-    const response = await fetchGemini();
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 2048,
+        temperature: 0.9,
+        messages: req.body.messages
+      })
+    });
 
     const data = await response.json();
+
     if (!response.ok) {
       return res.status(response.status).json({
         error: data.error?.message || JSON.stringify(data)
       });
     }
 
-    const text = data.candidates?.[0]?.content?.parts
-      ?.map(p => p.text || '')
-      .join('') || '';
+    const text = data.choices?.[0]?.message?.content || '';
 
-    // Guardar en Redis si viene saveKey
     if (saveKey && REDIS_URL && REDIS_TOKEN) {
       await redisSet(saveKey, text);
     }
