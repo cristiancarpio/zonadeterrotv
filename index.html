@@ -152,6 +152,8 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-
 .nav-btn.active.gs .nl{color:#f4a261}
 .nav-btn.active.yd{border-color:#2dc653;background:rgba(45,198,83,0.15)}
 .nav-btn.active.yd .nl{color:#2dc653}
+.nav-btn.active.yh{border-color:#ff4444;background:rgba(255,68,68,0.15)}
+.nav-btn.active.yh .nl{color:#ff4444}
 .nav-btn.active.cs{border-color:#9b5de5;background:rgba(155,93,229,0.15)}
 .nav-btn.active.cs .nl{color:#9b5de5}
 
@@ -250,6 +252,16 @@ select option{background:#1a1a1a;color:#f0f0f0}
 .ptt{background:var(--green-dim);color:#1abc9c;border:0.5px solid var(--green)}
 .div{height:0.5px;background:var(--border);margin:16px 0}
 .inc-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
+/* HUB SUB-TABS */
+.hub-tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none}
+.hub-tabs::-webkit-scrollbar{display:none}
+.hub-tab{flex:0 0 auto;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:8px 14px;font-size:14px;font-family:var(--fb);color:var(--text-dim);cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.hub-tab.active{border-color:var(--blue);background:var(--blue-dim);color:#5dade2}
+.hub-tab.active.red{border-color:var(--red);background:var(--red-dim);color:var(--red-bright)}
+.hub-tab.active.pink{border-color:#f72585;background:rgba(247,37,133,0.15);color:#f72585}
+.hub-tab.active.green{border-color:#ff4444;background:rgba(255,68,68,0.15);color:#ff4444}
+.hub-tab.active.orange{border-color:#f4a261;background:rgba(244,162,97,0.15);color:#f4a261}
+.hub-sub{display:none}.hub-sub.active{display:block}
 /* RESULT BOX */
 .result-copy{display:flex;justify-content:flex-end;margin-bottom:10px}
 .copy-btn{font-size:15px;padding:5px 14px;background:transparent;border:0.5px solid var(--border2);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;transition:all 0.2s}
@@ -287,20 +299,23 @@ select option{background:#1a1a1a;color:#f0f0f0}
 
   <nav class="nav">
     <button class="nav-btn cs active" onclick="setPanel('cs',this)"><span class="ni">🎬</span><span class="nl">Casos</span></button>
-    <button class="nav-btn rl" onclick="setPanel('rl',this)"><span class="ni">📹</span><span class="nl">Reels FB</span></button>
-    <button class="nav-btn fb" onclick="setPanel('fb',this)"><span class="ni">📘</span><span class="nl">Posts FB</span></button>
+    <button class="nav-btn fb" onclick="setPanel('fb',this)"><span class="ni">📘</span><span class="nl">Facebook</span></button>
+    <button class="nav-btn yh" onclick="setPanel('yh',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
     <button class="nav-btn wk" onclick="setPanel('wk',this)"><span class="ni">🗓️</span><span class="nl">Semana</span></button>
-    <button class="nav-btn im" onclick="setPanel('im',this)"><span class="ni">🖼️</span><span class="nl">Imágenes</span></button>
-    <button class="nav-btn yt" onclick="setPanel('yt',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
-    <button class="nav-btn gs" onclick="setPanel('gs',this)"><span class="ni">🎥</span><span class="nl">Guión YT</span></button>
-    <button class="nav-btn yd" onclick="setPanel('yd',this)"><span class="ni">📝</span><span class="nl">Desc YT</span></button>
     <button class="nav-btn cm" onclick="setPanel('cm',this)"><span class="ni">💬</span><span class="nl">Comentarios</span></button>
     <button class="nav-btn an" onclick="setPanel('an',this)"><span class="ni">📊</span><span class="nl">Análisis</span></button>
     <button class="nav-btn str" onclick="setPanel('str',this)"><span class="ni">💰</span><span class="nl">Estrategia</span></button>
   </nav>
 
-  <!-- ═══════════════════════════════════════════════ FACEBOOK POSTS -->
+  <!-- ═══════════════════════════════════════════════ FACEBOOK HUB -->
   <div class="panel" id="panel-fb">
+    <div class="hub-tabs">
+      <button class="hub-tab active" onclick="setHub('fb','posts',this)">📘 Posts</button>
+      <button class="hub-tab" onclick="setHub('fb','reels',this)">📹 Reels</button>
+      <button class="hub-tab" onclick="setHub('fb','imgs',this)">🖼️ Imágenes</button>
+    </div>
+    <div class="hub-sub active" id="hub-fb-posts">
+
     <div class="sec-title">POSTS FACEBOOK</div>
     <div class="sec-sub">5 posts de texto · tendencias reales de hoy</div>
 
@@ -383,10 +398,10 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="sec-sub">Las encuestas tienen el mayor alcance orgánico en Facebook</div>
     <button class="gen-btn" id="enc-btn" style="background:linear-gradient(135deg,#4a0e2a,#e63946)" onclick="genEncuestas()">GENERAR 5 ENCUESTAS 📊</button>
     <div class="gen-note">Preguntas que dividen la audiencia · máximo debate · máximo alcance</div>
-  </div>
+  
+    </div>
+    <div class="hub-sub" id="hub-fb-reels">
 
-  <!-- ═══════════════════════════════════════════════ REELS FACEBOOK -->
-  <div class="panel" id="panel-rl">
     <div class="sec-title">REELS FACEBOOK</div>
     <div class="sec-sub">3 scripts de Reels · 30-60 seg · alcance máximo</div>
 
@@ -522,8 +537,227 @@ select option{background:#1a1a1a;color:#f0f0f0}
     <div class="gen-note">El análisis aparece en el chat con recomendaciones concretas</div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════ YOUTUBE/TIKTOK -->
-  <div class="panel" id="panel-yt">
+  <!-- ═══════════════════════════════════════════════ YOUTUBE HUB -->
+  <div class="panel" id="panel-yh">
+    <div class="hub-tabs">
+      <button class="hub-tab active green" onclick="setHub('yh','ideas',this)">💡 Ideas</button>
+      <button class="hub-tab" onclick="setHub('yh','guion',this)">🎥 Guión</button>
+      <button class="hub-tab" onclick="setHub('yh','desc',this)">📝 Descripción SEO</button>
+    </div>
+    <div class="hub-sub active" id="hub-yh-ideas">
+
+    <div class="sec-title">YOUTUBE · TIKTOK</div>
+    <div class="sec-sub">Ideas de videos basadas en tendencias de hoy</div>
+
+    <div class="tbox">
+      <div class="tbox-head">
+        <span class="tbox-title">🔥 Tendencias para video</span>
+        <span class="tstatus ts-loading" id="yt-ts">Buscando...</span>
+      </div>
+      <div class="tlist" id="yt-tlist">
+        <div class="skel" style="width:75%"></div><div class="skel" style="width:60%"></div>
+        <div class="skel" style="width:80%"></div><div class="skel" style="width:55%"></div>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Plataforma</div>
+        <select id="vp-plat">
+          <option value="YouTube (videos de 8 a 15 minutos con título SEO optimizado)">YouTube</option>
+          <option value="TikTok (videos de 30 a 60 segundos con hook de 3 segundos)">TikTok</option>
+          <option value="ambas plataformas adaptando el mismo concepto">Ambas</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Formato</div>
+        <select id="vp-formato">
+          <option value="variado: análisis, reseña, ranking, documental corto, reacción">Variado ✓</option>
+          <option value="análisis y teorías en profundidad">Análisis</option>
+          <option value="rankings top 10">Rankings</option>
+          <option value="found footage y analog horror">Found footage</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="yt-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="yt-s1"><span class="step-ic">🔍</span>Buscando qué está trending en video terror</div>
+        <div class="prog-step" id="yt-s2"><span class="step-ic">📊</span>Analizando formatos con mayor retención</div>
+        <div class="prog-step" id="yt-s3"><span class="step-ic">✍️</span>Generando ideas con estructura completa</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="yt-bar"></div></div>
+    </div>
+    <button class="gen-btn yt" id="yt-btn" onclick="gen('yt')">GENERAR 5 IDEAS DE VIDEO ▶️</button>
+    <div class="gen-note">Título · gancho · estructura · thumbnail · hashtags</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ ESTRATEGIA -->
+  <div class="panel" id="panel-str">
+    <div class="sec-title">ESTRATEGIA</div>
+    <div class="sec-sub">Maximizar ingresos · sistema completo</div>
+
+    <div class="inc-card">
+      <div class="inc-label">Potencial mensual · nicho terror</div>
+      <div class="inc-row"><span class="inc-plat">📘 Facebook actual</span><span class="inc-range">$300/mes → $600-800</span></div>
+      <div class="inc-bg"><div class="inc-fill" style="width:55%;background:var(--blue)"></div></div>
+      <div class="inc-row"><span class="inc-plat">🎬 + Reels Facebook</span><span class="inc-range">+$200-400/mes</span></div>
+      <div class="inc-bg"><div class="inc-fill" style="width:70%;background:var(--red)"></div></div>
+      <div class="inc-row"><span class="inc-plat">▶️ + YouTube</span><span class="inc-range">+$300-1.000/mes</span></div>
+      <div class="inc-bg"><div class="inc-fill" style="width:85%;background:var(--green)"></div></div>
+      <div class="inc-row"><span class="inc-plat">🔗 Sistema completo</span><span class="inc-range">$1.500-3.000/mes</span></div>
+      <div class="inc-bg" style="margin-bottom:0"><div class="inc-fill" style="width:95%;background:var(--purple)"></div></div>
+    </div>
+
+    <div class="sc hot">
+      <div class="st">🗓️ Tu sistema diario completo</div>
+      <div class="sb">
+        <strong style="color:var(--text);display:block;margin-bottom:4px">8 publicaciones por día · mismo esfuerzo</strong>
+        8:00 AM · Post 1 (debate)<br>
+        10:00 AM · Reel 1 (alcance nuevo)<br>
+        12:00 PM · Post 2 (opinión)<br>
+        3:00 PM · Post 3 (reseña)<br>
+        6:00 PM · Post 4 + Reel 2 (prime time)<br>
+        9:00 PM · Post 5 CTA (monetización)<br>
+        9:30 PM · Reel 3 (cierre nocturno)
+      </div>
+      <span class="sm">Total: 5 posts + 3 Reels = 8 publicaciones</span>
+    </div>
+
+    <div class="ss-title">📘 FACEBOOK <span class="pill pfb">Ya ganás $300</span></div>
+    <div class="sc hot"><div class="st">🎯 Post 5 siempre es CTA</div><div class="sb">El quinto post de cada día tiene que invitar al grupo privado de terror ($5-10/mes) o pedir Stars en tu próximo Live. Con 100 miembros en el grupo duplicás lo que ganás hoy.</div><span class="sm">Meta: $600/mes en 60 días</span></div>
+    <div class="sc"><div class="st">📹 Reels = tu mayor palanca de crecimiento</div><div class="sb">Los Reels llegan a gente que todavía no te sigue. Facebook los distribuye fuera de tu audiencia actual igual que TikTok. Son tu herramienta de adquisición de seguidores nuevos y pagan mejor RPM que los posts de texto.</div></div>
+    <div class="sc"><div class="st">💬 Respondé comentarios en las primeras 2 horas</div><div class="sb">Facebook mide tu tiempo de respuesta. Responder los primeros 10 comentarios dentro de las 2 horas multiplica x3 el alcance orgánico. Una repregunta corta es suficiente.</div></div>
+    <div class="sc"><div class="st">🚀 Boostear lo que ya despega solo</div><div class="sb">Cuando un post supera 40 comentarios en las primeras 3 horas sin promoción, invertí $3-5 en boostearlo. ROI típico 8x porque el algoritmo ya lo validó.</div></div>
+
+    <div class="div"></div>
+    <div class="ss-title">▶️ YOUTUBE <span class="pill pyt">Mayor potencial</span></div>
+    <div class="sc hot"><div class="st">♻️ Un contenido, tres formatos</div><div class="sb">El mismo análisis de terror que hacés en YouTube (15 min) se convierte en 5 posts de Facebook + 3 Reels + 3 TikToks. El trabajo se hace una vez, los ingresos llegan de todos lados.</div><span class="sm">3x ingresos · mismo esfuerzo</span></div>
+    <div class="sc"><div class="st">🖼️ El thumbnail es el 80% del éxito</div><div class="sb">Cara con expresión de shock real, texto de 3-4 palabras máximo, fondo oscuro con elemento inquietante. A/B test de thumbnails en YouTube Studio cada semana.</div></div>
+    <div class="sc"><div class="st">💳 Membresías desde 500 suscriptores</div><div class="sb">$2.99 acceso anticipado · $4.99 videos exclusivos. Con 50 miembros en el tier básico son $150/mes extra sin esfuerzo adicional.</div></div>
+
+    <div class="div"></div>
+    <div class="ss-title">🤝 MONETIZACIÓN EXTRA</div>
+    <div class="sc"><div class="st">🎬 Afiliados de Shudder y streaming</div><div class="sb">Shudder (plataforma de terror), Amazon Prime y Paramount+ tienen programas de afiliados. Cada suscripción que generás te da $5-15. Con audiencia activa de terror puede sumar $200-500/mes sin esfuerzo.</div></div>
+    <div class="sc"><div class="st">📧 Email list desde ya</div><div class="sb">Las plataformas pueden cambiar su algoritmo o cerrarte la cuenta. El email es tuyo para siempre. Ofrecé algo gratis: "Las 10 leyendas más perturbadoras que no se cuentan en internet" y empezá a construir tu lista hoy.</div></div>
+
+    <br>
+    <button class="gen-btn str" id="str-btn" onclick="genPlan()">PEDIRME UN PLAN PERSONALIZADO 💰</button>
+    <div class="gen-note">Plan mes a mes para escalar tus $300 actuales</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ COMENTARIOS -->
+  <div class="panel" id="panel-cm">
+    <div class="sec-title">RESPUESTAS A COMENTARIOS</div>
+    <div class="sec-sub">Respondé rápido · el algoritmo te premia en las primeras 2 hs</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">⚡ Por qué importa</span></div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.7">
+        Facebook mide cuánto tardás en responder. Responder los primeros 10 comentarios dentro de las 2 horas <strong style="color:var(--text)">multiplica x3 el alcance orgánico</strong>. Una repregunta corta alcanza.
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Pegá el comentario que recibiste</div>
+        <textarea id="cm-comentario" placeholder="Ej: jajaja esto me pasó a mí de verdad, una vez en el monte escuché algo raro..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Tono de respuesta</div>
+        <select id="cm-tono">
+          <option value="cercano y humano, como si fuera un amigo apasionado del terror">Cercano y humano</option>
+          <option value="misterioso y que genere intriga para que sigan comentando">Misterioso</option>
+          <option value="divertido y que invite a debatir más">Divertido</option>
+          <option value="informativo, aportando un dato extra de valor">Informativo</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Objetivo</div>
+        <select id="cm-objetivo">
+          <option value="generar más comentarios con una repregunta al final">Más comentarios</option>
+          <option value="llevar al usuario al grupo privado de terror">Al grupo privado</option>
+          <option value="generar reacciones positivas y compartidos">Más shares</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="cm-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="cm-s1"><span class="step-ic">🔍</span>Analizando el comentario recibido</div>
+        <div class="prog-step" id="cm-s2"><span class="step-ic">🧠</span>Pensando la mejor respuesta estratégica</div>
+        <div class="prog-step" id="cm-s3"><span class="step-ic">✍️</span>Redactando 5 opciones de respuesta</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="cm-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="cm-btn" style="background:linear-gradient(135deg,#005f73,#00b4d8)" onclick="genComentarios()">GENERAR 5 RESPUESTAS 💬</button>
+    <div class="gen-note">Cada respuesta lista para copiar y pegar</div>
+  
+    </div>
+    <div class="hub-sub" id="hub-fb-imgs">
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ ANÁLISIS -->
+  <div class="panel" id="panel-an">
+    <div class="sec-title">ANÁLISIS</div>
+    <div class="sec-sub">Qué posts te funcionaron · dónde mejorar</div>
+
+    <div class="analyzer">
+      <div class="an-intro">
+        <div class="an-intro-title">📊 Cómo funciona</div>
+        <div class="an-intro-body">
+          Entrá a <strong style="color:var(--text)">Facebook → Tu página → Herramientas de publicación → Estadísticas</strong> y cargá los datos de tus últimos posts. La IA analiza qué tipo de contenido te da más alcance, comentarios y engagement, y te dice exactamente qué cambiar.
+        </div>
+      </div>
+
+      <div class="an-step">
+        <div class="an-step-num">Paso 1 · Cargá tus posts</div>
+        <div class="an-step-title">Ingresá los datos de tus últimos 5-10 posts</div>
+        <div class="post-row" id="postRows">
+          <!-- rows added dynamically -->
+        </div>
+        <button class="add-post-btn" onclick="addPostRow()">+ Agregar post</button>
+      </div>
+
+      <div class="an-step">
+        <div class="an-step-num">Paso 2 · Contexto</div>
+        <div class="an-step-title">Contame un poco más</div>
+        <div class="cfg-grid" style="margin-bottom:0">
+          <div class="cfg-card"><div class="cfg-label">Tus ingresos actuales</div>
+            <select id="an-ingresos">
+              <option value="300 dólares por mes">$300/mes</option>
+              <option value="100 a 300 dólares por mes">$100-300/mes</option>
+              <option value="300 a 600 dólares por mes">$300-600/mes</option>
+              <option value="más de 600 dólares por mes">+$600/mes</option>
+            </select>
+          </div>
+          <div class="cfg-card"><div class="cfg-label">Posts por día actuales</div>
+            <select id="an-freq">
+              <option value="1 a 2 posts por día">1-2/día</option>
+              <option value="3 a 5 posts por día">3-5/día</option>
+              <option value="más de 5 posts por día">+5/día</option>
+              <option value="irregular, no tengo rutina fija">Irregular</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-wrap" id="an-prog">
+        <div class="prog-steps">
+          <div class="prog-step" id="an-s1"><span class="step-ic">📊</span>Procesando métricas de tus posts</div>
+          <div class="prog-step" id="an-s2"><span class="step-ic">🔍</span>Identificando patrones de engagement</div>
+          <div class="prog-step" id="an-s3"><span class="step-ic">💡</span>Generando recomendaciones específicas</div>
+        </div>
+        <div class="pbar-wrap"><div class="pbar" id="an-bar"></div></div>
+      </div>
+    </div>
+
+    <button class="gen-btn an" id="an-btn" onclick="analizarPosts()">ANALIZAR MIS POSTS 📊</button>
+    <div class="gen-note">El análisis aparece en el chat con recomendaciones concretas</div>
+  </div>
+
+
     <div class="sec-title">YOUTUBE · TIKTOK</div>
     <div class="sec-sub">Ideas de videos basadas en tendencias de hoy</div>
 
@@ -733,21 +967,30 @@ select option{background:#1a1a1a;color:#f0f0f0}
   <!-- ═══════════════════════════════════════════════ PLANIFICADOR SEMANAL -->
   <div class="panel" id="panel-wk">
     <div class="sec-title">PLAN SEMANAL</div>
-    <div class="sec-sub">7 días completos · 35 posts + 21 Reels listos para publicar</div>
+    <div class="sec-sub">Bloques de 2 días · calidad consistente en cada post y Reel</div>
 
     <div class="tbox">
       <div class="tbox-head"><span class="tbox-title">📅 Qué incluye</span></div>
       <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
-        Genera el contenido completo de <strong style="color:var(--text)">toda la semana</strong> basado en las tendencias actuales:<br>
-        · 5 posts por día × 7 días = <strong style="color:var(--text)">35 posts</strong><br>
-        · 3 scripts de Reels por día × 7 días = <strong style="color:var(--text)">21 Reels</strong><br>
-        · Distribuidos por horario y tipo para máximo alcance<br>
-        · Cada día temáticamente coherente y variado
+        Generá <strong style="color:var(--text)">bloques de 2 días</strong> para mantener calidad máxima en cada post:<br>
+        · 5 posts × 2 días = <strong style="color:var(--text)">10 posts</strong> con ganchos frescos<br>
+        · 3 Reels × 2 días = <strong style="color:var(--text)">6 scripts</strong> con estructuras variadas<br>
+        · La IA mantiene creatividad alta en bloques cortos<br>
+        · <strong style="color:var(--red-bright)">⚠️ Semana completa disponible pero calidad puede decaer desde post 10</strong>
       </div>
     </div>
 
     <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Foco de la semana</div>
+      <div class="cfg-card"><div class="cfg-label">Bloque a generar</div>
+        <select id="wk-bloque">
+          <option value="Lunes y Martes">Lunes y Martes</option>
+          <option value="Miércoles y Jueves">Miércoles y Jueves</option>
+          <option value="Viernes y Sábado">Viernes y Sábado</option>
+          <option value="Domingo solo">Solo Domingo</option>
+          <option value="toda la semana (Lunes a Domingo, calidad puede variar en posts finales)">Semana completa ⚠️</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Foco</div>
         <select id="wk-foco">
           <option value="variado: mezcla de películas, leyendas, experiencias personales y debates">Variado ✓</option>
           <option value="estrenos y novedades del cine de terror de la semana">Estrenos semana</option>
@@ -787,7 +1030,146 @@ select option{background:#1a1a1a;color:#f0f0f0}
       <div class="pbar-wrap"><div class="pbar" id="wk-bar"></div></div>
     </div>
     <button class="gen-btn" id="wk-btn" style="background:linear-gradient(135deg,#023e8a,#4cc9f0)" onclick="genSemana()">GENERAR SEMANA COMPLETA 🗓️</button>
-    <div class="gen-note">⚠️ Tarda 20-30 seg · generá un café mientras esperás ☕</div>
+    <div class="gen-note">Bloques de 2 días = mejor calidad · semana completa disponible pero más lenta</div>
+  
+    </div>
+    <div class="hub-sub" id="hub-yh-guion">
+
+    <div class="sec-title">GUIÓN YOUTUBE</div>
+    <div class="sec-sub">Video completo de 10-15 min · listo para grabar</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">🎥 Cómo usarlo</span></div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
+        Generá el guión completo del video → grabás leyendo o improvisando sobre la estructura → ese mismo contenido se convierte en <strong style="color:var(--text)">5 posts FB + 3 Reels + descripción SEO</strong> con las otras herramientas de la app.
+      </div>
+    </div>
+
+    <div class="cfg-grid" style="margin-bottom:12px">
+      <div class="cfg-card" style="grid-column:1/-1">
+        <div class="cfg-label">Tema del video (podés ser específico)</div>
+        <textarea id="gs-tema" placeholder="Ej: Las 5 películas de terror más perturbadoras de 2025 que nadie habla, o: La historia real detrás de La Monja..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Formato</div>
+        <select id="gs-formato">
+          <option value="análisis y teorías en profundidad con datos reales">Análisis / teorías</option>
+          <option value="ranking top con suspenso creciente, el más impactante al final">Ranking Top</option>
+          <option value="documental corto con narración dramática">Documental corto</option>
+          <option value="reseña con opinión personal apasionada">Reseña personal</option>
+          <option value="historia real narrada como si fuera un relato de terror">Historia real narrada</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Duración objetivo</div>
+        <select id="gs-dur">
+          <option value="10 minutos (aproximadamente 1400 palabras)">10 minutos</option>
+          <option value="12 minutos (aproximadamente 1700 palabras)">12 minutos</option>
+          <option value="15 minutos (aproximadamente 2100 palabras)">15 minutos</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Tono</div>
+        <select id="gs-tono">
+          <option value="narrador apasionado y humano, como si contaras algo que te fascina">Apasionado</option>
+          <option value="dramático con suspenso creciente, como documental de terror">Dramático</option>
+          <option value="analítico pero entretenido, con humor negro ocasional">Analítico</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">CTA final</div>
+        <select id="gs-cta">
+          <option value="suscribirse al canal y activar la campanita">Suscripción</option>
+          <option value="unirse al grupo privado de terror">Grupo privado</option>
+          <option value="membresía del canal">Membresía</option>
+          <option value="ver el siguiente video recomendado">Siguiente video</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="gs-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="gs-s1"><span class="step-ic">🔍</span>Investigando el tema con tendencias actuales</div>
+        <div class="prog-step" id="gs-s2"><span class="step-ic">🗂️</span>Estructurando el guión con retención máxima</div>
+        <div class="prog-step" id="gs-s3"><span class="step-ic">✍️</span>Redactando el guión completo listo para grabar</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="gs-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="gs-btn" style="background:linear-gradient(135deg,#7c3a00,#f4a261)" onclick="genGuion()">GENERAR GUIÓN COMPLETO 🎥</button>
+    <div class="gen-note">⚠️ Tarda 25-35 seg por la extensión · vale la pena esperar ☕</div>
+  
+    </div>
+    <div class="hub-sub" id="hub-yh-desc">
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ PLANIFICADOR SEMANAL -->
+  <div class="panel" id="panel-wk">
+    <div class="sec-title">PLAN SEMANAL</div>
+    <div class="sec-sub">Bloques de 2 días · calidad consistente en cada post y Reel</div>
+
+    <div class="tbox">
+      <div class="tbox-head"><span class="tbox-title">📅 Qué incluye</span></div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.8">
+        Generá <strong style="color:var(--text)">bloques de 2 días</strong> para mantener calidad máxima en cada post:<br>
+        · 5 posts × 2 días = <strong style="color:var(--text)">10 posts</strong> con ganchos frescos<br>
+        · 3 Reels × 2 días = <strong style="color:var(--text)">6 scripts</strong> con estructuras variadas<br>
+        · La IA mantiene creatividad alta en bloques cortos<br>
+        · <strong style="color:var(--red-bright)">⚠️ Semana completa disponible pero calidad puede decaer desde post 10</strong>
+      </div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-card"><div class="cfg-label">Bloque a generar</div>
+        <select id="wk-bloque">
+          <option value="Lunes y Martes">Lunes y Martes</option>
+          <option value="Miércoles y Jueves">Miércoles y Jueves</option>
+          <option value="Viernes y Sábado">Viernes y Sábado</option>
+          <option value="Domingo solo">Solo Domingo</option>
+          <option value="toda la semana (Lunes a Domingo, calidad puede variar en posts finales)">Semana completa ⚠️</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Foco</div>
+        <select id="wk-foco">
+          <option value="variado: mezcla de películas, leyendas, experiencias personales y debates">Variado ✓</option>
+          <option value="estrenos y novedades del cine de terror de la semana">Estrenos semana</option>
+          <option value="leyendas urbanas latinoamericanas y experiencias paranormales">Leyendas latinas</option>
+          <option value="terror clásico: películas y directores icónicos del género">Terror clásico</option>
+          <option value="analog horror, creepypastas y terror de internet">Terror internet</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Tono dominante</div>
+        <select id="wk-tono">
+          <option value="fan apasionado y humano, voz cercana">Fan apasionado</option>
+          <option value="dramático con suspenso creciente">Dramático</option>
+          <option value="mix de opinión directa y debate">Mix debate</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">CTA de monetización</div>
+        <select id="wk-cta">
+          <option value="grupo privado de terror ($5-10/mes)">Grupo privado</option>
+          <option value="Stars de Facebook en lives">Stars FB</option>
+          <option value="canal de YouTube del creador">Canal YouTube</option>
+        </select>
+      </div>
+      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
+        <select id="wk-ht">
+          <option value="con 5 hashtags en español por post">5 hashtags</option>
+          <option value="sin hashtags">Sin hashtags</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="prog-wrap" id="wk-prog">
+      <div class="prog-steps">
+        <div class="prog-step" id="wk-s1"><span class="step-ic">🔍</span>Analizando tendencias de la semana</div>
+        <div class="prog-step" id="wk-s2"><span class="step-ic">🗓️</span>Estructurando los 7 días con variedad</div>
+        <div class="prog-step" id="wk-s3"><span class="step-ic">✍️</span>Redactando posts y scripts completos</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" id="wk-bar"></div></div>
+    </div>
+    <button class="gen-btn" id="wk-btn" style="background:linear-gradient(135deg,#023e8a,#4cc9f0)" onclick="genSemana()">GENERAR SEMANA COMPLETA 🗓️</button>
+    <div class="gen-note">Bloques de 2 días = mejor calidad · semana completa disponible pero más lenta</div>
   </div>
 
 
@@ -1056,6 +1438,14 @@ function setPanel(id,el) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   if(id==='cs' && !casosLoaded) fetchCasosTrends();
+}
+
+function setHub(panel, sub, el) {
+  const hub = document.getElementById('panel-'+panel);
+  hub.querySelectorAll('.hub-tab').forEach(t=>t.classList.remove('active','red','pink','green','orange'));
+  el.classList.add('active');
+  hub.querySelectorAll('.hub-sub').forEach(s=>s.classList.remove('active'));
+  document.getElementById('hub-'+panel+'-'+sub).classList.add('active');
 }
 
 // ── POST ROWS (analyzer) ───────────────────────────────────────────────
@@ -1333,7 +1723,7 @@ async function gen(plat) {
     const largo=document.getElementById('fb-largo').value;
     const ht=document.getElementById('fb-ht').value;
     const fbCant=document.getElementById('fb-cant').value;
-    prompt=`Generame ${fbCant} posts de terror para Facebook usando estas tendencias reales de hoy: ${tends}. Tono: ${tono}. Tipo: ${tipo}. Largo: ${largo}. Hashtags: ${ht}. Reglas: primera línea gancho brutal en menos de 8 palabras, voz 100% humana, no empezar con "Hola" ni "Hey" ni "¿Sabías que". Cada post numerado con su horario recomendado. El último post siempre es CTA invitando a un grupo privado de terror.`;
+    prompt=`Generame ${fbCant} posts de terror para Facebook usando estas tendencias reales de hoy: ${tends}. Tono: ${tono}. Tipo: ${tipo}. Largo: ${largo}. Hashtags: ${ht}. Reglas: primera línea gancho brutal en menos de 8 palabras, voz 100% humana, no empezar con "Hola" ni "Hey" ni "¿Sabías que". Cada post numerado con su horario recomendado. El último post siempre es CTA invitando a un grupo privado de terror. REGLA CRÍTICA DE LENGUAJE SEGURO PARA META/YOUTUBE: Nunca uses estas palabras exactas que activan filtros algorítmicos: "asesinato", "matar", "sangre", "suicidio", "violación", "tortura", "muerto", "cadáver", "droga", "bomba". Reemplazalas siempre por eufemismos narrativos: en vez de "asesinato" → "lo que le hicieron", en vez de "sangre" → "la sustancia oscura" o "rastros", en vez de "suicidio" → "su decisión final" o "lo que hizo esa noche", en vez de "matar/mató" → "hizo desaparecer" o "terminó con", en vez de "cadáver" → "lo que encontraron", en vez de "tortura" → "lo que vivió". El contenido tiene que ser perturbador pero con lenguaje que pase los filtros de Meta y YouTube 2026.`;
   } else if (plat==='rl') {
     const formato=document.getElementById('rl-formato').value;
     const dur=document.getElementById('rl-dur').value;
@@ -1341,6 +1731,8 @@ async function gen(plat) {
     const cta=document.getElementById('rl-cta').value;
     const rlCant=document.getElementById('rl-cant').value;
     prompt=`Generame ${rlCant} scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}.
+
+Variá la estructura de apertura: cada Reel debe empezar diferente — uno con pregunta, uno con afirmación, uno in medias res, uno con dato impactante, uno con el final primero. Nunca dos Reels con la misma estructura de apertura.
 
 Para cada Reel usá este formato exacto:
 
@@ -1501,13 +1893,14 @@ async function genSemana() {
   const btn = document.getElementById('wk-btn');
   btn.disabled = true;
   const obj = startProg('wk');
+  const bloque = document.getElementById('wk-bloque').value;
   const foco = document.getElementById('wk-foco').value;
   const tono = document.getElementById('wk-tono').value;
   const cta = document.getElementById('wk-cta').value;
   const ht = document.getElementById('wk-ht').value;
   const tends = getTrends('fb');
 
-  const prompt = `Sos un estratega de contenido de terror en redes sociales. Generame el plan de contenido completo para esta semana (Lunes a Domingo) para una página de terror en Facebook.
+  const prompt = `Sos un estratega de contenido de terror en redes sociales. Generame el plan de contenido para: ${bloque} para una página de terror en Facebook.
 
 Tendencias actuales: ${tends}.
 Foco temático: ${foco}.
@@ -1772,7 +2165,9 @@ Reglas:
 - Las primeras 3 palabras son las más importantes — tienen que parar el scroll
 - Sin violencia explícita — la perturbación viene de la narrativa
 - Voseo latinoamericano en el caption
-- Cada Reel con un caso diferente`;
+- Cada Reel con un caso diferente
+- Variá la estructura de apertura en cada Reel: el primero empieza con afirmación impactante, el segundo con pregunta perturbadora, el tercero in medias res (ya en el medio de la acción), el cuarto con dato que parece mentira, el quinto con la revelación al revés (el final primero)
+- REGLA CRÍTICA DE LENGUAJE SEGURO PARA META/YOUTUBE: Nunca uses estas palabras exactas que activan filtros algorítmicos: "asesinato", "matar", "sangre", "suicidio", "violación", "tortura", "muerto", "cadáver", "droga", "bomba". Reemplazalas siempre por eufemismos narrativos: en vez de "asesinato" → "lo que le hicieron", en vez de "sangre" → "la sustancia oscura" o "rastros", en vez de "suicidio" → "su decisión final" o "lo que hizo esa noche", en vez de "matar/mató" → "hizo desaparecer" o "terminó con", en vez de "cadáver" → "lo que encontraron", en vez de "tortura" → "lo que vivió". El contenido tiene que ser perturbador pero con lenguaje que pase los filtros de Meta y YouTube 2026.`;
 
   try {
     const txt = await callAPI(prompt, false, 'th_cs');
