@@ -1840,15 +1840,15 @@ async function genCasos() {
   const cta = document.getElementById('cs-cta').value;
   const tends = getCasosTrends();
 
-  const prompt = `Sos el creador de Zona de Terror TV con 230.000 seguidores en Facebook. Generame ${cant} Reels de casos reales en el estilo exacto que ya probaste que funciona con tu audiencia.
+  const prompt = `Sos el creador de Zona de Terror TV con 230.000 seguidores en Facebook. Generame ${cant} textos para Reels de casos reales. SOLO el texto que va en pantalla — nada de instrucciones de produccion, nada de imagen, audio, capcut, caption. Solo el texto narrativo.
 
-EJEMPLOS REALES DE TUS REELS MAS VISTOS - imitá este estilo exacto:
+ESTOS SON TUS REELS MAS VISTOS — imitá este estilo exacto:
 
 EJEMPLO 1:
 La historia de Jewel Shuping genero un debate mundial.
 Desde nina estaba convencida de que debia ser ciega.
 Aunque veia perfectamente, aprendio braille y caminaba con baston.
-Anos despues explico que padecia Body Integrity Identity Disorder.
+Anos despues explico que padecia Body Integrity Identity Disorder, un trastorno en el que la persona siente que su cuerpo no coincide con su identidad.
 En 2006, con 21 anos, provoco un dano irreversible en sus ojos y perdio la vision.
 Cuando su familia supo que habia sido intencional, la rechazo.
 Pero ella aseguro algo que impacto a todos: Por primera vez siento que mi cuerpo coincide con quien soy.
@@ -1869,54 +1869,37 @@ A las 10:11 envio su ultimo mensaje a sus padres.
 Despues... desaparecio.
 Ocho dias mas tarde, su cuerpo fue encontrado al pie de los acantilados de Dingli.
 Pero algo no tenia sentido: su bicicleta estaba arriba, sus zapatos colocados a un lado.
-La autopsia revelo algo aun mas extrano: faltaban la mayoria de sus organos internos y su cuerpo pesaba apenas 16 kilos.
+La autopsia revelo algo mas extrano: faltaban la mayoria de sus organos internos y su cuerpo pesaba apenas 16 kilos.
 Hasta hoy, nadie ha podido explicar exactamente que ocurrio.
 
-ESTILO QUE TENES QUE IMITAR:
-- Frases cortas, una idea por linea, maximo 12 palabras por linea
-- Datos reales especificos: nombres completos, anos, edades, lugares exactos
-- Narrativa cronologica con tension creciente
+REGLAS ABSOLUTAS:
+- Narrativa fluida y cronologica — NUNCA formato de ficha con "Lugar:", "Ano:", "Nombre:", "Crimenes:" — eso destruye el efecto
+- Frases cortas, una idea por linea
+- Datos reales especificos integrados naturalmente en la narracion: nombres, anos, edades, lugares
+- Tension creciente — lo mas perturbador siempre al final
 - Puntos suspensivos (...) en los momentos de mayor tension
-- Ultima linea que genera debate, indignacion o deja pregunta abierta
-- Estilo periodistico directo, sin adornos
-- Sin emojis dentro del texto del Reel
+- Ultima linea que genera debate o deja pregunta abierta
+- Sin emojis
+- Que se lea en ${dur}
 
-Tendencias actuales: ${tends}
-Tipo de caso: ${tipo}
-Duracion: ${dur}
+Tendencias: ${tends}
+Tipo: ${tipo}
 Ritmo: ${ritmo}
 Region: ${region}
-Video de fondo sugerido: ${video}
 CTA final: ${cta}
-Hashtags: ${ht}
+Hashtags para el caption: ${ht}
 
-Para cada Reel:
+Formato de salida para cada Reel:
 
 ---
-REEL [N] - [nombre del caso]
+REEL [N] — [titulo del caso]
 
-TEXTO EN PANTALLA:
-[El texto completo imitando exactamente el estilo de los ejemplos. Frases cortas una por linea, datos especificos reales, tension creciente, cierre impactante.]
+[El texto narrativo completo, listo para poner en pantalla]
 
-IMAGEN FIJA ARRIBA:
-[Que foto usar y donde buscarla en Google]
-
-VIDEO DE FONDO:
-[Descripcion exacta para buscar en Pexels]
-
-AUDIO EN CAPCUT:
-[Tipo de musica o sonido ambiente a buscar]
-
-COMO ARMARLO EN CAPCUT:
-[Instrucciones: imagen arriba centrada, texto abajo con fondo semitransparente negro, fuente recomendada]
-
-CAPTION:
-[Primera linea el gancho mas fuerte. Cierre con ${cta}. ${ht}]
-
-PUBLICAR: [mejor horario]
+CAPTION: [primera linea gancho + cierre con ${cta} + ${ht}]
 ---
 
-LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron.`;
+LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron, asesino=el responsable.`;
 
   try {
     const txt = await callAPI(prompt, false, 'th_cs');
