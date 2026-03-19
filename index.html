@@ -2,1253 +2,1391 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0d0b0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="TerrorHub">
-<title>Terror Content Hub</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ZonaTerror">
+<title>Zona de Terror TV</title>
 <link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#0a0a0a; --surface:#111; --surface2:#1a1a1a; --surface3:#222;
-  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
-  --red:#c0392b; --red-dim:rgba(192,57,43,0.15); --red-bright:#e74c3c;
-  --blue:#2980b9; --blue-dim:rgba(41,128,185,0.15);
-  --green:#1d9e75; --green-dim:rgba(29,158,117,0.15);
-  --purple:#8e44ad; --purple-dim:rgba(142,68,173,0.15);
-  --orange:#e67e22; --orange-dim:rgba(230,126,34,0.15);
-  --text:#f0f0f0; --text-dim:#888; --text-dimmer:#444;
-  --fd:'Bebas Neue',sans-serif; --fb:'Plus Jakarta Sans',sans-serif;
-  --r:12px; --rs:8px;
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden;font-size:16px}
-.app{display:block;max-width:900px;margin:0 auto}
-
-/* ── MOBILE BASE (ya estaban, los dejamos) ─────────────────────────── */
-
-/* ── TABLET / DESKTOP 600px+ ───────────────────────────────────────── */
-@media(min-width:600px){
-  .nav{gap:8px;padding:14px 28px}
-  .panel{padding:0 28px 40px}
-  .header{padding:22px 28px 0}
-  .live-bar,.install-banner{margin-left:28px;margin-right:28px}
-  .cfg-grid{grid-template-columns:repeat(4,1fr)}
-  .tbox,.schedule,.prog-wrap,.sc,.inc-card,.an-intro,.an-step{margin-bottom:14px}
-
-  .logo{font-size:36px}
-  .date-badge{font-size:14px}
-  .nav-btn .ni{font-size:22px}
-  .nav-btn .nl{font-size:13px}
-  .live-text{font-size:15px}
-  .live-text strong{font-size:17px}
-  .refresh-btn{font-size:14px}
-
-  .sec-title{font-size:30px}
-  .sec-sub{font-size:16px}
-
-  .tbox-title{font-size:14px}
-  .tstatus{font-size:13px}
-  .titem{font-size:16px}
-  .tmeta{font-size:15px}
-
-  .schedule-title{font-size:14px}
-  .sched-time{font-size:15px}
-  .sched-type{font-size:15px}
-  .sched-desc{font-size:15px}
-
-  .cfg-label{font-size:13px}
-  select{font-size:15px}
-
-  .prog-step{font-size:16px}
-  .step-ic{font-size:16px}
-
-  .gen-btn{font-size:22px;padding:16px}
-  .gen-note{font-size:15px}
-
-  .st{font-size:17px}
-  .sb{font-size:15px}
-  .sm{font-size:14px}
-  .ss-title{font-size:20px}
-  .inc-label{font-size:14px}
-  .inc-plat{font-size:15px}
-  .inc-range{font-size:14px}
-
-  .an-intro-title{font-size:17px}
-  .an-intro-body{font-size:15px}
-  .an-step-num{font-size:13px}
-  .an-step-title{font-size:17px}
-  .post-entry-label{font-size:13px}
-  .post-input{font-size:14px;padding:8px 10px}
-  .tipo-select{font-size:14px;padding:7px 8px}
-  .add-post-btn{font-size:14px;padding:8px 14px}
-
-  .copy-btn{font-size:15px;padding:7px 16px}
-
-  textarea{font-size:15px !important;line-height:1.6 !important}
-  input[type=text]{font-size:15px !important}
+  --bg: #0d0b0f;
+  --bg2: #161219;
+  --bg3: #1f1a24;
+  --bg4: #2a232f;
+  --gold: #f5c518;
+  --gold2: #ffd84d;
+  --gold-dim: rgba(245,197,24,0.1);
+  --gold-glow: rgba(245,197,24,0.2);
+  --red: #e63b2e;
+  --red-dim: rgba(230,59,46,0.12);
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --purple: #a855f7;
+  --purple-dim: rgba(168,85,247,0.12);
+  --pink: #ec4899;
+  --pink-dim: rgba(236,72,153,0.12);
+  --text: #f5f0ff;
+  --text2: #a89ec0;
+  --text3: #5a5270;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(245,197,24,0.2);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --fd: 'Bebas Neue', sans-serif;
+  --fb: 'Outfit', sans-serif;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* ── DESKTOP ANCHO 900px+ ──────────────────────────────────────────── */
-@media(min-width:900px){
-  .cfg-grid{grid-template-columns:repeat(4,1fr)}
-  .type-grid-2{grid-template-columns:repeat(3,1fr)}
-  .sec-title{font-size:34px}
-  .logo{font-size:40px}
-  .gen-btn{font-size:24px;padding:18px}
-  .titem{font-size:17px}
-  .st{font-size:18px}
-  .sb{font-size:16px}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--fb);
+  min-height: 100%;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-/* HEADER */
-.header{padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:var(--fd);font-size:36px;letter-spacing:2px}
-.logo span{color:var(--red)}
-.date-badge{font-size:14px;color:var(--text-dim);background:var(--surface2);padding:4px 10px;border-radius:20px;border:0.5px solid var(--border)}
+/* NOISE */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
 
-/* INSTALL */
-.install-banner{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:11px 14px;margin:10px 20px 0;display:none;align-items:center;gap:10px}
-.install-banner.show{display:flex}
-.install-text{flex:1;font-size:14px;color:var(--text-dim);line-height:1.4}
-.install-text strong{color:var(--text);display:block}
-.install-btn{font-size:14px;font-weight:500;padding:6px 12px;background:var(--red);color:#fff;border:none;border-radius:var(--rs);cursor:pointer}
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
 
-/* LIVE BAR */
-.live-bar{margin:6px 20px 0;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 14px;display:flex;align-items:center;gap:10px}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.live-text{flex:1;font-size:15px;color:var(--text-dim);line-height:1.4}
-.live-text strong{color:var(--text);display:block;font-size:16px}
-.refresh-btn{font-size:14px;padding:5px 10px;background:transparent;border:0.5px solid var(--border);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;white-space:nowrap}
-.refresh-btn:hover{border-color:var(--red);color:var(--red)}
+/* ── HEADER ─────────────────────────────────────────── */
+.header {
+  padding: 52px 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(245,197,24,0.04) 0%, transparent 100%);
+  pointer-events: none;
+}
+.logo-img {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 16px var(--gold-glow);
+  flex-shrink: 0;
+}
+.header-info { flex: 1; min-width: 0; }
+.brand-name {
+  font-family: var(--fd);
+  font-size: 20px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  line-height: 1;
+  text-shadow: 0 0 24px var(--gold-glow);
+}
+.brand-sub { font-size: 11px; color: var(--text3); margin-top: 2px; letter-spacing: 0.02em; }
+.header-date {
+  font-size: 11px;
+  color: var(--text3);
+  background: var(--bg3);
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 
-/* NAV */
-.nav{display:flex;overflow-x:auto;gap:5px;padding:8px 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.nav::-webkit-scrollbar{display:none}
-.nav-btn{flex:0 0 auto;min-width:64px;}
-.nav-btn{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:8px 3px;text-align:center;cursor:pointer;transition:all 0.2s}
-.nav-btn .ni{font-size:22px;display:block;margin-bottom:4px}
-.nav-btn .nl{font-size:13px;color:var(--text-dim);font-weight:500;display:block;line-height:1.2}
-.nav-btn.active.fb{border-color:var(--blue);background:var(--blue-dim)}
-.nav-btn.active.fb .nl{color:#5dade2}
-.nav-btn.active.rl{border-color:var(--red);background:var(--red-dim)}
-.nav-btn.active.rl .nl{color:var(--red-bright)}
-.nav-btn.active.an{border-color:var(--orange);background:var(--orange-dim)}
-.nav-btn.active.an .nl{color:#f0a500}
-.nav-btn.active.yt{border-color:var(--green);background:var(--green-dim)}
-.nav-btn.active.yt .nl{color:#1abc9c}
-.nav-btn.active.str{border-color:var(--purple);background:var(--purple-dim)}
-.nav-btn.active.str .nl{color:#bb8fce}
-.nav-btn.active.cm{border-color:#00b4d8;background:rgba(0,180,216,0.15)}
-.nav-btn.active.cm .nl{color:#00b4d8}
-.nav-btn.active.im{border-color:#f72585;background:rgba(247,37,133,0.15)}
-.nav-btn.active.im .nl{color:#f72585}
-.nav-btn.active.wk{border-color:#4cc9f0;background:rgba(76,201,240,0.15)}
-.nav-btn.active.wk .nl{color:#4cc9f0}
-.nav-btn.active.gs{border-color:#f4a261;background:rgba(244,162,97,0.15)}
-.nav-btn.active.gs .nl{color:#f4a261}
-.nav-btn.active.yd{border-color:#2dc653;background:rgba(45,198,83,0.15)}
-.nav-btn.active.yd .nl{color:#2dc653}
-.nav-btn.active.yh{border-color:#ff4444;background:rgba(255,68,68,0.15)}
-.nav-btn.active.yh .nl{color:#ff4444}
-.nav-btn.active.cs{border-color:#9b5de5;background:rgba(155,93,229,0.15)}
-.nav-btn.active.cs .nl{color:#9b5de5}
-.nav-btn.active.co{border-color:#f0a500;background:rgba(230,126,34,0.15)}
-.nav-btn.active.co .nl{color:#f0a500}
+/* ── CONTENT ─────────────────────────────────────────── */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(90px + var(--safe-bottom));
+}
 
-/* PANELS */
-.panel{display:none;padding:10px 20px 40px;animation:fi 0.2s ease}
-.panel.active{display:block}
-@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* ── BOTTOM NAV ─────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: rgba(13,11,15,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  padding: 10px 8px calc(10px + var(--safe-bottom));
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  z-index: 200;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: all 0.2s;
+}
+.nav-item .nav-icon { font-size: 22px; line-height: 1; }
+.nav-item .nav-label { font-size: 10px; color: var(--text3); font-weight: 500; letter-spacing: 0.02em; }
+.nav-item.active { background: var(--gold-dim); }
+.nav-item.active .nav-label { color: var(--gold); }
 
-.sec-title{font-family:var(--fd);font-size:28px;letter-spacing:1px;margin-bottom:2px}
-.sec-sub{font-size:16px;color:var(--text-dim);margin-bottom:12px}
+/* ── PANELS ─────────────────────────────────────────── */
+.panel { display: none; padding: 20px 16px; animation: fadeUp 0.25s ease; }
+.panel.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* TRENDS BOX */
-.tbox{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
-.tbox-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.tbox-title{font-size:14px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);font-weight:500}
-.tstatus{font-size:13px;padding:2px 8px;border-radius:20px}
-.ts-loading{background:rgba(192,57,43,0.2);color:var(--red-bright)}
-.ts-live{background:rgba(29,158,117,0.2);color:#1abc9c}
-.ts-cache{background:rgba(136,136,136,0.15);color:var(--text-dim)}
-.tlist{display:flex;flex-direction:column;gap:6px;min-height:50px}
-.titem{display:flex;gap:7px;align-items:baseline;font-size:16px}
-.tname{font-weight:500;color:var(--text)}
-.tmeta{color:var(--text-dim);font-size:15px}
-.skel{height:11px;background:var(--surface2);border-radius:4px;animation:sh 1.5s infinite}
-@keyframes sh{0%{opacity:0.4}50%{opacity:0.8}100%{opacity:0.4}}
+/* ── TYPOGRAPHY ─────────────────────────────────────── */
+.page-title {
+  font-family: var(--fd);
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.page-sub { font-size: 14px; color: var(--text2); margin-bottom: 20px; }
 
-/* CONFIG */
-.cfg-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.cfg-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:9px 12px}
-.cfg-label{font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:5px}
-select{width:100%;background:transparent;border:none;color:var(--text);font-size:16px;font-family:var(--fb);outline:none;cursor:pointer}
-select option{background:#1a1a1a;color:#f0f0f0}
+/* ── CARDS ─────────────────────────────────────────── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.card-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
 
-/* SCHEDULE PREVIEW */
-.schedule{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
-.schedule-title{font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
-.sched-grid{display:flex;flex-direction:column;gap:5px}
-.sched-row{display:flex;align-items:center;gap:8px}
-.sched-time{font-size:15px;color:var(--text-dim);min-width:52px;font-weight:500}
-.sched-type{font-size:15px;padding:2px 8px;border-radius:20px;font-weight:500}
-.st-post{background:var(--blue-dim);color:#5dade2;border:0.5px solid rgba(41,128,185,0.3)}
-.st-reel{background:var(--red-dim);color:var(--red-bright);border:0.5px solid rgba(192,57,43,0.3)}
-.sched-desc{font-size:15px;color:var(--text-dim)}
+/* ── COUNTER CARDS ──────────────────────────────────── */
+.counters { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.counter-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.counter-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.counter-card.reels::after { background: linear-gradient(90deg, var(--red), #ff6b5b); }
+.counter-card.posts::after { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+.counter-label { font-size: 11px; color: var(--text3); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.counter-num { font-family: var(--fd); font-size: 58px; line-height: 1; letter-spacing: -1px; }
+.counter-card.reels .counter-num { color: var(--red); }
+.counter-card.posts .counter-num { color: var(--gold); }
+.counter-meta { font-size: 12px; color: var(--text3); margin-top: 6px; }
 
-/* PROGRESS */
-.prog-wrap{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:12px;display:none}
-.prog-wrap.show{display:block}
-.prog-steps{display:flex;flex-direction:column;gap:7px}
-.prog-step{display:flex;align-items:center;gap:9px;font-size:16px;color:var(--text-dimmer);transition:color 0.3s}
-.prog-step.done{color:var(--text-dim)}
-.prog-step.active{color:#1abc9c}
-.step-ic{font-size:13px;width:18px;text-align:center}
-.pbar-wrap{height:2px;background:var(--surface2);border-radius:2px;margin-top:10px;overflow:hidden}
-.pbar{height:100%;width:0;background:var(--red);border-radius:2px;transition:width 0.4s}
+/* ── TEAM BUTTONS ─────────────────────────────────── */
+.team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.team-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.team-name { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+.team-btn {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 14px;
+  font-family: var(--fb);
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  transition: all 0.15s;
+}
+.team-btn:last-child { margin-bottom: 0; }
+.team-btn:active { transform: scale(0.97); }
+.team-btn.reel:hover, .team-btn.reel:active { background: var(--red-dim); border-color: var(--red); color: #ff8070; }
+.team-btn.post:hover, .team-btn.post:active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
 
-/* BUTTONS */
-.gen-btn{width:100%;padding:15px;font-family:var(--fd);font-size:22px;letter-spacing:2px;border:none;border-radius:var(--r);cursor:pointer;transition:transform 0.15s;margin-bottom:7px}
-.gen-btn:active{transform:scale(0.98)}
-.gen-btn:disabled{opacity:0.4;cursor:default}
-.gen-btn.fb{background:linear-gradient(135deg,#1a4a7a,#2471a3);color:#fff}
-.gen-btn.rl{background:linear-gradient(135deg,#7b1a1a,#c0392b);color:#fff}
-.gen-btn.an{background:linear-gradient(135deg,#7a3a10,#e67e22);color:#fff}
-.gen-btn.yt{background:linear-gradient(135deg,#0d5c40,#1d9e75);color:#fff}
-.gen-btn.str{background:linear-gradient(135deg,#4a2070,#8e44ad);color:#fff}
-.gen-note{font-size:15px;color:var(--text-dimmer);text-align:center;margin-bottom:14px}
+/* ── COMPETITION ─────────────────────────────────── */
+.competition-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.comp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.comp-row:last-child { margin-bottom: 0; }
+.comp-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.comp-avatar.c { background: rgba(230,59,46,0.2); border: 2px solid var(--red); }
+.comp-avatar.v { background: rgba(168,85,247,0.2); border: 2px solid var(--purple); }
+.comp-info { flex: 1; }
+.comp-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.comp-bar-wrap { height: 6px; background: var(--bg4); border-radius: 3px; overflow: hidden; }
+.comp-bar { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+.comp-bar.c { background: linear-gradient(90deg, var(--red), #ff6b5b); }
+.comp-bar.v { background: linear-gradient(90deg, var(--purple), #c084fc); }
+.comp-points { font-size: 22px; font-weight: 700; color: var(--text); min-width: 44px; text-align: right; }
+.comp-pts-label { font-size: 10px; color: var(--text3); text-align: right; }
+.comp-leader {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  background: var(--gold-dim);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(245,197,24,0.2);
+  margin-top: 14px;
+}
 
-/* ANALYZER */
-.analyzer{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.an-intro{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
-.an-intro-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:4px}
-.an-intro-body{font-size:15px;color:var(--text-dim);line-height:1.6}
-.an-step{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
-.an-step-num{font-size:14px;font-weight:500;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
-.an-step-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:8px}
-.post-row{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
-.post-entry{background:var(--surface2);border-radius:var(--rs);padding:8px 10px}
-.post-entry-label{font-size:13px;color:var(--text-dim);margin-bottom:4px}
-.post-entry-inputs{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:6px}
-.post-input{background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:8px 10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;width:100%}
-.post-input::placeholder{color:var(--text-dimmer)}
-.add-post-btn{font-size:14px;padding:5px 12px;background:transparent;border:0.5px solid var(--border2);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;width:100%}
-.add-post-btn:hover{border-color:var(--orange);color:var(--orange)}
-.tipo-select{background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:7px 8px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;width:100%}
-.tipo-select option{background:#1a1a1a}
+/* ── FOLLOWERS ──────────────────────────────────── */
+.plat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.plat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  position: relative;
+}
+.plat-icon { font-size: 24px; margin-bottom: 6px; display: block; }
+.plat-name { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.plat-num {
+  font-family: var(--fd);
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.plat-delta { font-size: 11px; font-weight: 500; }
+.plat-delta.up { color: var(--green); }
+.plat-delta.down { color: var(--red); }
+.plat-delta.flat { color: var(--text3); }
+.plat-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 7px 10px;
+  color: var(--text);
+  font-size: 16px;
+  font-family: var(--fd);
+  outline: none;
+  text-align: center;
+  margin-top: 8px;
+}
+.plat-input:focus { border-color: var(--gold); }
+.plat-save-btn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 7px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(245,197,24,0.25);
+  border-radius: var(--radius-xs);
+  color: var(--gold);
+  font-size: 13px;
+  font-family: var(--fb);
+  font-weight: 600;
+  cursor: pointer;
+}
 
-/* STRATEGY */
-.sc{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px}
-.sc.hot{border-color:rgba(192,57,43,0.4);background:var(--red-dim)}
-.st{font-size:17px;font-weight:500;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.sb{font-size:16px;color:var(--text-dim);line-height:1.6}
-.sm{display:inline-block;font-size:15px;color:var(--red);font-weight:500;margin-top:5px;background:var(--red-dim);padding:2px 8px;border-radius:20px;border:0.5px solid rgba(192,57,43,0.3)}
-.ss-title{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
-.pill{font-size:13px;padding:2px 8px;border-radius:20px;font-family:var(--fb);font-weight:500}
-.pfb{background:var(--blue-dim);color:#5dade2;border:0.5px solid var(--blue)}
-.pyt{background:var(--red-dim);color:var(--red-bright);border:0.5px solid var(--red)}
-.ptt{background:var(--green-dim);color:#1abc9c;border:0.5px solid var(--green)}
-.div{height:0.5px;background:var(--border);margin:16px 0}
-.inc-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
-/* HUB SUB-TABS */
-.hub-tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none}
-.hub-tabs::-webkit-scrollbar{display:none}
-.hub-tab{flex:0 0 auto;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rs);padding:8px 14px;font-size:14px;font-family:var(--fb);color:var(--text-dim);cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.hub-tab.active{border-color:var(--blue);background:var(--blue-dim);color:#5dade2}
-.hub-tab.active.red{border-color:var(--red);background:var(--red-dim);color:var(--red-bright)}
-.hub-tab.active.pink{border-color:#f72585;background:rgba(247,37,133,0.15);color:#f72585}
-.hub-tab.active.green{border-color:#ff4444;background:rgba(255,68,68,0.15);color:#ff4444}
-.hub-tab.active.orange{border-color:#f4a261;background:rgba(244,162,97,0.15);color:#f4a261}
-.hub-sub{display:none}.hub-sub.active{display:block}
-/* RESULT BOX */
-.result-copy{display:flex;justify-content:flex-end;margin-bottom:10px}
-.copy-btn{font-size:15px;padding:5px 14px;background:transparent;border:0.5px solid var(--border2);border-radius:var(--rs);color:var(--text-dim);cursor:pointer;transition:all 0.2s}
-.copy-btn:hover{border-color:var(--red);color:var(--red)}
-.inc-label{font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:10px}
-.inc-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
-.inc-plat{font-size:15px;font-weight:500}
-.inc-range{font-size:14px;color:var(--text-dim)}
-.inc-bg{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;margin-bottom:9px}
-.inc-fill{height:100%;border-radius:2px}
+/* ── AI ANALYSIS ─────────────────────────────── */
+.ai-analysis-card {
+  background: linear-gradient(135deg, rgba(245,197,24,0.06), rgba(168,85,247,0.06));
+  border: 1px solid rgba(245,197,24,0.15);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold);
+  background: var(--gold-dim);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(245,197,24,0.2);
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+.ai-text { font-size: 15px; color: var(--text2); line-height: 1.65; }
+.ai-prompts { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.ai-prompt-item {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.ai-prompt-item:hover { border-color: var(--gold); background: var(--gold-dim); }
+.ai-prompt-num { font-size: 11px; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+/* ── AGENDA ─────────────────────────────────── */
+.agenda-day {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.agenda-day-header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+.agenda-day-name { font-size: 16px; font-weight: 700; color: var(--text); }
+.agenda-day-date { font-size: 12px; color: var(--text3); }
+.agenda-slots { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.agenda-slot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  background: var(--bg3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.slot-time { font-family: var(--fd); font-size: 16px; color: var(--text2); min-width: 52px; }
+.slot-type {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.slot-type.reel { background: var(--red-dim); color: #ff8070; border: 1px solid rgba(230,59,46,0.3); }
+.slot-type.post { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(245,197,24,0.2); }
+.slot-who { font-size: 13px; color: var(--text2); flex: 1; }
+.slot-plat { font-size: 18px; }
+.slot-check {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.slot-check.done { background: var(--green); border-color: var(--green); }
+
+/* ── IDEAS ──────────────────────────────────── */
+.ideas-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.ideas-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.ideas-live-info { flex: 1; }
+.ideas-live-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.ideas-live-sub { font-size: 12px; color: var(--text3); }
+.ideas-refresh-btn {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cat-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.cat-pill {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cat-pill.active { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
+
+.idea-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.idea-card-head {
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.idea-dot-big { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.idea-id-tag { font-size: 10px; color: var(--text3); font-weight: 600; background: var(--bg3); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
+.idea-title { font-size: 16px; font-weight: 600; color: var(--text); flex: 1; line-height: 1.35; }
+.idea-toggle { font-size: 20px; color: var(--text3); cursor: pointer; flex-shrink: 0; transition: transform 0.2s; }
+.idea-toggle.open { transform: rotate(180deg); }
+.idea-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
+.idea-body.show { display: block; padding-top: 14px; }
+.idea-desc-text { font-size: 14px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; }
+.idea-action-btn {
+  padding: 10px 18px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(245,197,24,0.25);
+  border-radius: var(--radius-sm);
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.idea-action-btn:hover { background: rgba(245,197,24,0.2); }
+
+.skel { background: var(--bg3); border-radius: var(--radius); margin-bottom: 10px; animation: sh 1.5s infinite; }
+@keyframes sh { 0%{opacity:0.3} 50%{opacity:0.6} 100%{opacity:0.3} }
+
+/* ── ANTICOPY / AMPLIAR ──────────────────────── */
+.info-banner {
+  background: var(--bg2);
+  border: 1px solid rgba(245,197,24,0.2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-left: 3px solid var(--gold);
+}
+.info-banner-title { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+.info-banner-body { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+textarea {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: var(--fb);
+  outline: none;
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+textarea::placeholder { color: var(--text3); }
+textarea:focus { border-color: var(--gold); }
+
+.cfg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.cfg-item { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
+.cfg-lbl { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  font-family: var(--fb);
+  outline: none;
+  cursor: pointer;
+}
+select option { background: #1f1a24; color: #f5f0ff; }
+
+/* ── BIG BUTTON ─────────────────────────────── */
+.big-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: var(--radius);
+  border: none;
+  font-family: var(--fd);
+  font-size: 20px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.big-btn:active { transform: scale(0.97); }
+.big-btn:disabled { opacity: 0.4; cursor: default; }
+.big-btn.gold { background: linear-gradient(135deg, #8c6800, #f5c518); color: #0d0b0f; font-weight: 900; }
+.big-btn.red { background: linear-gradient(135deg, #7a0000, #e63b2e); color: #fff; }
+.big-btn.ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 15px;
+  font-family: var(--fb);
+  font-weight: 500;
+  letter-spacing: 0;
+  padding: 14px;
+}
+
+/* ── PROGRESS ───────────────────────────────── */
+.prog-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 12px; display: none; }
+.prog-box.show { display: block; }
+.prog-step { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text3); margin-bottom: 8px; transition: color 0.3s; }
+.prog-step:last-child { margin-bottom: 0; }
+.prog-step.active { color: var(--gold); }
+.prog-step.done { color: var(--text2); }
+.prog-step .ps-ic { font-size: 16px; width: 22px; text-align: center; flex-shrink: 0; }
+.prog-bar-wrap { height: 3px; background: var(--bg4); border-radius: 2px; margin-top: 12px; overflow: hidden; }
+.prog-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; transition: width 0.4s; }
+
+/* ── RESULT BOX ─────────────────────────────── */
+.result-box { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; display: none; }
+.result-box.show { display: block; }
+.result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.result-label { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; text-transform: uppercase; }
+.copy-btn {
+  padding: 7px 16px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.copy-btn:hover { background: var(--gold-dim); color: var(--gold); }
+.result-text { font-size: 15px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+
+/* ── ERROR ──────────────────────────────────── */
+.err-box { background: rgba(230,59,46,0.08); border: 1px solid rgba(230,59,46,0.3); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 14px; color: #ff8070; line-height: 1.5; margin-bottom: 12px; display: none; }
+.err-box.show { display: block; }
+
+/* ── ACTIVITY ───────────────────────────────── */
+.activity-list { display: flex; flex-direction: column; gap: 6px; }
+.act-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.act-time { font-size: 12px; color: var(--text3); font-weight: 600; min-width: 44px; }
+.act-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.act-text { font-size: 14px; color: var(--text2); flex: 1; }
+.act-empty { text-align: center; padding: 28px; color: var(--text3); font-size: 14px; }
+
+/* ── GOAL CONFIG ────────────────────────────── */
+.goal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.goal-item { display: flex; flex-direction: column; gap: 6px; }
+.goal-lbl { font-size: 12px; color: var(--text3); font-weight: 500; }
+.goal-inp {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  color: var(--text);
+  font-size: 18px;
+  font-family: var(--fd);
+  text-align: center;
+  outline: none;
+  width: 100%;
+}
+.goal-inp:focus { border-color: var(--gold); }
+
+/* ── DIVIDER ──────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+/* ── AMPLIAR SELECTED ────────────────────── */
+.amp-selected {
+  background: var(--bg2);
+  border: 1px solid rgba(245,197,24,0.2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.amp-sel-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.amp-sel-title { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+.amp-sel-desc { font-size: 13px; color: var(--text2); line-height: 1.55; }
 </style>
 </head>
 <body>
 <div class="app">
 
+  <!-- HEADER -->
   <div class="header">
-    <div class="logo">TERROR<span>HUB</span></div>
-    <div class="date-badge" id="dateBadge">—</div>
+    <img class="logo-img" src="/mnt/user-data/uploads/428665454_382961591348182_331831650396344219_n.jpg" alt="Logo" onerror="this.style.display='none'">
+    <div class="header-info">
+      <div class="brand-name">Zona de Terror TV</div>
+      <div class="brand-sub">Panel de Control · 230K seguidores</div>
+    </div>
+    <div class="header-date" id="headerDate">—</div>
   </div>
 
-  <div class="install-banner" id="installBanner">
-    <div style="font-size:20px">📲</div>
-    <div class="install-text"><strong>Instalar en tu celular</strong>Acceso directo sin navegador</div>
-    <button class="install-btn" id="installBtn">Instalar</button>
-  </div>
+  <!-- CONTENT -->
+  <div class="content">
 
-  <div class="live-bar">
-    <div class="live-dot"></div>
-    <div class="live-text">
-      <strong id="liveTitle">Buscando tendencias en internet...</strong>
-      <span id="liveDesc">Consultando qué está viral en terror hoy</span>
-      <span id="trendTimer" style="font-size:12px;color:#888;margin-top:3px;display:block"></span>
-    </div>
-    <button class="refresh-btn" onclick="fetchTrends(true)">↺ Actualizar</button>
-  </div>
+    <!-- ══ PANEL: BATALLA ══════════════════════════ -->
+    <div class="panel active" id="panel-batalla">
+      <div class="page-title">⚔️ Contador</div>
+      <div class="page-sub">Meta semanal del equipo</div>
 
-  <nav class="nav">
-    <button class="nav-btn cs active" onclick="setPanel('cs',this)"><span class="ni">🎬</span><span class="nl">Casos</span></button>
-    <button class="nav-btn fb" onclick="setPanel('fb',this)"><span class="ni">📘</span><span class="nl">Facebook</span></button>
-    <button class="nav-btn yh" onclick="setPanel('yh',this)"><span class="ni">▶️</span><span class="nl">YouTube</span></button>
-    <button class="nav-btn wk" onclick="setPanel('wk',this)"><span class="ni">🗓️</span><span class="nl">Semana</span></button>
-    <button class="nav-btn co" onclick="setPanel('co',this)"><span class="ni">🧠</span><span class="nl">Coach</span></button>
-    </nav>
+      <div class="counters">
+        <div class="counter-card reels">
+          <div class="counter-label">Reels Faltan</div>
+          <div class="counter-num" id="cnt-reels">21</div>
+          <div class="counter-meta">de <span id="gr-disp">21</span> esta semana</div>
+        </div>
+        <div class="counter-card posts">
+          <div class="counter-label">Posts Faltan</div>
+          <div class="counter-num" id="cnt-posts">35</div>
+          <div class="counter-meta">de <span id="gp-disp">35</span> esta semana</div>
+        </div>
+      </div>
 
-  <!-- ═══════════════════════════════════════════════ FACEBOOK HUB -->
-  <div class="panel" id="panel-fb">
-    <div class="hub-tabs">
-      <button class="hub-tab active" onclick="setHub('fb','posts',this)">📘 Posts</button>
-      <button class="hub-tab" onclick="setHub('fb','reels',this)">📹 Reels</button>
-      <button class="hub-tab" onclick="setHub('fb','imgs',this)">🖼️ Imágenes</button>
-    </div>
-    <div class="hub-sub active" id="hub-fb-posts">
+      <!-- COMPETITION -->
+      <div class="competition-card">
+        <div class="card-title">🏆 Competencia motivadora · esta semana</div>
+        <div class="comp-row">
+          <div class="comp-avatar c">💀</div>
+          <div class="comp-info">
+            <div class="comp-name">Cristian</div>
+            <div class="comp-bar-wrap">
+              <div class="comp-bar c" id="bar-c" style="width:0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="comp-points" id="pts-c">0</div>
+            <div class="comp-pts-label">pts</div>
+          </div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-avatar v">👁️</div>
+          <div class="comp-info">
+            <div class="comp-name">Vanessa</div>
+            <div class="comp-bar-wrap">
+              <div class="comp-bar v" id="bar-v" style="width:0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="comp-points" id="pts-v">0</div>
+            <div class="comp-pts-label">pts</div>
+          </div>
+        </div>
+        <div class="comp-leader" id="comp-leader">¡Empate! Los dos arrancando la semana 🔥</div>
+      </div>
 
-    <div class="sec-title">POSTS FACEBOOK</div>
-    <div class="sec-sub">5 posts de texto · tendencias reales de hoy</div>
+      <!-- TEAM BUTTONS -->
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-name">💀 Cristian</div>
+          <button class="team-btn reel" onclick="registrar('Cristian','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
+          <button class="team-btn post" onclick="registrar('Cristian','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
+        </div>
+        <div class="team-card">
+          <div class="team-name">👁️ Vanessa</div>
+          <button class="team-btn reel" onclick="registrar('Vanessa','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
+          <button class="team-btn post" onclick="registrar('Vanessa','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
+        </div>
+      </div>
 
-    <div class="tbox">
-      <div class="tbox-head">
-        <span class="tbox-title">🔥 Tendencias en vivo</span>
-        <span class="tstatus ts-loading" id="fb-ts">Buscando...</span>
+      <!-- GOAL CONFIG -->
+      <div class="card">
+        <div class="card-title">⚙️ Meta semanal</div>
+        <div class="goal-row">
+          <div class="goal-item">
+            <span class="goal-lbl">Meta de Reels</span>
+            <input class="goal-inp" id="inp-reels" type="number" value="21" min="1" onchange="updateGoals()">
+          </div>
+          <div class="goal-item">
+            <span class="goal-lbl">Meta de Posts</span>
+            <input class="goal-inp" id="inp-posts" type="number" value="35" min="1" onchange="updateGoals()">
+          </div>
+        </div>
+        <div class="divider"></div>
+        <button class="big-btn ghost" onclick="resetWeek()">↺ Nueva semana — reiniciar</button>
       </div>
-      <div class="tlist" id="fb-tlist">
-        <div class="skel" style="width:80%"></div><div class="skel" style="width:65%"></div>
-        <div class="skel" style="width:75%"></div><div class="skel" style="width:55%"></div>
-        <div class="skel" style="width:70%"></div>
-      </div>
-    </div>
 
-    <div class="schedule">
-      <div class="schedule-title">📅 Horario recomendado · posts de texto</div>
-      <div class="sched-grid">
-        <div class="sched-row"><span class="sched-time">8:00 AM</span><span class="sched-type st-post">Post 1</span><span class="sched-desc">Debate o curiosidad · arranque del día</span></div>
-        <div class="sched-row"><span class="sched-time">12:00 PM</span><span class="sched-type st-post">Post 2</span><span class="sched-desc">Pico del mediodía · opinión</span></div>
-        <div class="sched-row"><span class="sched-time">3:00 PM</span><span class="sched-type st-post">Post 3</span><span class="sched-desc">Tarde activa · reseña o análisis</span></div>
-        <div class="sched-row"><span class="sched-time">6:00 PM</span><span class="sched-type st-post">Post 4</span><span class="sched-desc">Prime time · encuesta o debate</span></div>
-        <div class="sched-row"><span class="sched-time">9:00 PM</span><span class="sched-type st-post">Post 5 🎯</span><span class="sched-desc">CTA monetización · grupo o Stars</span></div>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Tono</div>
-        <select id="fb-tono">
-          <option value="fan apasionado y humano">Fan apasionado</option>
-          <option value="dramático con suspenso">Dramático</option>
-          <option value="opinión directa y personal">Opinión directa</option>
-          <option value="informativo y entretenido">Informativo</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Tipo</div>
-        <select id="fb-tipo">
-          <option value="variado: opinión, debate, curiosidad, reseña, y el último post siempre es CTA invitando al grupo privado de terror">Variado + CTA ✓</option>
-          <option value="solo debates y preguntas, el último post es CTA al grupo privado">Solo debates</option>
-          <option value="solo curiosidades y datos, el último post es CTA al grupo privado">Curiosidades</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Largo</div>
-        <select id="fb-largo">
-          <option value="cortos de 80 a 120 palabras">Cortos</option>
-          <option value="medianos de 150 a 220 palabras">Medianos</option>
-          <option value="mix de cortos y largos">Mix</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
-        <select id="fb-ht">
-          <option value="con 5 hashtags en español">5 hashtags</option>
-          <option value="sin hashtags">Sin hashtags</option>
-          <option value="con 8 hashtags">8 hashtags</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Cantidad de posts</div>
-        <select id="fb-cant">
-          <option value="5">5 posts</option>
-          <option value="3">3 posts</option>
-          <option value="7">7 posts</option>
-          <option value="10">10 posts</option>
-        </select>
+      <!-- ACTIVITY -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="card-title" style="margin-bottom:0">📋 Diario de actividad</div>
+          <span style="font-size:13px;color:var(--text3);cursor:pointer" onclick="clearActivity()">Limpiar</span>
+        </div>
+        <div class="activity-list" id="activityList">
+          <div class="act-empty">Sin actividad registrada aún.</div>
+        </div>
       </div>
     </div>
 
-    <div class="prog-wrap" id="fb-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="fb-s1"><span class="step-ic">🔍</span>Buscando tendencias reales de terror hoy</div>
-        <div class="prog-step" id="fb-s2"><span class="step-ic">🧠</span>Analizando qué está viral en Facebook</div>
-        <div class="prog-step" id="fb-s3"><span class="step-ic">✍️</span>Redactando 5 posts con voz humana</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="fb-bar"></div></div>
-    </div>
-    <button class="gen-btn fb" id="fb-btn" onclick="gen('fb')">GENERAR POSTS 📘</button>
-    <div class="gen-note">El post 5 siempre incluye CTA de monetización</div>
+    <!-- ══ PANEL: SEGUIDORES ════════════════════════ -->
+    <div class="panel" id="panel-followers">
+      <div class="page-title">📈 Seguidores</div>
+      <div class="page-sub">Actualizá los números diariamente</div>
 
-    <div style="height:1px;background:var(--border);margin:16px 0"></div>
-    <div class="sec-title" style="font-size:18px">AMPLIAR POST</div>
-    <div class="sec-sub">Tomá un post y expandilo con más datos, más tensión y más gancho</div>
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Pegá el post que querés ampliar</div>
-        <textarea id="amp-post" placeholder="Pegá acá el post que generaste o uno que ya publicaste..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:80px;margin-top:4px"></textarea>
+      <div class="plat-grid">
+        <div class="plat-card">
+          <span class="plat-icon">📘</span>
+          <div class="plat-name">Facebook</div>
+          <div class="plat-num" id="num-fb" style="color:#1877f2">230K</div>
+          <div class="plat-delta" id="delta-fb"></div>
+          <input class="plat-input" id="inp-fb" type="number" placeholder="Ej: 231000">
+          <button class="plat-save-btn" onclick="saveFollowers('fb')">Guardar</button>
+        </div>
+        <div class="plat-card">
+          <span class="plat-icon">📸</span>
+          <div class="plat-name">Instagram</div>
+          <div class="plat-num" id="num-ig" style="color:#e1306c">—</div>
+          <div class="plat-delta" id="delta-ig"></div>
+          <input class="plat-input" id="inp-ig" type="number" placeholder="Ej: 15000">
+          <button class="plat-save-btn" onclick="saveFollowers('ig')">Guardar</button>
+        </div>
+        <div class="plat-card">
+          <span class="plat-icon">🎵</span>
+          <div class="plat-name">TikTok</div>
+          <div class="plat-num" id="num-tt" style="color:#69c9d0">—</div>
+          <div class="plat-delta" id="delta-tt"></div>
+          <input class="plat-input" id="inp-tt" type="number" placeholder="Ej: 8000">
+          <button class="plat-save-btn" onclick="saveFollowers('tt')">Guardar</button>
+        </div>
+        <div class="plat-card">
+          <span class="plat-icon">▶️</span>
+          <div class="plat-name">YouTube</div>
+          <div class="plat-num" id="num-yt" style="color:#ff0000">—</div>
+          <div class="plat-delta" id="delta-yt"></div>
+          <input class="plat-input" id="inp-yt" type="number" placeholder="Ej: 5000">
+          <button class="plat-save-btn" onclick="saveFollowers('yt')">Guardar</button>
+        </div>
       </div>
-    </div>
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card"><div class="cfg-label">Cómo ampliarlo</div>
-        <select id="amp-modo">
-          <option value="más datos reales y específicos: fechas, nombres, lugares, números concretos que no estaban">Más datos reales</option>
-          <option value="más tensión narrativa y suspenso creciente, con giro perturbador al final">Más tensión</option>
-          <option value="más contexto histórico y científico que haga el caso más creíble e impactante">Más contexto</option>
-          <option value="más emocional y cercano, que conecte con la experiencia del lector">Más emocional</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Largo final</div>
-        <select id="amp-largo">
-          <option value="150 a 200 palabras">150-200 palabras</option>
-          <option value="200 a 300 palabras">200-300 palabras</option>
-          <option value="300 a 400 palabras">300-400 palabras</option>
-        </select>
-      </div>
-    </div>
-    <button class="gen-btn" id="amp-btn" style="background:linear-gradient(135deg,#1a0a3a,#7c3aed)" onclick="genAmpliar()">AMPLIAR POST ✨</button>
-    <div class="gen-note">Mismo post · más datos · más impacto · más comentarios</div>
-  
-    </div>
-    <div class="hub-sub" id="hub-fb-reels">
 
-    <div class="sec-title">REELS FACEBOOK</div>
-    <div class="sec-sub">3 scripts de Reels · 30-60 seg · alcance máximo</div>
+      <div class="err-box" id="followers-err"></div>
 
-    <div class="tbox">
-      <div class="tbox-head">
-        <span class="tbox-title">🔥 Tendencias para Reels</span>
-        <span class="tstatus ts-loading" id="rl-ts">Buscando...</span>
+      <div class="ai-analysis-card" id="ai-analysis-card">
+        <div class="ai-badge">✨ Análisis IA · Groq</div>
+        <div class="ai-text" id="ai-analysis-text">Cargá los seguidores de al menos 2 plataformas para que la IA analice tu crecimiento y te dé estrategias concretas.</div>
+        <div class="ai-prompts" id="ai-prompts"></div>
       </div>
-      <div class="tlist" id="rl-tlist">
-        <div class="skel" style="width:75%"></div><div class="skel" style="width:60%"></div>
-        <div class="skel" style="width:80%"></div><div class="skel" style="width:65%"></div>
-      </div>
+
+      <button class="big-btn gold" id="analyze-btn" onclick="analyzeFollowers()">✨ Analizar con IA</button>
+      <div class="gen-note" style="font-size:13px;color:var(--text3);text-align:center;margin-bottom:14px">La IA detecta qué plataforma priorizar esta semana</div>
     </div>
 
-    <div class="schedule">
-      <div class="schedule-title">📅 Horario recomendado · Reels</div>
-      <div class="sched-grid">
-        <div class="sched-row"><span class="sched-time">10:00 AM</span><span class="sched-type st-reel">Reel 1</span><span class="sched-desc">Mañana · captar audiencia nueva</span></div>
-        <div class="sched-row"><span class="sched-time">6:00 PM</span><span class="sched-type st-reel">Reel 2</span><span class="sched-desc">Prime time · mayor alcance del día</span></div>
-        <div class="sched-row"><span class="sched-time">9:30 PM</span><span class="sched-type st-reel">Reel 3</span><span class="sched-desc">Noche · terror engancha más de noche</span></div>
-      </div>
+    <!-- ══ PANEL: AGENDA ════════════════════════════ -->
+    <div class="panel" id="panel-agenda">
+      <div class="page-title">📅 Agenda</div>
+      <div class="page-sub">Publicaciones de la semana · tildá cuando publiques</div>
+      <div id="agendaContainer"></div>
     </div>
 
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Formato Reel</div>
-        <select id="rl-formato">
-          <option value="narración directa a cámara, texto hablado como si contaras un secreto">Narración directa</option>
-          <option value="texto encima de imagen o clip, estilo found footage o CCTV">Texto sobre imagen</option>
-          <option value="pregunta impactante + respuesta reveladora">Pregunta + revelación</option>
-          <option value="top 3 datos de terror en formato rápido">Top 3 rápido</option>
-        </select>
+    <!-- ══ PANEL: IDEAS ═════════════════════════════ -->
+    <div class="panel" id="panel-ideas">
+      <div class="page-title">💡 15 Ideas</div>
+      <div class="page-sub">Generadas por Gemini con tendencias de hoy</div>
+
+      <div class="ideas-header-bar">
+        <div class="ideas-live-dot"></div>
+        <div class="ideas-live-info">
+          <div class="ideas-live-title" id="ideas-title">Generando con Gemini...</div>
+          <div class="ideas-live-sub" id="ideas-sub">Ideas frescas para hoy</div>
+        </div>
+        <button class="ideas-refresh-btn" onclick="generarIdeas(true)">↺ Nuevas</button>
       </div>
-      <div class="cfg-card"><div class="cfg-label">Duración</div>
-        <select id="rl-dur">
-          <option value="30 a 45 segundos, muy dinámico">30-45 seg ✓</option>
-          <option value="45 a 60 segundos con desarrollo">45-60 seg</option>
-          <option value="mix de duraciones">Mix</option>
-        </select>
+
+      <div class="err-box" id="ideas-err"></div>
+
+      <div class="cat-filter">
+        <button class="cat-pill active" onclick="filterCat('all',this)">Todas</button>
+        <button class="cat-pill" onclick="filterCat('paranormal',this)">👻</button>
+        <button class="cat-pill" onclick="filterCat('aliens',this)">👽</button>
+        <button class="cat-pill" onclick="filterCat('misterios',this)">🔵</button>
+        <button class="cat-pill" onclick="filterCat('crimenes',this)">🔴</button>
+        <button class="cat-pill" onclick="filterCat('tendencias',this)">⚡</button>
       </div>
-      <div class="cfg-card"><div class="cfg-label">Gancho inicial</div>
-        <select id="rl-gancho">
-          <option value="pregunta perturbadora que genera curiosidad inmediata">Pregunta perturbadora</option>
-          <option value="afirmación impactante que contradice lo que todos creen">Afirmación impactante</option>
-          <option value="dato real que parece mentira">Dato increíble</option>
-          <option value="inicio in medias res, ya en medio de la acción">In medias res</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">CTA final</div>
-        <select id="rl-cta">
-          <option value="terminar con pregunta que invite a comentar">Pregunta (comentarios)</option>
-          <option value="terminar mencionando que el análisis completo está en el perfil">Al perfil (tráfico)</option>
-          <option value="terminar invitando al grupo privado de terror">Al grupo privado</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Cantidad de Reels</div>
-        <select id="rl-cant">
-          <option value="3">3 Reels</option>
-          <option value="1">1 Reel</option>
-          <option value="5">5 Reels</option>
-          <option value="7">7 Reels</option>
-        </select>
+
+      <div id="ideasList">
+        <div class="skel" style="height:72px"></div>
+        <div class="skel" style="height:72px"></div>
+        <div class="skel" style="height:72px"></div>
+        <div class="skel" style="height:72px"></div>
+        <div class="skel" style="height:72px"></div>
       </div>
     </div>
 
-    <div class="prog-wrap" id="rl-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="rl-s1"><span class="step-ic">🔍</span>Buscando formatos virales de Reels terror</div>
-        <div class="prog-step" id="rl-s2"><span class="step-ic">🎬</span>Estructurando narrativa de 30-60 segundos</div>
-        <div class="prog-step" id="rl-s3"><span class="step-ic">✍️</span>Escribiendo scripts con hooks irresistibles</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="rl-bar"></div></div>
-    </div>
-    <button class="gen-btn rl" id="rl-btn" onclick="gen('rl')">GENERAR SCRIPTS DE REELS 🎬</button>
-    <div class="gen-note">Cada script incluye hook · desarrollo · CTA · sugerencia visual</div>
-    </div><!-- /hub-fb-reels -->
-    <div class="hub-sub" id="hub-fb-imgs">
-    <div class="sec-title">COPY PARA IMÁGENES</div>
-    <div class="sec-sub">Texto para fotos FB · texto en Reels · títulos de thumbnails YT</div>
+    <!-- ══ PANEL: HERRAMIENTAS ══════════════════════ -->
+    <div class="panel" id="panel-tools">
+      <div class="page-title">🛠️ Herramientas</div>
+      <div class="page-sub">Anticopy · Ampliar posts · Zona creativa</div>
 
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Tipo de contenido</div>
-        <select id="im-tipo">
-          <option value="post con imagen en Facebook">Post con imagen FB</option>
-          <option value="thumbnail de YouTube">Thumbnail YouTube</option>
-          <option value="texto superpuesto en Reel de terror">Texto en Reel</option>
-          <option value="portada de grupo privado de terror">Portada de grupo</option>
-        </select>
+      <!-- TABS -->
+      <div style="display:flex;gap:8px;margin-bottom:18px">
+        <button class="cat-pill active" id="tab-anticopy" onclick="setTool('anticopy')">🛡️ Anticopy</button>
+        <button class="cat-pill" id="tab-ampliar" onclick="setTool('ampliar')">📝 Ampliar</button>
       </div>
-      <div class="cfg-card"><div class="cfg-label">Tema de la imagen</div>
-        <select id="im-tema">
-          <option value="escena de película de terror">Película de terror</option>
-          <option value="lugar abandonado o perturbador">Lugar perturbador</option>
-          <option value="leyenda urbana o criatura">Leyenda / criatura</option>
-          <option value="experiencia paranormal personal">Experiencia paranormal</option>
-          <option value="noticia o hecho real perturbador">Hecho real</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Objetivo</div>
-        <select id="im-objetivo">
-          <option value="maximizar comentarios y debate">Más comentarios</option>
-          <option value="maximizar clicks y CTR">Más clicks / CTR</option>
-          <option value="maximizar shares y viralidad">Más compartidos</option>
-          <option value="llevar al grupo privado de terror">Al grupo privado</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Largo del texto</div>
-        <select id="im-largo">
-          <option value="muy corto: 1 sola línea impactante de máximo 6 palabras">1 línea · 6 palabras</option>
-          <option value="corto: 2 a 3 líneas con gancho y pregunta">2-3 líneas</option>
-          <option value="descripción completa de 60 a 90 palabras para el post de la imagen">Descripción completa</option>
-        </select>
-      </div>
-    </div>
 
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Describí tu imagen (opcional pero mejora el resultado)</div>
-        <textarea id="im-desc" placeholder="Ej: foto de una casa abandonada de noche con una ventana iluminada..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:60px;margin-top:4px"></textarea>
+      <!-- ANTICOPY -->
+      <div id="tool-anticopy">
+        <div class="info-banner">
+          <div class="info-banner-title">🛡️ Zona Anticopy</div>
+          <div class="info-banner-body">Pegá texto de otra página. Groq lo reescribe desde cero para que Facebook lo detecte como contenido 100% original de Zona de Terror TV.</div>
+        </div>
+        <textarea id="anticopyInput" placeholder="Pegá acá el texto que querés transformar al estilo Zona de Terror TV..."></textarea>
+        <div class="err-box" id="ac-err"></div>
+        <div class="prog-box" id="ac-prog">
+          <div class="prog-step" id="ac-s1"><span class="ps-ic">🔍</span>Analizando estructura y vocabulario</div>
+          <div class="prog-step" id="ac-s2"><span class="ps-ic">✂️</span>Destruyendo patrones detectables</div>
+          <div class="prog-step" id="ac-s3"><span class="ps-ic">💀</span>Reconstruyendo en estilo Zona de Terror TV</div>
+          <div class="prog-bar-wrap"><div class="prog-bar" id="ac-bar"></div></div>
+        </div>
+        <button class="big-btn gold" id="ac-btn" onclick="anticopy()">💀 Convertir a Estilo Zona de Terror TV</button>
+        <div class="result-box" id="ac-result">
+          <div class="result-header">
+            <span class="result-label">Resultado</span>
+            <button class="copy-btn" onclick="copyResult('ac-text','ac-copy')">Copiar</button>
+          </div>
+          <div class="result-text" id="ac-text"></div>
+        </div>
+        <button class="big-btn ghost" onclick="clearTool('ac')">Limpiar</button>
       </div>
-    </div>
 
-    <div class="prog-wrap" id="im-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="im-s1"><span class="step-ic">🔍</span>Analizando tipo de imagen y objetivo</div>
-        <div class="prog-step" id="im-s2"><span class="step-ic">🧠</span>Generando copies optimizados para alcance</div>
-        <div class="prog-step" id="im-s3"><span class="step-ic">✍️</span>Refinando con ganchos de terror irresistibles</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="im-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="im-btn" style="background:linear-gradient(135deg,#7b0e4e,#f72585)" onclick="genImagen()">GENERAR 5 COPIES 🖼️</button>
-    <div class="gen-note">5 opciones de texto · elegís la que más te gusta</div>
-    </div><!-- /hub-fb-imgs -->
-  </div><!-- /panel-fb -->
-
-
-
-  <!-- ═══════════════════════════════════════════════ YOUTUBE HUB -->
-  <div class="panel" id="panel-yh">
-    <div class="hub-tabs">
-      <button class="hub-tab active green" onclick="setHub('yh','ideas',this)">💡 Ideas</button>
-      <button class="hub-tab" onclick="setHub('yh','guion',this)">🎥 Guión</button>
-      <button class="hub-tab" onclick="setHub('yh','desc',this)">📝 Descripción SEO</button>
-    </div>
-    <div class="hub-sub active" id="hub-yh-ideas">
-
-    <div class="sec-title">YOUTUBE · TIKTOK</div>
-    <div class="sec-sub">Ideas de videos basadas en tendencias de hoy</div>
-
-    <div class="tbox">
-      <div class="tbox-head">
-        <span class="tbox-title">🔥 Tendencias para video</span>
-        <span class="tstatus ts-loading" id="yt-ts">Buscando...</span>
-      </div>
-      <div class="tlist" id="yt-tlist">
-        <div class="skel" style="width:75%"></div><div class="skel" style="width:60%"></div>
-        <div class="skel" style="width:80%"></div><div class="skel" style="width:55%"></div>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Plataforma</div>
-        <select id="vp-plat">
-          <option value="YouTube (videos de 8 a 15 minutos con título SEO optimizado)">YouTube</option>
-          <option value="TikTok (videos de 30 a 60 segundos con hook de 3 segundos)">TikTok</option>
-          <option value="ambas plataformas adaptando el mismo concepto">Ambas</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Formato</div>
-        <select id="vp-formato">
-          <option value="variado: análisis, reseña, ranking, documental corto, reacción">Variado ✓</option>
-          <option value="análisis y teorías en profundidad">Análisis</option>
-          <option value="rankings top 10">Rankings</option>
-          <option value="found footage y analog horror">Found footage</option>
-        </select>
+      <!-- AMPLIAR -->
+      <div id="tool-ampliar" style="display:none">
+        <div class="amp-selected" id="ampSelected">
+          <div class="amp-sel-label">Idea seleccionada</div>
+          <div class="amp-sel-title">Ninguna</div>
+          <div class="amp-sel-desc">Elegí una idea del panel de 15 Ideas o escribí tu tema abajo.</div>
+        </div>
+        <textarea id="ampliarInput" placeholder="O escribí el tema que querés desarrollar..." style="min-height:90px"></textarea>
+        <div class="cfg-row">
+          <div class="cfg-item">
+            <div class="cfg-lbl">Tono</div>
+            <select id="amp-tono">
+              <option value="sombrío, tenso y perturbador con atmósfera densa">Sombrío</option>
+              <option value="dramático y escalofriante con ritmo acelerado">Dramático</option>
+              <option value="investigativo periodístico como caso sin resolver">Investigativo</option>
+              <option value="narrativo en primera persona como si el autor lo vivió">1ra persona</option>
+            </select>
+          </div>
+          <div class="cfg-item">
+            <div class="cfg-lbl">Largo</div>
+            <select id="amp-largo">
+              <option value="300 a 400 palabras">300-400 palabras</option>
+              <option value="400 a 600 palabras">400-600 palabras</option>
+              <option value="600 a 800 palabras">600-800 palabras</option>
+            </select>
+          </div>
+          <div class="cfg-item">
+            <div class="cfg-lbl">CTA final</div>
+            <select id="amp-cta">
+              <option value="pregunta perturbadora que obligue a comentar">Pregunta</option>
+              <option value="encuesta de opinión al final">Encuesta</option>
+              <option value="invitación al grupo privado">Grupo privado</option>
+              <option value="pedir que compartan si les dio miedo">Compartir</option>
+            </select>
+          </div>
+          <div class="cfg-item">
+            <div class="cfg-lbl">Hashtags</div>
+            <select id="amp-ht">
+              <option value="con 5 hashtags en español">5 hashtags</option>
+              <option value="sin hashtags">Sin hashtags</option>
+              <option value="con 8 hashtags de terror">8 hashtags</option>
+            </select>
+          </div>
+        </div>
+        <div class="err-box" id="amp-err"></div>
+        <div class="prog-box" id="amp-prog">
+          <div class="prog-step" id="amp-s1"><span class="ps-ic">💀</span>Modo Director Creativo activado</div>
+          <div class="prog-step" id="amp-s2"><span class="ps-ic">🌑</span>Construyendo atmósfera y narrativa</div>
+          <div class="prog-step" id="amp-s3"><span class="ps-ic">✍️</span>Redactando post con ganchos de engagement</div>
+          <div class="prog-bar-wrap"><div class="prog-bar" id="amp-bar"></div></div>
+        </div>
+        <button class="big-btn red" id="amp-btn" onclick="ampliar()">📝 Generar Post Completo</button>
+        <div class="result-box" id="amp-result">
+          <div class="result-header">
+            <span class="result-label">Post Generado</span>
+            <button class="copy-btn" onclick="copyResult('amp-text','amp-copy')" id="amp-copy">Copiar</button>
+          </div>
+          <div class="result-text" id="amp-text"></div>
+        </div>
+        <button class="big-btn ghost" onclick="clearTool('amp')">Limpiar</button>
       </div>
     </div>
 
-    <div class="prog-wrap" id="yt-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="yt-s1"><span class="step-ic">🔍</span>Buscando qué está trending en video terror</div>
-        <div class="prog-step" id="yt-s2"><span class="step-ic">📊</span>Analizando formatos con mayor retención</div>
-        <div class="prog-step" id="yt-s3"><span class="step-ic">✍️</span>Generando ideas con estructura completa</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="yt-bar"></div></div>
-    </div>
-    <button class="gen-btn yt" id="yt-btn" onclick="gen('yt')">GENERAR 5 IDEAS DE VIDEO ▶️</button>
-    <div class="gen-note">Título · gancho · estructura · thumbnail · hashtags</div>
-  </div>
+  </div><!-- /content -->
 
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="setPanel('batalla',this)">
+      <span class="nav-icon">⚔️</span><span class="nav-label">Contador</span>
+    </button>
+    <button class="nav-item" onclick="setPanel('followers',this)">
+      <span class="nav-icon">📈</span><span class="nav-label">Seguidores</span>
+    </button>
+    <button class="nav-item" onclick="setPanel('agenda',this)">
+      <span class="nav-icon">📅</span><span class="nav-label">Agenda</span>
+    </button>
+    <button class="nav-item" onclick="setPanel('ideas',this)">
+      <span class="nav-icon">💡</span><span class="nav-label">Ideas</span>
+    </button>
+    <button class="nav-item" onclick="setPanel('tools',this)">
+      <span class="nav-icon">🛠️</span><span class="nav-label">Tools</span>
+    </button>
+  </nav>
 
-
-
-
-
-
-
-
-    <div class="sec-sub">Texto para fotos FB · texto en Reels · títulos de thumbnails YT</div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Tipo de contenido</div>
-        <select id="im-tipo">
-          <option value="post con imagen en Facebook">Post con imagen FB</option>
-          <option value="thumbnail de YouTube">Thumbnail YouTube</option>
-          <option value="texto superpuesto en Reel de terror">Texto en Reel</option>
-          <option value="portada de grupo privado de terror">Portada de grupo</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Tema de la imagen</div>
-        <select id="im-tema">
-          <option value="escena de película de terror">Película de terror</option>
-          <option value="lugar abandonado o perturbador">Lugar perturbador</option>
-          <option value="leyenda urbana o criatura">Leyenda / criatura</option>
-          <option value="experiencia paranormal personal">Experiencia paranormal</option>
-          <option value="noticia o hecho real perturbador">Hecho real</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Objetivo</div>
-        <select id="im-objetivo">
-          <option value="maximizar comentarios y debate">Más comentarios</option>
-          <option value="maximizar clicks y CTR">Más clicks / CTR</option>
-          <option value="maximizar shares y viralidad">Más compartidos</option>
-          <option value="llevar al grupo privado de terror">Al grupo privado</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Largo del texto</div>
-        <select id="im-largo">
-          <option value="muy corto: 1 sola línea impactante de máximo 6 palabras">1 línea · 6 palabras</option>
-          <option value="corto: 2 a 3 líneas con gancho y pregunta">2-3 líneas</option>
-          <option value="descripción completa de 60 a 90 palabras para el post de la imagen">Descripción completa</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Describí tu imagen (opcional pero mejora el resultado)</div>
-        <textarea id="im-desc" placeholder="Ej: foto de una casa abandonada de noche con una ventana iluminada..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:60px;margin-top:4px"></textarea>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="im-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="im-s1"><span class="step-ic">🔍</span>Analizando tipo de imagen y objetivo</div>
-        <div class="prog-step" id="im-s2"><span class="step-ic">🧠</span>Generando copies optimizados para alcance</div>
-        <div class="prog-step" id="im-s3"><span class="step-ic">✍️</span>Refinando con ganchos de terror irresistibles</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="im-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="im-btn" style="background:linear-gradient(135deg,#7b0e4e,#f72585)" onclick="genImagen()">GENERAR 5 COPIES 🖼️</button>
-    <div class="gen-note">5 opciones de texto · elegís la que más te gusta</div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════ PLANIFICADOR SEMANAL -->
-  <div class="panel" id="panel-wk">
-    <div class="sec-title">PLAN SEMANAL</div>
-    <div class="sec-sub">Bloques de 2 días · calidad consistente en cada post y Reel</div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Bloque a generar</div>
-        <select id="wk-bloque">
-          <option value="Lunes y Martes">Lunes y Martes</option>
-          <option value="Miércoles y Jueves">Miércoles y Jueves</option>
-          <option value="Viernes y Sábado">Viernes y Sábado</option>
-          <option value="Domingo solo">Solo Domingo</option>
-          <option value="toda la semana (Lunes a Domingo, calidad puede variar en posts finales)">Semana completa ⚠️</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Foco</div>
-        <select id="wk-foco">
-          <option value="variado: mezcla de películas, leyendas, experiencias personales y debates">Variado ✓</option>
-          <option value="estrenos y novedades del cine de terror de la semana">Estrenos semana</option>
-          <option value="leyendas urbanas latinoamericanas y experiencias paranormales">Leyendas latinas</option>
-          <option value="terror clásico: películas y directores icónicos del género">Terror clásico</option>
-          <option value="analog horror, creepypastas y terror de internet">Terror internet</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Tono dominante</div>
-        <select id="wk-tono">
-          <option value="fan apasionado y humano, voz cercana">Fan apasionado</option>
-          <option value="dramático con suspenso creciente">Dramático</option>
-          <option value="mix de opinión directa y debate">Mix debate</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">CTA de monetización</div>
-        <select id="wk-cta">
-          <option value="grupo privado de terror ($5-10/mes)">Grupo privado</option>
-          <option value="Stars de Facebook en lives">Stars FB</option>
-          <option value="canal de YouTube del creador">Canal YouTube</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
-        <select id="wk-ht">
-          <option value="con 5 hashtags en español por post">5 hashtags</option>
-          <option value="sin hashtags">Sin hashtags</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="wk-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="wk-s1"><span class="step-ic">🔍</span>Analizando tendencias de la semana</div>
-        <div class="prog-step" id="wk-s2"><span class="step-ic">🗓️</span>Estructurando los 7 días con variedad</div>
-        <div class="prog-step" id="wk-s3"><span class="step-ic">✍️</span>Redactando posts y scripts completos</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="wk-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="wk-btn" style="background:linear-gradient(135deg,#023e8a,#4cc9f0)" onclick="genSemana()">GENERAR SEMANA COMPLETA 🗓️</button>
-    <div class="gen-note">Bloques de 2 días = mejor calidad · semana completa disponible pero más lenta</div>
-  
-    </div>
-    <div class="hub-sub" id="hub-yh-guion">
-
-    <div class="sec-title">GUIÓN YOUTUBE</div>
-    <div class="sec-sub">Video completo de 10-15 min · listo para grabar</div>
-
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Tema del video (podés ser específico)</div>
-        <textarea id="gs-tema" placeholder="Ej: Las 5 películas de terror más perturbadoras de 2025 que nadie habla, o: La historia real detrás de La Monja..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Formato</div>
-        <select id="gs-formato">
-          <option value="análisis y teorías en profundidad con datos reales">Análisis / teorías</option>
-          <option value="ranking top con suspenso creciente, el más impactante al final">Ranking Top</option>
-          <option value="documental corto con narración dramática">Documental corto</option>
-          <option value="reseña con opinión personal apasionada">Reseña personal</option>
-          <option value="historia real narrada como si fuera un relato de terror">Historia real narrada</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Duración objetivo</div>
-        <select id="gs-dur">
-          <option value="10 minutos (aproximadamente 1400 palabras)">10 minutos</option>
-          <option value="12 minutos (aproximadamente 1700 palabras)">12 minutos</option>
-          <option value="15 minutos (aproximadamente 2100 palabras)">15 minutos</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Tono</div>
-        <select id="gs-tono">
-          <option value="narrador apasionado y humano, como si contaras algo que te fascina">Apasionado</option>
-          <option value="dramático con suspenso creciente, como documental de terror">Dramático</option>
-          <option value="analítico pero entretenido, con humor negro ocasional">Analítico</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">CTA final</div>
-        <select id="gs-cta">
-          <option value="suscribirse al canal y activar la campanita">Suscripción</option>
-          <option value="unirse al grupo privado de terror">Grupo privado</option>
-          <option value="membresía del canal">Membresía</option>
-          <option value="ver el siguiente video recomendado">Siguiente video</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="gs-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="gs-s1"><span class="step-ic">🔍</span>Investigando el tema con tendencias actuales</div>
-        <div class="prog-step" id="gs-s2"><span class="step-ic">🗂️</span>Estructurando el guión con retención máxima</div>
-        <div class="prog-step" id="gs-s3"><span class="step-ic">✍️</span>Redactando el guión completo listo para grabar</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="gs-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="gs-btn" style="background:linear-gradient(135deg,#7c3a00,#f4a261)" onclick="genGuion()">GENERAR GUIÓN COMPLETO 🎥</button>
-    <div class="gen-note">⚠️ Tarda 25-35 seg por la extensión · vale la pena esperar ☕</div>
-  
-    </div>
-    <div class="hub-sub" id="hub-yh-desc">
-
-    </div>
-  </div>
-
-
-
-
-  <!-- ═══════════════════════════════════════════════ GUIÓN YOUTUBE -->
-  <div class="panel" id="panel-gs">
-    <div class="sec-title">GUIÓN YOUTUBE</div>
-    <div class="sec-sub">Video completo de 10-15 min · listo para grabar</div>
-
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Tema del video (podés ser específico)</div>
-        <textarea id="gs-tema" placeholder="Ej: Las 5 películas de terror más perturbadoras de 2025 que nadie habla, o: La historia real detrás de La Monja..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Formato</div>
-        <select id="gs-formato">
-          <option value="análisis y teorías en profundidad con datos reales">Análisis / teorías</option>
-          <option value="ranking top con suspenso creciente, el más impactante al final">Ranking Top</option>
-          <option value="documental corto con narración dramática">Documental corto</option>
-          <option value="reseña con opinión personal apasionada">Reseña personal</option>
-          <option value="historia real narrada como si fuera un relato de terror">Historia real narrada</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Duración objetivo</div>
-        <select id="gs-dur">
-          <option value="10 minutos (aproximadamente 1400 palabras)">10 minutos</option>
-          <option value="12 minutos (aproximadamente 1700 palabras)">12 minutos</option>
-          <option value="15 minutos (aproximadamente 2100 palabras)">15 minutos</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Tono</div>
-        <select id="gs-tono">
-          <option value="narrador apasionado y humano, como si contaras algo que te fascina">Apasionado</option>
-          <option value="dramático con suspenso creciente, como documental de terror">Dramático</option>
-          <option value="analítico pero entretenido, con humor negro ocasional">Analítico</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">CTA final</div>
-        <select id="gs-cta">
-          <option value="suscribirse al canal y activar la campanita">Suscripción</option>
-          <option value="unirse al grupo privado de terror">Grupo privado</option>
-          <option value="membresía del canal">Membresía</option>
-          <option value="ver el siguiente video recomendado">Siguiente video</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="gs-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="gs-s1"><span class="step-ic">🔍</span>Investigando el tema con tendencias actuales</div>
-        <div class="prog-step" id="gs-s2"><span class="step-ic">🗂️</span>Estructurando el guión con retención máxima</div>
-        <div class="prog-step" id="gs-s3"><span class="step-ic">✍️</span>Redactando el guión completo listo para grabar</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="gs-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="gs-btn" style="background:linear-gradient(135deg,#7c3a00,#f4a261)" onclick="genGuion()">GENERAR GUIÓN COMPLETO 🎥</button>
-    <div class="gen-note">⚠️ Tarda 25-35 seg por la extensión · vale la pena esperar ☕</div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════ DESCRIPCIÓN YOUTUBE -->
-  <div class="panel" id="panel-yd">
-    <div class="sec-title">DESCRIPCIÓN YOUTUBE</div>
-    <div class="sec-sub">SEO optimizado · keywords · timestamps · links</div>
-
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Título del video</div>
-        <input type="text" id="yd-titulo" placeholder="Ej: Las 5 películas de terror más perturbadoras de 2025" style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;margin-top:4px">
-      </div>
-    </div>
-
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">De qué trata el video (2-3 líneas)</div>
-        <textarea id="yd-desc" placeholder="Ej: Análisis de las películas de terror más comentadas del año, con ranking del más al menos perturbador, incluye Nosferatu, La Novia de Frankenstein y más..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:70px;margin-top:4px"></textarea>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Duración del video</div>
-        <select id="yd-dur">
-          <option value="10 minutos">10 min</option>
-          <option value="12 minutos">12 min</option>
-          <option value="15 minutos">15 min</option>
-          <option value="20 minutos o más">+20 min</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Links a incluir</div>
-        <select id="yd-links">
-          <option value="grupo privado de terror y canal de YouTube">Grupo + Canal</option>
-          <option value="solo el grupo privado de terror">Solo grupo</option>
-          <option value="solo el canal de YouTube">Solo canal</option>
-          <option value="ningún link por ahora">Sin links</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Idioma SEO</div>
-        <select id="yd-idioma">
-          <option value="español latinoamericano general">Español latino</option>
-          <option value="español de Argentina">Argentina</option>
-          <option value="español de México">México</option>
-          <option value="español de España">España</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
-        <select id="yd-ht">
-          <option value="con 5 hashtags de terror en español al final">5 hashtags</option>
-          <option value="con 8 hashtags de terror en español al final">8 hashtags</option>
-          <option value="sin hashtags">Sin hashtags</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="yd-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="yd-s1"><span class="step-ic">🔍</span>Analizando keywords de terror en YouTube</div>
-        <div class="prog-step" id="yd-s2"><span class="step-ic">📊</span>Estructurando descripción para el algoritmo</div>
-        <div class="prog-step" id="yd-s3"><span class="step-ic">✍️</span>Redactando descripción + timestamps + tags</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="yd-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="yd-btn" style="background:linear-gradient(135deg,#0a3d1f,#2dc653)" onclick="genDescYT()">GENERAR DESCRIPCIÓN SEO 📝</button>
-    <div class="gen-note">Descripción · timestamps · keywords · tags · hashtags</div>
-  </div>
-
-
-  <!-- ═══════════════════════════════════════════════ REELS DE CASOS -->
-  <div class="panel active" id="panel-cs">
-    <div class="sec-title">REELS DE CASOS</div>
-    <div class="sec-sub">Video de fondo + imagen del caso arriba + texto completo · 15 segundos</div>
-
-    <div class="tbox">
-      <div class="tbox-head">
-        <span class="tbox-title">🔥 Casos virales ahora · true crime</span>
-        <span class="tstatus ts-loading" id="cs-ts">Buscando...</span>
-      </div>
-      <div style="display:flex;justify-content:flex-end;margin-bottom:6px">
-        <button class="refresh-btn" onclick="fetchCasosTrends(true)">↺ Actualizar casos</button>
-      </div>
-      <div class="tlist" id="cs-tlist">
-        <div class="skel" style="width:80%"></div>
-        <div class="skel" style="width:65%"></div>
-        <div class="skel" style="width:75%"></div>
-        <div class="skel" style="width:55%"></div>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Tipo de caso</div>
-        <select id="cs-tipo">
-          <option value="caso policial sin resolver narrado en tercera persona, estilo periodístico perturbador">Caso sin resolver</option>
-          <option value="leyenda urbana latinoamericana narrada como si fuera un testimonio real">Leyenda urbana</option>
-          <option value="últimas palabras o mensajes de una víctima, narrado con respeto y tensión">Últimas palabras</option>
-          <option value="expediente clasificado o experimento oscuro, narrado como si fuera filtrado">Expediente/experimento</option>
-          <option value="testimonio paranormal en primera persona, narrado como experiencia vivida">Testimonio paranormal</option>
-          <option value="grabación o evidencia perturbadora descripta en detalle, sin mostrar violencia">Grabación real</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Duración</div>
-        <select id="cs-dur">
-          <option value="15 segundos — texto completo de una sola pantalla, máximo 180 caracteres, que se lea en 15 segundos">15 segundos ✓</option>
-          <option value="20 segundos — texto completo de una sola pantalla, máximo 240 caracteres">20 segundos</option>
-          <option value="30 segundos — texto completo de una sola pantalla, máximo 350 caracteres">30 segundos</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Ritmo narrativo</div>
-        <select id="cs-ritmo">
-          <option value="tensión creciente: empieza tranquilo y termina con revelación perturbadora">Tensión creciente</option>
-          <option value="impacto desde el primer segundo: arranca con lo más perturbador">Impacto inmediato</option>
-          <option value="misterio sin resolver: termina con pregunta abierta que genera comentarios">Misterio abierto</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Región</div>
-        <select id="cs-region">
-          <option value="latinoamérica (Argentina, México, Colombia, Chile, Perú)">Latinoamérica</option>
-          <option value="mundial, casos internacionales famosos">Mundial</option>
-          <option value="España y Europa hispanohablante">España</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="cfg-grid">
-      <div class="cfg-card"><div class="cfg-label">Video de fondo</div>
-        <select id="cs-video">
-          <option value="bosque nocturno o lugar abandonado">Bosque / abandonado</option>
-          <option value="lluvia nocturna en ciudad vacía">Lluvia nocturna</option>
-          <option value="niebla densa en camino solitario">Niebla / camino</option>
-          <option value="mar oscuro de noche">Mar de noche</option>
-          <option value="habitación oscura con luz tenue">Habitación oscura</option>
-          <option value="ciudad vacía de madrugada">Ciudad madrugada</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Cantidad</div>
-        <select id="cs-cant">
-          <option value="3">3 Reels</option>
-          <option value="5">5 Reels</option>
-          <option value="7">7 Reels</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Hashtags</div>
-        <select id="cs-ht">
-          <option value="con 8 hashtags de terror y casos en español">8 hashtags</option>
-          <option value="con 5 hashtags de terror en español">5 hashtags</option>
-          <option value="sin hashtags">Sin hashtags</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">CTA final</div>
-        <select id="cs-cta">
-          <option value="pregunta perturbadora que invite a comentar la opinión">Pregunta (comentarios)</option>
-          <option value="invitar al grupo privado de terror para más casos">Al grupo privado</option>
-          <option value="seguir la página para ver el caso completo">Seguir la página</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="cs-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="cs-s1"><span class="step-ic">🔍</span>Buscando casos y leyendas perturbadoras</div>
-        <div class="prog-step" id="cs-s2"><span class="step-ic">✂️</span>Adaptando texto para leer en pantalla</div>
-        <div class="prog-step" id="cs-s3"><span class="step-ic">🎬</span>Generando instrucciones de producción en CapCut</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="cs-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="cs-btn" style="background:linear-gradient(135deg,#2d0050,#9b5de5)" onclick="genCasos()">GENERAR REELS DE CASOS 🎬</button>
-    <div class="gen-note">Texto en pantalla · video sugerido · instrucciones CapCut · caption · hashtags</div>
-
-    <div style="height:1px;background:var(--border);margin:16px 0"></div>
-    <div class="sec-title" style="font-size:18px">AMPLIAR REEL</div>
-    <div class="sec-sub">Expandí un texto con más datos reales y más impacto</div>
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Pegá el texto del Reel que querés ampliar</div>
-        <textarea id="arl-post" placeholder="Pegá acá el texto del Reel generado arriba..." style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:80px;margin-top:4px"></textarea>
-      </div>
-    </div>
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card"><div class="cfg-label">Cómo ampliarlo</div>
-        <select id="arl-modo">
-          <option value="más datos reales específicos: fechas exactas, nombres completos, detalles concretos del caso que no estaban">Más datos reales</option>
-          <option value="más tensión narrativa con suspense creciente y el dato más perturbador al final">Más tensión</option>
-          <option value="más contexto del caso: qué pasó antes, investigación, reacciones de la familia o la justicia">Más contexto</option>
-        </select>
-      </div>
-      <div class="cfg-card"><div class="cfg-label">Duración final</div>
-        <select id="arl-dur">
-          <option value="15 segundos — máximo 180 caracteres">15 seg</option>
-          <option value="20 segundos — máximo 240 caracteres">20 seg</option>
-          <option value="30 segundos — máximo 350 caracteres">30 seg</option>
-        </select>
-      </div>
-    </div>
-    <button class="gen-btn" id="arl-btn" style="background:linear-gradient(135deg,#1a0050,#7c3aed)" onclick="genAmpliarReel()">AMPLIAR REEL ✨</button>
-    <div class="gen-note">Mismo caso · más datos reales · más impacto</div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════ COACH -->
-  <div class="panel" id="panel-co">
-    <div class="sec-title">COACH DE ESTRATEGIA</div>
-    <div class="sec-sub">Guía de estrategia + consultas concretas</div>
-
-    <div class="tbox" style="margin-bottom:14px">
-      <div class="tbox-head"><span class="tbox-title">⚡ Los 6 tips que más impactan en tu página</span></div>
-      <div style="font-size:15px;color:var(--text-dim);line-height:1.9">
-        <p style="margin-bottom:10px"><strong style="color:var(--text)">1. Respondé comentarios en las primeras 2 horas.</strong> Facebook mide tu tiempo de respuesta. Responder los primeros 10 comentarios multiplica x3 el alcance orgánico.</p>
-        <p style="margin-bottom:10px"><strong style="color:var(--text)">2. El Reel de casos es tu motor de crecimiento.</strong> 3 Reels por día — 10AM, 6PM, 9:30PM. Llegan a gente que no te sigue todavía.</p>
-        <p style="margin-bottom:10px"><strong style="color:var(--text)">3. Post 5 siempre es CTA.</strong> El último post del día invita al grupo privado. Con 100 miembros duplicás lo que ganás hoy.</p>
-        <p style="margin-bottom:10px"><strong style="color:var(--text)">4. Boosteá lo que ya despega solo.</strong> Más de 40 comentarios en 3 horas sin promoción → invertí $3-5. ROI típico 8x.</p>
-        <p style="margin-bottom:10px"><strong style="color:var(--text)">5. Nunca borres posts con alto engagement.</strong> El historial de comentarios le dice al algoritmo que tu página genera conversación.</p>
-        <p style="margin-bottom:0"><strong style="color:var(--text)">6. Un caso, tres formatos.</strong> Reel 15 seg + post largo + idea YouTube. El trabajo se hace una vez.</p>
-      </div>
-    </div>
-
-    <div class="tbox" style="margin-bottom:14px">
-      <div class="tbox-head"><span class="tbox-title">📅 Tu sistema diario ideal</span></div>
-      <div style="font-size:15px;color:var(--text-dim);line-height:1.9">
-        🕗 8:00 AM — Post 1 (caso o debate)<br>
-        🕙 10:00 AM — Reel 1 (caso 15 seg)<br>
-        🕛 12:00 PM — Post 2 (fenómeno o curiosidad)<br>
-        🕒 3:00 PM — Post 3 (historia real)<br>
-        🕕 6:00 PM — Post 4 + Reel 2 (prime time)<br>
-        🕘 9:00 PM — Post 5 CTA (grupo privado)<br>
-        🕤 9:30 PM — Reel 3 (cierre nocturno)
-      </div>
-    </div>
-
-    <div class="tbox" style="margin-bottom:14px">
-      <div class="tbox-head"><span class="tbox-title">💰 Potencial con 230k seguidores</span></div>
-      <div style="font-size:15px;color:var(--text-dim);line-height:1.9">
-        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">Facebook actual</span><span style="float:right">$300 → $600-800/mes</span></div>
-        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:10px"><div style="width:55%;height:100%;background:var(--blue);border-radius:2px"></div></div>
-        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">+ Reels de Casos diarios</span><span style="float:right">+$200-400/mes</span></div>
-        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:10px"><div style="width:70%;height:100%;background:var(--red);border-radius:2px"></div></div>
-        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">+ YouTube con guiones</span><span style="float:right">+$300-1.000/mes</span></div>
-        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:10px"><div style="width:85%;height:100%;background:var(--green);border-radius:2px"></div></div>
-        <div style="margin-bottom:6px"><span style="color:var(--text);font-weight:500">Sistema completo</span><span style="float:right">$1.500-3.000/mes</span></div>
-        <div style="height:4px;background:var(--surface2);border-radius:2px;margin-bottom:0"><div style="width:95%;height:100%;background:var(--purple);border-radius:2px"></div></div>
-      </div>
-    </div>
-
-    <div class="sec-title" style="font-size:20px;margin-top:4px">PREGUNTALE AL COACH</div>
-    <div class="sec-sub">Estrategia, crecimiento, monetización — respuestas concretas para tu caso</div>
-
-    <div class="cfg-grid" style="margin-bottom:12px">
-      <div class="cfg-card" style="grid-column:1/-1">
-        <div class="cfg-label">Tu pregunta o situación</div>
-        <textarea id="co-pregunta" placeholder="Ej: Tengo 230k y gano $300/mes. Qué cambio esta semana para crecer más rápido?&#10;Ej: Un post tuvo 15 comentarios y 800 alcance, está bien?&#10;Ej: Cómo monetizo mejor el grupo privado?" style="width:100%;background:var(--surface3);border:0.5px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:100px;margin-top:4px"></textarea>
-      </div>
-    </div>
-
-    <div class="prog-wrap" id="co-prog">
-      <div class="prog-steps">
-        <div class="prog-step" id="co-s1"><span class="step-ic">🧠</span>Analizando tu situación</div>
-        <div class="prog-step" id="co-s2"><span class="step-ic">📊</span>Evaluando estrategia óptima</div>
-        <div class="prog-step" id="co-s3"><span class="step-ic">💡</span>Generando recomendaciones concretas</div>
-      </div>
-      <div class="pbar-wrap"><div class="pbar" id="co-bar"></div></div>
-    </div>
-    <button class="gen-btn" id="co-btn" style="background:linear-gradient(135deg,#7a3a00,#f0a500)" onclick="genCoach()">CONSULTAR AL COACH 🧠</button>
-    <div class="gen-note">Respuestas específicas para tu página · sin consejos genéricos</div>
-  </div>
-
+</div><!-- /app -->
 
 <script>
-// ── DATE ───────────────────────────────────────────────────────────────
-document.getElementById('dateBadge').textContent =
-  new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+// ══ HELPERS ════════════════════════════════════════
+const S = {
+  get:(k,d)=>{try{const v=localStorage.getItem('ztv_'+k);return v?JSON.parse(v):d}catch{return d}},
+  set:(k,v)=>{try{localStorage.setItem('ztv_'+k,JSON.stringify(v))}catch{}}
+};
 
-// ── STATE ──────────────────────────────────────────────────────────────
-let cache = {fb:null,rl:null,yt:null};
-let loaded = false;
+// ══ DATE ═══════════════════════════════════════════
+const NOW = new Date();
+document.getElementById('headerDate').textContent =
+  NOW.toLocaleDateString('es-AR',{weekday:'short',day:'2-digit',month:'short'}).toUpperCase();
 
-// ── PANEL ──────────────────────────────────────────────────────────────
-function setPanel(id,el) {
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+// ══ API CALLS (via Vercel functions) ═══════════════
+async function callGemini(prompt) {
+  const res = await fetch('/api/gemini', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({prompt})
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Error Gemini');
+  return data.text;
+}
+
+async function callGroq(prompt) {
+  const res = await fetch('/api/groq', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({prompt})
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Error Groq');
+  return data.text;
+}
+
+// ══ PANEL SWITCH ═══════════════════════════════════
+function setPanel(id, el) {
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
-  if(id==='cs' && !casosLoaded) fetchCasosTrends();
+  document.querySelector('.content').scrollTop = 0;
 }
 
-function setHub(panel, sub, el) {
-  const hub = document.getElementById('panel-'+panel);
-  hub.querySelectorAll('.hub-tab').forEach(t=>t.classList.remove('active','red','pink','green','orange'));
-  el.classList.add('active');
-  hub.querySelectorAll('.hub-sub').forEach(s=>s.classList.remove('active'));
-  document.getElementById('hub-'+panel+'-'+sub).classList.add('active');
+// ══ BATTLE STATE ═══════════════════════════════════
+let state = S.get('state',{reels:21,posts:35,goalReels:21,goalPosts:35});
+let pts = S.get('pts',{c:0,v:0});
+let activity = S.get('activity',[]);
+
+function renderCounters() {
+  document.getElementById('cnt-reels').textContent = Math.max(0,state.reels);
+  document.getElementById('cnt-posts').textContent = Math.max(0,state.posts);
+  document.getElementById('gr-disp').textContent = state.goalReels;
+  document.getElementById('gp-disp').textContent = state.goalPosts;
+  document.getElementById('inp-reels').value = state.goalReels;
+  document.getElementById('inp-posts').value = state.goalPosts;
 }
 
-// ── POST ROWS (analyzer) ───────────────────────────────────────────────
-let rowCount = 0;
+function renderCompetition() {
+  const pc = pts.c, pv = pts.v;
+  document.getElementById('pts-c').textContent = pc;
+  document.getElementById('pts-v').textContent = pv;
+  const max = Math.max(pc,pv,1);
+  document.getElementById('bar-c').style.width = (pc/max*100)+'%';
+  document.getElementById('bar-v').style.width = (pv/max*100)+'%';
+  const leader = document.getElementById('comp-leader');
+  if (pc > pv) leader.textContent = `💀 Cristian lidera con ${pc-pv} pts de ventaja`;
+  else if (pv > pc) leader.textContent = `👁️ Vanessa lidera con ${pv-pc} pts de ventaja`;
+  else leader.textContent = pc === 0 ? '¡Empate! Los dos arrancando la semana 🔥' : `¡Empate perfecto en ${pc} puntos! 🔥`;
+}
 
+function updateGoals() {
+  state.goalReels = parseInt(document.getElementById('inp-reels').value)||21;
+  state.goalPosts = parseInt(document.getElementById('inp-posts').value)||35;
+  state.reels = state.goalReels;
+  state.posts = state.goalPosts;
+  S.set('state',state);
+  renderCounters();
+}
 
+function resetWeek() {
+  if(!confirm('¿Reiniciar para nueva semana? Se resetean contadores y puntos.')) return;
+  state.reels = state.goalReels;
+  state.posts = state.goalPosts;
+  pts = {c:0,v:0};
+  S.set('state',state); S.set('pts',pts);
+  renderCounters(); renderCompetition();
+  addActivity('Sistema','nueva semana iniciada','🔄','#888');
+}
 
+function registrar(quien, tipo) {
+  if(tipo==='Reel'&&state.reels>0) state.reels--;
+  if(tipo==='Post'&&state.posts>0) state.posts--;
+  const key = quien==='Cristian'?'c':'v';
+  pts[key] += tipo==='Reel'?2:1;
+  S.set('state',state); S.set('pts',pts);
+  renderCounters(); renderCompetition();
+  addActivity(quien,`subió un ${tipo} (${tipo==='Reel'?'+2':'+1'} pts)`,tipo==='Reel'?'🎬':'📝',quien==='Cristian'?'#e63b2e':'#a855f7');
+  if(navigator.vibrate) navigator.vibrate(40);
+}
 
-// ── FETCH TRENDS ───────────────────────────────────────────────────────
-async function fetchTrends(force) {
-  if (loaded && !force) return;
-  setLive('Cargando tendencias...','Verificando caché compartido');
-  setStatus('ts-loading','Buscando...');
-  showSkels();
+function addActivity(quien,accion,icon,color) {
+  const time = new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+  activity.unshift({time,quien,accion,icon,color:color||'#888'});
+  if(activity.length>60) activity.pop();
+  S.set('activity',activity);
+  renderActivity();
+}
 
-  // Try Redis cache first (shared between users, TTL 6hs)
-  if (!force) {
-    try {
-      const cr = await fetch('/api/generate?key=trends_terror');
-      const cj = await cr.json();
-      if (cj.value) {
-        const parsed = JSON.parse(cj.value);
-        cache = parsed; loaded = true;
-        renderTrends(parsed);
-        setLive('Tendencias cargadas ✓', parsed.resumen||'Terror está en tendencia');
-        setStatus('ts-cache','Cache ⚡');
-        return;
+function renderActivity() {
+  const el = document.getElementById('activityList');
+  if(!activity.length){el.innerHTML='<div class="act-empty">Sin actividad aún.</div>';return;}
+  el.innerHTML = activity.slice(0,15).map(a=>`
+    <div class="act-item">
+      <span class="act-time">${a.time}</span>
+      <span class="act-dot" style="background:${a.color}"></span>
+      <span class="act-text"><strong style="color:var(--text)">${a.quien}</strong> ${a.accion}</span>
+    </div>`).join('');
+}
+
+function clearActivity() {
+  if(!confirm('¿Limpiar historial?')) return;
+  activity=[]; S.set('activity',activity); renderActivity();
+}
+
+// ══ FOLLOWERS ══════════════════════════════════════
+const PLATS = {
+  fb:{label:'Facebook',color:'#1877f2'},
+  ig:{label:'Instagram',color:'#e1306c'},
+  tt:{label:'TikTok',color:'#69c9d0'},
+  yt:{label:'YouTube',color:'#ff0000'}
+};
+
+let followers = S.get('followers',{fb:230000,ig:0,tt:0,yt:0});
+let followersHistory = S.get('followersHistory',{fb:[],ig:[],tt:[],yt:[]});
+
+function renderFollowers() {
+  Object.keys(PLATS).forEach(p=>{
+    const val = followers[p];
+    const numEl = document.getElementById('num-'+p);
+    const deltaEl = document.getElementById('delta-'+p);
+    if(val) {
+      numEl.textContent = val>=1000000?(val/1000000).toFixed(1)+'M':val>=1000?(val/1000).toFixed(1)+'K':val;
+      const hist = followersHistory[p];
+      if(hist && hist.length>=2) {
+        const diff = hist[hist.length-1] - hist[hist.length-2];
+        if(diff>0){deltaEl.textContent='▲ +'+diff.toLocaleString();deltaEl.className='plat-delta up';}
+        else if(diff<0){deltaEl.textContent='▼ '+diff.toLocaleString();deltaEl.className='plat-delta down';}
+        else{deltaEl.textContent='— sin cambios';deltaEl.className='plat-delta flat';}
       }
-    } catch(e){}
-  }
+    } else {
+      numEl.textContent = '—';
+      deltaEl.textContent = '';
+    }
+  });
+}
 
-  const prompt = `Sos un experto en contenido de terror en redes sociales. Listá las tendencias actuales más importantes del nicho de terror/horror para creadores de contenido hispanohablantes en Facebook, Reels e YouTube. Incluí: estrenos recientes, películas de terror que se están discutiendo, formatos virales de video, leyendas urbanas populares, debates activos en el nicho.
+function saveFollowers(plat) {
+  const val = parseInt(document.getElementById('inp-'+plat).value);
+  if(!val||val<0){alert('Ingresá un número válido.');return;}
+  const prev = followers[plat];
+  followers[plat] = val;
+  if(!followersHistory[plat]) followersHistory[plat]=[];
+  if(prev&&prev!==val) followersHistory[plat].push(prev);
+  followersHistory[plat].push(val);
+  if(followersHistory[plat].length>30) followersHistory[plat].shift();
+  S.set('followers',followers); S.set('followersHistory',followersHistory);
+  document.getElementById('inp-'+plat).value='';
+  renderFollowers();
+  addActivity('Datos',`${PLATS[plat].label} actualizado: ${val.toLocaleString()}seg`,'📊','#22c55e');
+}
 
-Respondé SOLO con este JSON exacto sin texto extra ni backticks ni markdown:
-{"resumen":"2 líneas con lo más importante del nicho terror ahora","fb":[{"f":"🔥","n":"nombre tendencia","m":"por qué es tendencia"},{"f":"🔥","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"}],"rl":[{"f":"🔥","n":"nombre","m":"motivo"},{"f":"🔥","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"}],"yt":[{"f":"🔥","n":"nombre","m":"motivo"},{"f":"🔥","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"},{"f":"📈","n":"nombre","m":"motivo"}]}`;
+async function analyzeFollowers() {
+  const hasData = Object.values(followers).some(v=>v>0);
+  if(!hasData){alert('Cargá al menos el seguidor de una plataforma.');return;}
+
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled=true; btn.textContent='Analizando...';
+  document.getElementById('followers-err').classList.remove('show');
+
+  const dataStr = Object.entries(PLATS).map(([k,p])=>
+    followers[k]?`${p.label}: ${followers[k].toLocaleString()} seguidores`:null
+  ).filter(Boolean).join(', ');
+
+  const prompt = `Sos el estratega digital de Zona de Terror TV, una página de terror con 230K seguidores en Facebook. Analizá estos números:
+
+${dataStr}
+
+Con base en estos datos:
+1. Identificá qué plataforma tiene más potencial de crecimiento esta semana
+2. Detectá cuál está siendo descuidada
+3. Dá 3 prompts de acción concreta y específica (qué publicar, cuándo, en qué plataforma)
+4. Una predicción de crecimiento si siguen tu recomendación
+
+Respondé en español, tono directo y estratégico. Máximo 120 palabras para el análisis. Luego listá exactamente 3 prompts de acción en formato: "PROMPT 1: [acción concreta]"`;
 
   try {
-    const res = await fetch('/api/generate',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        useSearch: true,
-        saveKey: 'trends_terror',
-        messages:[{role:'user',content:prompt}]
-      })
-    });
-    const data = await res.json();
-    if(data.error) throw new Error(typeof data.error==='string'?data.error:data.error.message||JSON.stringify(data.error));
-    const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    const clean = txt.replace(/```json|```/g,'').trim();
-    const jsonStart = clean.indexOf('{');
-    const jsonEnd = clean.lastIndexOf('}');
-    const parsed = JSON.parse(clean.slice(jsonStart, jsonEnd+1));
-    cache = parsed; loaded = true;
-    renderTrends(parsed);
-    setLive('Tendencias actualizadas ✓', parsed.resumen||'Terror está en tendencia');
-    setStatus('ts-live','En vivo ✓');
-    startTrendTimer();
+    const txt = await callGroq(prompt);
+    const lines = txt.split('\n').filter(l=>l.trim());
+    const prompts = lines.filter(l=>l.match(/PROMPT\s*\d/i));
+    const analysis = lines.filter(l=>!l.match(/PROMPT\s*\d/i)).join('\n').trim();
+
+    document.getElementById('ai-analysis-text').textContent = analysis || txt;
+
+    const promptsEl = document.getElementById('ai-prompts');
+    if(prompts.length) {
+      promptsEl.innerHTML = prompts.map((p,i)=>`
+        <div class="ai-prompt-item">
+          <span class="ai-prompt-num">${i+1}</span>
+          <span>${p.replace(/PROMPT\s*\d+:\s*/i,'')}</span>
+        </div>`).join('');
+    } else {
+      promptsEl.innerHTML='';
+    }
   } catch(e) {
-    const fb=[{f:'🔥',n:'Scream 7',m:'regresa Neve Campbell · debate activo'},{f:'🔥',n:'La Novia de Frankenstein',m:'Christian Bale · estrenada 6 mar'},{f:'🔥',n:'Whistle / El Silbido del Mal',m:'director de La Monja · estreno 27 mar'},{f:'📈',n:'Insidious 6',m:'agosto 2026'},{f:'📈',n:'Evil Dead nueva entrega',m:'julio 2026'}];
-    const rl=[{f:'🔥',n:'CCTV falso / found footage',m:'"grabación real" · millones de vistas'},{f:'🔥',n:'Narración directa 60 seg',m:'alta retención · fácil de hacer'},{f:'📈',n:'Analog horror VHS',m:'estética retro · muy compartido'},{f:'📈',n:'Top 3 de terror rápido',m:'formato muy replicado'}];
-    const yt=[{f:'🔥',n:'Análisis y teorías',m:'Scream 7, Evil Dead · alta retención'},{f:'🔥',n:'Reseñas en profundidad',m:'Novia de Frankenstein · mucha búsqueda'},{f:'📈',n:'Analog horror',m:'millones de views'},{f:'📈',n:'Rankings top 10 terror 2026',m:'evergreen con pico ahora'}];
-    cache={fb,rl,yt,resumen:'Scream 7 y Whistle dominan la conversación. El analog horror sigue creciendo.'};
-    loaded=true; renderTrends(cache);
-    setLive('Tendencias cargadas',cache.resumen);
-    setStatus('ts-cache','Cache ⚡');
-    updateTimerDisplay();
+    document.getElementById('followers-err').textContent='⚠️ '+e.message;
+    document.getElementById('followers-err').classList.add('show');
+  }
+
+  btn.disabled=false; btn.textContent='✨ Analizar con IA';
+}
+
+// ══ AGENDA ══════════════════════════════════════════
+const SCHEDULE = [
+  {time:'8:00 AM', type:'post', who:'Cristian', plat:'📘', desc:'Post debate/curiosidad'},
+  {time:'10:00 AM',type:'reel',who:'Vanessa', plat:'📘', desc:'Reel de alcance'},
+  {time:'12:00 PM',type:'post',who:'Vanessa', plat:'📘', desc:'Post opinión'},
+  {time:'3:00 PM', type:'post',who:'Cristian',plat:'📘', desc:'Post reseña/análisis'},
+  {time:'6:00 PM', type:'reel',who:'Cristian',plat:'📘', desc:'Reel prime time'},
+  {time:'6:30 PM', type:'post',who:'Vanessa', plat:'📸', desc:'Post Instagram'},
+  {time:'7:00 PM', type:'reel',who:'Vanessa', plat:'🎵', desc:'Reel TikTok'},
+  {time:'8:00 PM', type:'post',who:'Cristian',plat:'📘', desc:'Post noche'},
+  {time:'9:00 PM', type:'post',who:'Vanessa', plat:'📘', desc:'Post CTA monetización 🎯'},
+  {time:'9:30 PM', type:'reel',who:'Cristian',plat:'📘', desc:'Reel cierre nocturno'},
+];
+
+const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+let agendaState = S.get('agenda',{});
+
+function buildAgenda() {
+  const container = document.getElementById('agendaContainer');
+  const today = NOW.getDay();
+  const weekStart = new Date(NOW);
+  weekStart.setDate(NOW.getDate()-(today===0?6:today-1));
+
+  container.innerHTML = DAYS.map((day,i)=>{
+    const d = new Date(weekStart);
+    d.setDate(weekStart.getDate()+i);
+    const dateStr = d.toLocaleDateString('es-AR',{day:'2-digit',month:'short'});
+    const isToday = d.toDateString()===NOW.toDateString();
+
+    const slots = SCHEDULE.map((s,si)=>{
+      const key = `${i}-${si}`;
+      const done = agendaState[key];
+      return `<div class="agenda-slot">
+        <span class="slot-time">${s.time}</span>
+        <span class="slot-type ${s.type}">${s.type==='reel'?'🎬 Reel':'📝 Post'}</span>
+        <span class="slot-plat">${s.plat}</span>
+        <span class="slot-who">${s.who} · ${s.desc}</span>
+        <button class="slot-check ${done?'done':''}" onclick="toggleSlot('${key}','${s.who}','${s.type}',this)">${done?'✓':''}</button>
+      </div>`;
+    }).join('');
+
+    return `<div class="agenda-day" ${isToday?'id="today-agenda"':''}>
+      <div class="agenda-day-header" style="${isToday?'background:var(--gold-dim);border-bottom:1px solid rgba(245,197,24,0.2)':''}">
+        <span class="agenda-day-name" style="${isToday?'color:var(--gold)':''}">${day} ${isToday?'· HOY':''}</span>
+        <span class="agenda-day-date">${dateStr}</span>
+      </div>
+      <div class="agenda-slots">${slots}</div>
+    </div>`;
+  }).join('');
+
+  if(document.getElementById('today-agenda')) {
+    setTimeout(()=>document.getElementById('today-agenda').scrollIntoView({behavior:'smooth'}),300);
   }
 }
 
-function renderTrends(d) {
-  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist'],['yt','cs-tlist']].forEach(([k,id])=>{
-    const el=document.getElementById(id);
-    if(!el||!d[k])return;
-    el.innerHTML=d[k].map(t=>`<div class="titem"><span>${t.f}</span><span class="tname">${t.n}</span><span class="tmeta"> · ${t.m}</span></div>`).join('');
-  });
+function toggleSlot(key, quien, tipo, btn) {
+  agendaState[key] = !agendaState[key];
+  S.set('agenda',agendaState);
+  btn.className = 'slot-check'+(agendaState[key]?' done':'');
+  btn.textContent = agendaState[key]?'✓':'';
+  if(agendaState[key]) {
+    addActivity(quien,`marcó ${tipo} en agenda ✓`,'✅',quien==='Cristian'?'#e63b2e':'#a855f7');
+  }
 }
 
-function showSkels() {
-  [['fb','fb-tlist'],['rl','rl-tlist'],['yt','yt-tlist'],['yt','cs-tlist']].forEach(([,id])=>{
-    const el=document.getElementById(id);
-    if(el) el.innerHTML=[80,65,75,55].map(w=>`<div class="skel" style="width:${w}%"></div>`).join('');
-  });
+// ══ IDEAS ══════════════════════════════════════════
+let IDEAS=[], ideasLoaded=false, currentFilter='all';
+const CAT_COLORS={paranormal:'#9b59b6',aliens:'#22c55e',misterios:'#3b82f6',crimenes:'#e63b2e',tendencias:'#f5c518'};
+let selectedIdea=null;
+
+async function generarIdeas(force) {
+  if(ideasLoaded&&!force) return;
+  document.getElementById('ideas-title').textContent='Generando con Gemini...';
+  document.getElementById('ideas-sub').textContent='Ideas frescas para hoy';
+  document.getElementById('ideas-err').classList.remove('show');
+  document.getElementById('ideasList').innerHTML=
+    Array(5).fill('<div class="skel" style="height:72px"></div>').join('');
+
+  const hoy = NOW.toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'});
+  const prompt=`Sos el Director Creativo de Zona de Terror TV (230.000 seguidores en Facebook). Tono: sombrío, tenso, profesional. Cero clichés. Frases cortas.
+
+HOY: ${hoy}
+
+Generá exactamente 15 ideas de terror basadas en tendencias actuales, estrenos recientes y misterios sin resolver. 5 categorías × 3 ideas: paranormal, aliens, misterios, crimenes, tendencias.
+
+Respondé SOLO con JSON array, sin texto extra ni backticks:
+[{"id":"001","cat":"paranormal","titulo":"Título gancho impactante","desc":"2 líneas perturbadoras con dato real + elemento inquietante."},{"id":"002","cat":"paranormal","titulo":"...","desc":"..."},{"id":"003","cat":"paranormal","titulo":"...","desc":"..."},{"id":"004","cat":"aliens","titulo":"...","desc":"..."},{"id":"005","cat":"aliens","titulo":"...","desc":"..."},{"id":"006","cat":"aliens","titulo":"...","desc":"..."},{"id":"007","cat":"misterios","titulo":"...","desc":"..."},{"id":"008","cat":"misterios","titulo":"...","desc":"..."},{"id":"009","cat":"misterios","titulo":"...","desc":"..."},{"id":"010","cat":"crimenes","titulo":"...","desc":"..."},{"id":"011","cat":"crimenes","titulo":"...","desc":"..."},{"id":"012","cat":"crimenes","titulo":"...","desc":"..."},{"id":"013","cat":"tendencias","titulo":"...","desc":"..."},{"id":"014","cat":"tendencias","titulo":"...","desc":"..."},{"id":"015","cat":"tendencias","titulo":"...","desc":"..."}]`;
+
+  try {
+    const txt = await callGemini(prompt);
+    IDEAS = JSON.parse(txt.replace(/```json|```/g,'').trim());
+    ideasLoaded=true;
+    S.set('ideas_cache',IDEAS);
+    document.getElementById('ideas-title').textContent='15 ideas generadas ✓';
+    document.getElementById('ideas-sub').textContent=`Gemini · ${hoy}`;
+    renderIdeas();
+  } catch(e) {
+    const cached=S.get('ideas_cache',null);
+    if(cached&&cached.length){IDEAS=cached;ideasLoaded=true;renderIdeas();
+      document.getElementById('ideas-title').textContent='Ideas en caché';
+      document.getElementById('ideas-sub').textContent='Tocá ↺ Nuevas para regenerar';}
+    else{document.getElementById('ideasList').innerHTML='<div class="act-empty">No se pudieron generar ideas.</div>';}
+    document.getElementById('ideas-err').textContent='⚠️ '+e.message;
+    document.getElementById('ideas-err').classList.add('show');
+    document.getElementById('ideas-title').textContent='Error al conectar';
+    document.getElementById('ideas-sub').textContent=e.message.substring(0,50);
+  }
 }
 
-function setLive(t,d){
-  document.getElementById('liveTitle').textContent=t;
-  document.getElementById('liveDesc').textContent=d;
-}
-function setStatus(cls,lbl){
-  ['fb','rl','yt','cs'].forEach(p=>{
-    const el=document.getElementById(p+'-ts');
-    if(el){el.className='tstatus '+cls;el.textContent=lbl;}
-  });
+function renderIdeas() {
+  const filtered=currentFilter==='all'?IDEAS:IDEAS.filter(i=>i.cat===currentFilter);
+  if(!filtered.length){document.getElementById('ideasList').innerHTML='<div class="act-empty">No hay ideas en esta categoría.</div>';return;}
+  document.getElementById('ideasList').innerHTML=filtered.map(idea=>`
+    <div class="idea-card">
+      <div class="idea-card-head">
+        <span class="idea-dot-big" style="background:${CAT_COLORS[idea.cat]||'#888'}"></span>
+        <span class="idea-id-tag">${idea.id}</span>
+        <span class="idea-title">${idea.titulo}</span>
+        <span class="idea-toggle" onclick="toggleIdea('${idea.id}',this)">⌄</span>
+      </div>
+      <div class="idea-body" id="ib-${idea.id}">
+        <div class="idea-desc-text">${idea.desc}</div>
+        <button class="idea-action-btn" onclick="selectIdea('${idea.id}')">📝 Ampliar este post</button>
+      </div>
+    </div>`).join('');
 }
 
-// ── PROGRESS ───────────────────────────────────────────────────────────
+function toggleIdea(id,el) {
+  const body=document.getElementById('ib-'+id);
+  body.classList.toggle('show');
+  el.classList.toggle('open');
+}
+
+function filterCat(cat,el) {
+  currentFilter=cat;
+  document.querySelectorAll('.cat-pill').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderIdeas();
+}
+
+function selectIdea(id) {
+  selectedIdea=IDEAS.find(i=>i.id===id);
+  if(!selectedIdea)return;
+  document.getElementById('ampSelected').innerHTML=`
+    <div class="amp-sel-label">Idea seleccionada</div>
+    <div class="amp-sel-title">[${selectedIdea.id}] ${selectedIdea.titulo}</div>
+    <div class="amp-sel-desc">${selectedIdea.desc}</div>`;
+  setTool('ampliar');
+  setPanel('tools',document.querySelectorAll('.nav-item')[4]);
+}
+
+// ══ TOOLS ══════════════════════════════════════════
+function setTool(tool) {
+  document.getElementById('tool-anticopy').style.display=tool==='anticopy'?'block':'none';
+  document.getElementById('tool-ampliar').style.display=tool==='ampliar'?'block':'none';
+  document.getElementById('tab-anticopy').classList.toggle('active',tool==='anticopy');
+  document.getElementById('tab-ampliar').classList.toggle('active',tool==='ampliar');
+}
+
+// ══ PROGRESS ═══════════════════════════════════════
 function startProg(p) {
   const wrap=document.getElementById(p+'-prog');
   const bar=document.getElementById(p+'-bar');
-  wrap.classList.add('show');
-  bar.style.width='0%';
+  wrap.classList.add('show'); bar.style.width='0%';
   let s=0;
   const steps=[1,2,3].map(i=>document.getElementById(p+'-s'+i));
   steps.forEach(el=>{if(el)el.className='prog-step';});
@@ -1256,823 +1394,144 @@ function startProg(p) {
   bar.style.width='15%';
   const iv=setInterval(()=>{
     s++;
-    steps.forEach((el,i)=>{
-      if(!el)return;
+    steps.forEach((el,i)=>{if(!el)return;
       if(i<s)el.className='prog-step done';
       else if(i===s)el.className='prog-step active';
       else el.className='prog-step';
     });
     bar.style.width=Math.min(15+s*30,88)+'%';
     if(s>=steps.length)clearInterval(iv);
-  },1800);
+  },1600);
   return{iv,bar,wrap};
 }
-function stopProg(p,obj){
+
+function stopProg(p,obj) {
   if(obj.iv)clearInterval(obj.iv);
   obj.bar.style.width='100%';
-  setTimeout(()=>{obj.wrap.classList.remove('show');obj.bar.style.width='0';},600);
+  setTimeout(()=>{obj.wrap.classList.remove('show');obj.bar.style.width='0';},500);
 }
 
-// ── RESULT DISPLAY ─────────────────────────────────────────────────────
-function _renderResult(plat, html) {
-  let box = document.getElementById(plat+'-result');
-  if (!box) {
-    box = document.createElement('div');
-    box.id = plat+'-result';
-    box.style.cssText = 'background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;font-size:15px;line-height:1.75;color:var(--text)';
-    const btn = document.getElementById(plat+'-btn');
-    if(btn) btn.parentNode.insertBefore(box, btn);
-  }
-  box.innerHTML = `<div class="result-copy"><button class="copy-btn" onclick="copyResult('${plat}')">&#128203; Copiar</button> <button class="copy-btn" style="margin-left:6px;border-color:#c0392b;color:#c0392b" onclick="clearResult('${plat}')">&#128465; Borrar</button></div>` + html;
-  return box;
-}
+// ══ ANTICOPY ═══════════════════════════════════════
+async function anticopy() {
+  const txt=document.getElementById('anticopyInput').value.trim();
+  if(!txt||txt.length<50){alert('Pegá un texto de al menos 50 caracteres.');return;}
+  const btn=document.getElementById('ac-btn');
+  btn.disabled=true;
+  document.getElementById('ac-result').classList.remove('show');
+  document.getElementById('ac-err').classList.remove('show');
+  const obj=startProg('ac');
 
-function showResult(plat, html) {
-  const box = _renderResult(plat, html);
-  box.scrollIntoView({behavior:'smooth', block:'start'});
-  try { localStorage.setItem('th_'+plat, html); } catch(e){}
-  // Cloud save happens via saveKey in callAPI
-}
+  const prompt=`Sos el Director Creativo de Zona de Terror TV (230.000 seguidores). Tono: sombrío, tenso, profesional. Cero clichés.
 
-function clearResult(plat) {
-  const box = document.getElementById(plat+'-result');
-  if (box) box.remove();
-  try { localStorage.removeItem('th_'+plat); } catch(e){}
-  deleteFromCloud(plat);
-}
-
-// ── SHARED PERSISTENCE (Upstash Redis) ────────────────────────────────
-async function restoreResults() {
-  const panels = ['cs','rl','fb','wk','im','yt','gs','yd','cm','an','str','enc'];
-  for (const plat of panels) {
-    try {
-      // Try cloud first, fall back to localStorage
-      const r = await fetch(`/api/generate?key=th_${plat}`);
-      const j = await r.json();
-      if (j.value) {
-        _renderResult(plat, j.value);
-        localStorage.setItem('th_'+plat, j.value); // sync local
-      } else {
-        const local = localStorage.getItem('th_'+plat);
-        if (local) _renderResult(plat, local);
-      }
-    } catch(e) {
-      try {
-        const local = localStorage.getItem('th_'+plat);
-        if (local) _renderResult(plat, local);
-      } catch(e2){}
-    }
-  }
-}
-
-async function saveToCloud(plat, html) {
-  try {
-    await fetch(`/api/generate?key=th_${plat}`, { method: 'DELETE' });
-  } catch(e){}
-  // saved via saveKey in generate POST
-}
-
-async function deleteFromCloud(plat) {
-  try {
-    await fetch(`/api/generate?key=th_${plat}`, { method: 'DELETE' });
-  } catch(e){}
-}
-
-function copyResult(plat) {
-  const box = document.getElementById(plat+'-result');
-  if (!box) return;
-  const text = box.innerText.replace('📋 Copiar\n','').replace('🗑️ Borrar\n','');
-  navigator.clipboard.writeText(text).then(()=>{
-    const btn = box.querySelector('.copy-btn');
-    btn.textContent = '✅ Copiado';
-    setTimeout(()=>btn.textContent='📋 Copiar todo', 2000);
-  });
-}
-
-function mdToHtml(txt) {
-  return txt
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,'<em>$1</em>')
-    .replace(/^### (.+)$/gm,'<h4 style="font-family:var(--fd);font-size:17px;letter-spacing:1px;color:var(--red-bright);margin:18px 0 6px">$1</h4>')
-    .replace(/^## (.+)$/gm,'<h3 style="font-family:var(--fd);font-size:20px;letter-spacing:1px;color:var(--red-bright);margin:20px 0 8px">$1</h3>')
-    .replace(/^# (.+)$/gm,'<h2 style="font-family:var(--fd);font-size:24px;letter-spacing:1px;color:var(--red);margin:22px 0 10px">$1</h2>')
-    .replace(/^\d+\. (.+)$/gm,'<p style="margin:6px 0;padding-left:4px">$&</p>')
-    .replace(/^[-•] (.+)$/gm,'<p style="margin:4px 0;padding-left:12px">• $1</p>')
-    .replace(/\n{2,}/g,'</p><p style="margin:10px 0">')
-    .replace(/\n/g,'<br>');
-}
-
-function getTrends(p){
-  if(!cache[p])return'tendencias actuales de terror';
-  return cache[p].map(t=>t.n+': '+t.m).join('; ');
-}
-
-// ── CALL API DIRECTLY ──────────────────────────────────────────────────
-async function callAPI(prompt, useHaiku=false, saveKey=null, retries=3, delay=8000) {
-  const res = await fetch('/api/generate', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ useHaiku, saveKey, messages: [{role:'user', content: prompt}] })
-  });
-  if (res.status === 429 && retries > 0) {
-    await new Promise(r => setTimeout(r, delay));
-    return callAPI(prompt, useHaiku, saveKey, retries - 1, delay + 5000);
-  }
-  const data = await res.json();
-  if (data.error) throw new Error(typeof data.error === 'string' ? data.error : (data.error.message || JSON.stringify(data.error)));
-  return (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-}
-
-// ── GENERATORS ─────────────────────────────────────────────────────────
-async function gen(plat) {
-  const btn = document.getElementById(plat+'-btn');
-  btn.disabled = true;
-  const obj = startProg(plat);
-  const tends = getTrends(plat==='rl'?'rl':plat==='yt'?'yt':'fb');
-  let prompt = '';
-
-  if (plat==='fb') {
-    const tono=document.getElementById('fb-tono').value;
-    const tipo=document.getElementById('fb-tipo').value;
-    const largo=document.getElementById('fb-largo').value;
-    const ht=document.getElementById('fb-ht').value;
-    const fbCant=document.getElementById('fb-cant').value;
-    prompt=`Sos el creador de Zona de Terror TV con 230.000 seguidores en Facebook. Generame ${fbCant} posts de terror para publicar hoy. Cada post tiene que atrapar al lector desde la primera palabra y no soltarlo hasta el final.
-
-ESTILO QUE FUNCIONA — imitá estos ejemplos reales:
-
-EJEMPLO 1:
-En 1978, John Wayne Gacy invitó a trabajar a jóvenes en su empresa de construcción.
-Nadie sospechaba nada. Era conocido en el barrio como un hombre simpático.
-Organizaba fiestas para niños disfrazado de payaso.
-Pero debajo de su casa había 29 cuerpos.
-Cuando lo arrestaron dijo algo que impactó a todos:
-Un payaso puede salirse con la suya haciendo casi cualquier cosa.
-¿Qué dice esto de las personas que nos rodean?
-
-EJEMPLO 2:
-¿Sabés por qué los bebés lloran sin parar a las 3 de la mañana?
-Hay una teoría que dice que a esa hora el sistema nervioso detecta presencias que los adultos no podemos percibir.
-No tiene explicación científica confirmada.
-Pero hay algo que sí está documentado: la mayoría de los partos espirituales ocurren exactamente a esa hora.
-Desde que lo leí, miro diferente el llanto de los bebés de noche.
-
-EJEMPLO 3:
-El experimento de los niños mudos del rey Federico II.
-En el siglo XIII quería saber cuál era el idioma natural de los seres humanos.
-Tomó bebés recién nacidos y los crió con nodrizas que tenían prohibido hablarles o acariciarlos.
-Solo podían alimentarlos.
-El resultado: todos los bebés fallecieron.
-Los historiadores concluyeron que murieron de falta de afecto.
-El amor no es opcional. Es tan vital como el aire.
+MISIÓN ANTICOPY: Reescribí completamente este texto para que Facebook lo detecte como contenido 100% original.
 
 REGLAS:
-- Primera línea = gancho que para el scroll, máximo 10 palabras
-- Datos específicos reales: nombres, años, lugares, números
-- Párrafos cortos con saltos de línea, máximo 2 líneas por bloque
-- Tensión creciente, lo más perturbador al final
-- Cierre con pregunta o reflexión que invite a comentar
-- Voz humana, nunca empezar con Hola, Hey, Sabias que
-- Cada post sobre un caso o fenómeno diferente
+- Cambiá el inicio completamente — empezá desde ángulo distinto
+- Reorganizá la estructura (si es A→B→C, hacé C→A→B o cualquier otro orden)
+- Reemplazá todo el vocabulario manteniendo datos reales y el misterio
+- Atmósfera oscura y densa de Zona de Terror TV
+- Terminá con pregunta perturbadora que invite a comentar
+- Escribí SOLO el texto reescrito, sin explicaciones
 
-Tendencias actuales: ${tends}
-Tono: ${tono}
-Tipo: ${tipo}
-Largo: ${largo}
-Hashtags: ${ht}
+TEXTO ORIGINAL:
+${txt}`;
 
-El ultimo post siempre es una pregunta de debate. Cada post numerado con horario 8AM 12PM 3PM 6PM 9PM.
-LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron.`;
-  } else if (plat==='rl') {
-    const formato=document.getElementById('rl-formato').value;
-    const dur=document.getElementById('rl-dur').value;
-    const gancho=document.getElementById('rl-gancho').value;
-    const cta=document.getElementById('rl-cta').value;
-    const rlCant=document.getElementById('rl-cant').value;
-    prompt=`Generame ${rlCant} scripts completos de Reels de terror para Facebook basados en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Duración: ${dur}. Tipo de gancho inicial: ${gancho}. CTA final: ${cta}.
+  try {
+    const result=await callGroq(prompt);
+    stopProg('ac',obj);
+    document.getElementById('ac-text').textContent=result.trim();
+    document.getElementById('ac-result').classList.add('show');
+  } catch(e) {
+    stopProg('ac',obj);
+    document.getElementById('ac-err').textContent='⚠️ '+e.message;
+    document.getElementById('ac-err').classList.add('show');
+  }
+  btn.disabled=false;
+}
 
-Variá la estructura de apertura: cada Reel debe empezar diferente — uno con pregunta, uno con afirmación, uno in medias res, uno con dato impactante, uno con el final primero. Nunca dos Reels con la misma estructura de apertura.
+// ══ AMPLIAR ════════════════════════════════════════
+async function ampliar() {
+  const custom=document.getElementById('ampliarInput').value.trim();
+  const tono=document.getElementById('amp-tono').value;
+  const largo=document.getElementById('amp-largo').value;
+  const cta=document.getElementById('amp-cta').value;
+  const ht=document.getElementById('amp-ht').value;
 
-Para cada Reel usá este formato exacto:
+  let tema=custom||(selectedIdea?`"${selectedIdea.titulo}": ${selectedIdea.desc}`:'');
+  if(!tema){alert('Elegí una idea o escribí tu tema.');return;}
 
-🎬 REEL [N] — [título del reel]
-⏱️ 0-3 seg    → GANCHO: [las 3 palabras más impactantes posibles que aparecen en pantalla]
-⏱️ 3-[X] seg  → DESARROLLO: [guión hablado segundo a segundo, qué decís en cada momento]
-⏱️ [X]-[Y] seg → CLÍMAX: [el momento más perturbador o revelador]
-⏱️ [Y]-[Z] seg → CTA: [últimos 5 segundos, llamada a la acción]
-⏱️ TOTAL: [Z] segundos
-🎨 VISUAL: [qué imagen o clip poner de fondo]
-📅 PUBLICAR: [horario recomendado]
+  const btn=document.getElementById('amp-btn');
+  btn.disabled=true;
+  document.getElementById('amp-result').classList.remove('show');
+  document.getElementById('amp-err').classList.remove('show');
+  const obj=startProg('amp');
 
-Cada Reel numerado y listo para producir. Los tiempos tienen que ser realistas para el texto indicado.`;
+  const prompt=`Sos el Director Creativo de Zona de Terror TV (230.000 seguidores en Facebook). Tono: sombrío, tenso, profesional. Cero clichés. Frases cortas. Mucha atmósfera.
+
+MISIÓN: Desarrollá este tema en un post de Facebook de ${largo}.
+
+TEMA: ${tema}
+TONO: ${tono}
+
+ESTRUCTURA:
+1. GANCHO — máx 8 palabras que detengan el scroll
+2. DESARROLLO — atmósfera + datos reales + detalles perturbadores
+3. GIRO O REVELACIÓN — algo inesperado
+4. CIERRE con ${cta}
+5. ${ht}
+
+REGLAS: Voz activa siempre. Datos concretos. Prohibido empezar con clichés. Escribí SOLO el post.`;
+
+  try {
+    const result=await callGemini(prompt);
+    stopProg('amp',obj);
+    document.getElementById('amp-text').textContent=result.trim();
+    document.getElementById('amp-result').classList.add('show');
+    addActivity('Zona TV',`generó post: "${tema.substring(0,30)}..."`, '📝','#f5c518');
+  } catch(e) {
+    stopProg('amp',obj);
+    document.getElementById('amp-err').textContent='⚠️ '+e.message;
+    document.getElementById('amp-err').classList.add('show');
+  }
+  btn.disabled=false;
+}
+
+// ══ COPY ═══════════════════════════════════════════
+function copyResult(textId,btnId) {
+  const txt=document.getElementById(textId)?.textContent||'';
+  navigator.clipboard.writeText(txt).catch(()=>{});
+  const btn=document.getElementById(btnId)||event.target;
+  const orig=btn.textContent;
+  btn.textContent='✓ Copiado';
+  setTimeout(()=>{btn.textContent=orig;},1500);
+}
+
+function clearTool(prefix) {
+  if(prefix==='ac'){
+    document.getElementById('anticopyInput').value='';
+    document.getElementById('ac-result').classList.remove('show');
+    document.getElementById('ac-err').classList.remove('show');
   } else {
-    const plataforma=document.getElementById('vp-plat').value;
-    const formato=document.getElementById('vp-formato').value;
-    prompt=`Generame 5 ideas de videos de terror para ${plataforma} basadas en estas tendencias reales de hoy: ${tends}. Formato: ${formato}. Para cada idea: 1) Título SEO con gancho fuerte, 2) Primeros 30 segundos, 3) Estructura completa en 4-5 puntos, 4) Tip de thumbnail, 5) 5 hashtags. Numeradas del 1 al 5.`;
-  }
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_'+plat);
-    stopProg(plat, obj);
-    showResult(plat, '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">✅ Contenido generado</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg(plat, obj);
-    showResult(plat, '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-
-async function genPlan(){
-  const btn=document.getElementById('str-btn');
-  if(btn) btn.disabled=true;
-  const prompt='Armame un plan de monetización mes a mes para los próximos 3 meses, partiendo de que ya gano $300/mes con mi página de terror en Facebook y voy a implementar 5 posts diarios + 3 Reels diarios. Quiero saber exactamente qué hacer cada mes en Facebook, YouTube y TikTok para llegar a $1.000/mes. Dame pasos concretos, métricas que seguir y señales de que voy por el camino correcto.';
-  showResult('str','<p style="color:var(--text-dim);font-size:14px">⏳ Generando tu plan personalizado...</p>');
-  try {
-    const txt = await callAPI(prompt, false, 'th_str');
-    showResult('str', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">💰 Tu plan personalizado</p>' + mdToHtml(txt));
-  } catch(e) {
-    showResult('str','<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  if(btn) btn.disabled=false;
-}
-
-
-// ── COMENTARIOS ────────────────────────────────────────────────────────
-async function genComentarios() {
-  const btn = document.getElementById('cm-btn');
-  const comentario = document.getElementById('cm-comentario').value.trim();
-  if (!comentario) { alert('Pegá el comentario que recibiste primero.'); return; }
-  btn.disabled = true;
-  const obj = startProg('cm');
-  const tono = document.getElementById('cm-tono').value;
-  const objetivo = document.getElementById('cm-objetivo').value;
-  const prompt = `Sos el admin de una página de terror en Facebook muy popular. Recibiste este comentario en uno de tus posts:
-
-"${comentario}"
-
-Generame 5 respuestas distintas para ese comentario. Tono: ${tono}. Objetivo: ${objetivo}.
-
-Reglas importantes:
-- Cada respuesta tiene que sonar 100% humana, no como IA
-- Máximo 2-3 líneas por respuesta
-- Usá el voseo argentino/latinoamericano
-- Cada respuesta numerada del 1 al 5
-- Que inviten a seguir interactuando sin ser forzadas`;
-
-  try {
-    const txt = await callAPI(prompt, true, 'th_cm');
-    stopProg('cm', obj);
-    showResult('cm', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">💬 5 respuestas listas</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('cm', obj);
-    showResult('cm', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-// ── IMÁGENES ───────────────────────────────────────────────────────────
-async function genImagen() {
-  const btn = document.getElementById('im-btn');
-  btn.disabled = true;
-  const obj = startProg('im');
-  const tipo = document.getElementById('im-tipo').value;
-  const tema = document.getElementById('im-tema').value;
-  const objetivo = document.getElementById('im-objetivo').value;
-  const largo = document.getElementById('im-largo').value;
-  const desc = document.getElementById('im-desc').value.trim();
-  const tends = getTrends('fb');
-
-  const prompt = `Sos un experto en contenido de terror viral en redes sociales. Generame 5 opciones de texto/copy para: ${tipo}.
-
-Tema de la imagen: ${tema}${desc ? '. Descripción específica: ' + desc : ''}.
-Tendencias actuales de terror: ${tends}.
-Objetivo: ${objetivo}.
-Largo: ${largo}.
-
-Reglas:
-- Cada texto tiene que parar el scroll instantáneamente
-- Voz humana, voseo latinoamericano, nada genérico
-- Para thumbnails de YouTube: máximo 4 palabras, que generen curiosidad o miedo inmediato
-- Para posts de Facebook con imagen: empezá con el gancho más fuerte posible
-- Para texto en Reels: que funcione como subtítulo visual impactante
-- Numeradas del 1 al 5, cada una con un enfoque distinto`;
-
-  try {
-    const txt = await callAPI(prompt, true, 'th_im');
-    stopProg('im', obj);
-    showResult('im', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🖼️ 5 copies listos</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('im', obj);
-    showResult('im', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-// ── PLANIFICADOR SEMANAL ───────────────────────────────────────────────
-async function genSemana() {
-  const btn = document.getElementById('wk-btn');
-  btn.disabled = true;
-  const obj = startProg('wk');
-  const bloque = document.getElementById('wk-bloque').value;
-  const foco = document.getElementById('wk-foco').value;
-  const tono = document.getElementById('wk-tono').value;
-  const cta = document.getElementById('wk-cta').value;
-  const ht = document.getElementById('wk-ht').value;
-  const tends = getTrends('fb');
-
-  const prompt = `Sos un estratega de contenido de terror en redes sociales. Generame el plan de contenido para: ${bloque} para una página de terror en Facebook.
-
-Tendencias actuales: ${tends}.
-Foco temático: ${foco}.
-Tono: ${tono}.
-CTA de monetización: ${cta}.
-Hashtags: ${ht}.
-
-Para cada día generá:
-**DÍA X — [nombre del día]**
-📝 POST 1 (8:00 AM): [tipo] — [texto completo del post]
-📝 POST 2 (12:00 PM): [tipo] — [texto completo del post]
-📝 POST 3 (3:00 PM): [tipo] — [texto completo del post]
-📝 POST 4 (6:00 PM): [tipo] — [texto completo del post]
-📝 POST 5 CTA (9:00 PM): [texto completo con CTA a ${cta}]
-🎬 REEL 1 (10:00 AM): GANCHO: [3 palabras] | DESARROLLO: [guión 30-45 seg] | CTA: [últimos 5 seg]
-🎬 REEL 2 (6:00 PM): GANCHO: [3 palabras] | DESARROLLO: [guión 30-45 seg] | CTA: [últimos 5 seg]
-🎬 REEL 3 (9:30 PM): GANCHO: [3 palabras] | DESARROLLO: [guión 30-45 seg] | CTA: [últimos 5 seg]
-
-Reglas: voz 100% humana, voseo latinoamericano, cada día temáticamente distinto, ganchos brutales en menos de 8 palabras, nunca empezar con "Hola", "Hey" ni "¿Sabías que".`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_wk');
-    stopProg('wk', obj);
-    showResult('wk', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🗓️ Semana completa generada</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('wk', obj);
-    showResult('wk', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-// ── AMPLIAR POST ──────────────────────────────────────────────────────
-async function genAmpliar() {
-  const btn = document.getElementById('amp-btn');
-  const post = document.getElementById('amp-post').value.trim();
-  if (!post) { alert('Pegá el post que querés ampliar primero.'); return; }
-  btn.disabled = true;
-  const obj = startProg('fb');
-  const modo = document.getElementById('amp-modo').value;
-  const largo = document.getElementById('amp-largo').value;
-
-  const prompt = `Sos el creador de Zona de Terror TV con 230.000 seguidores en Facebook. Tengo este post que quiero mejorar y ampliar:
-
---- POST ACTUAL ---
-${post}
---- FIN DEL POST ---
-
-Amplialó con ${modo}. Largo final: ${largo}.
-
-REGLAS PARA LA VERSION AMPLIADA:
-- Mantene el mismo tema y caso pero hacelo mucho mas rico en detalles
-- Primera linea tiene que seguir siendo un gancho brutal que para el scroll
-- Agrega datos reales especificos: nombres completos, anos, lugares exactos, numeros concretos
-- Narrativa en parrafos cortos con saltos de linea, maximo 2 lineas por bloque
-- Tension creciente — lo mas perturbador siempre al final
-- Cierre con pregunta o dato que invite a comentar
-- Voz humana, cercana, periodistica
-- LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron
-
-Dame SOLO el post ampliado, sin explicaciones ni comentarios previos.`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_amp');
-    stopProg('fb', obj);
-    showResult('amp', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">✨ Post ampliado</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('fb', obj);
-    showResult('amp', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-
-// ── GUIÓN YOUTUBE ──────────────────────────────────────────────────────
-async function genGuion() {
-  const btn = document.getElementById('gs-btn');
-  const tema = document.getElementById('gs-tema').value.trim();
-  if (!tema) { alert('Ingresá el tema del video primero.'); return; }
-  btn.disabled = true;
-  const obj = startProg('gs');
-  const formato = document.getElementById('gs-formato').value;
-  const dur = document.getElementById('gs-dur').value;
-  const tono = document.getElementById('gs-tono').value;
-  const cta = document.getElementById('gs-cta').value;
-  const tends = getTrends('yt');
-
-  const prompt = `Sos un guionista experto en contenido de terror para YouTube en español latinoamericano. Escribí el guión completo de un video de ${dur} sobre este tema: "${tema}".
-
-Tendencias actuales del nicho terror que podés incorporar: ${tends}.
-Formato: ${formato}.
-Tono: ${tono}.
-CTA final: ${cta}.
-
-Estructurá el guión así:
-
-## TÍTULO PRINCIPAL
-[el mejor título SEO para este video]
-
-### TÍTULOS ALTERNATIVOS (A/B test)
-- Opción B: [título alternativo]
-- Opción C: [título alternativo]
-
----
-
-## 🎬 GUIÓN COMPLETO
-
-### INTRO (0:00 - 0:30) — GANCHO
-[Texto exacto a decir. Tiene que atrapar en los primeros 3 segundos. Pregunta perturbadora o afirmación impactante. Anticipá lo que van a descubrir sin spoilear.]
-
-### BLOQUE 1 (0:30 - X:XX) — [nombre del bloque]
-[Texto completo a decir. Datos, historia, análisis. Incluí momentos de pausa dramática marcados con [PAUSA] donde corresponda. Indicá [CORTE A] cuando sugieran cambio de plano o imagen.]
-
-### BLOQUE 2 (X:XX - X:XX) — [nombre del bloque]
-[Texto completo]
-
-### BLOQUE 3 (X:XX - X:XX) — [nombre del bloque]
-[Texto completo]
-
-### BLOQUE 4 (X:XX - X:XX) — [nombre del bloque]
-[Texto completo]
-
-### CLÍMAX (X:XX - X:XX) — EL MOMENTO MÁS FUERTE
-[El bloque más perturbador o revelador. El que hace que la gente comparta el video.]
-
-### OUTRO (X:XX - fin) — CTA
-[Cierre natural + llamada a ${cta}. Que no suene forzado.]
-
----
-
-## 📋 NOTAS DE PRODUCCIÓN
-- **Recursos visuales sugeridos**: [qué imágenes/clips buscar para el B-roll]
-- **Música de fondo recomendada**: [tipo de ambiente sonoro]
-- **Momentos clave para thumbnail**: [en qué segundo hay una expresión o imagen buena para capturar]
-
-Escribí el guión en voseo latinoamericano, voz humana y apasionada. El texto tiene que poder leerse directamente ante la cámara.`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_gs');
-    stopProg('gs', obj);
-    showResult('gs', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🎥 Guión completo listo</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('gs', obj);
-    showResult('gs', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-// ── DESCRIPCIÓN YOUTUBE ────────────────────────────────────────────────
-async function genDescYT() {
-  const btn = document.getElementById('yd-btn');
-  const titulo = document.getElementById('yd-titulo').value.trim();
-  const desc = document.getElementById('yd-desc').value.trim();
-  if (!titulo) { alert('Ingresá el título del video primero.'); return; }
-  btn.disabled = true;
-  const obj = startProg('yd');
-  const dur = document.getElementById('yd-dur').value;
-  const links = document.getElementById('yd-links').value;
-  const idioma = document.getElementById('yd-idioma').value;
-  const ht = document.getElementById('yd-ht').value;
-  const tends = getTrends('yt');
-
-  const prompt = `Sos un experto en SEO de YouTube especializado en el nicho de terror en ${idioma}. Generame la descripción completa y optimizada para este video:
-
-TÍTULO: "${titulo}"
-TEMA: ${desc || 'video de terror sobre ' + titulo}
-DURACIÓN: ${dur}
-TENDENCIAS ACTUALES: ${tends}
-LINKS A INCLUIR: ${links}
-HASHTAGS: ${ht}
-
-Generá la descripción con este formato exacto:
-
-## DESCRIPCIÓN COMPLETA PARA YOUTUBE
-
-[PRIMERAS 2-3 LÍNEAS — LAS MÁS IMPORTANTES]
-[Estas líneas aparecen antes del "Ver más". Tienen que tener la keyword principal, generar curiosidad y tener gancho. Máximo 200 caracteres antes del corte.]
-
-[DESCRIPCIÓN EXTENDIDA]
-[3-4 párrafos desarrollando el tema con keywords naturales. Mencioná el tema principal, subtemas, personas/películas/leyendas relacionadas que la gente busca. Que suene humano, no keyword stuffing.]
-
-⏱️ TIMESTAMPS
-0:00 - Intro
-[timestamps estimados basados en la duración de ${dur} y el tema]
-
-🔗 LINKS
-[placeholder para ${links}]
-
----
-
-## 🏷️ TAGS RECOMENDADOS
-[Lista de 20-25 tags separados por comas, mix de keywords amplias y específicas del nicho terror en ${idioma}]
-
-${ht}
-
----
-
-## 💡 KEYWORDS PRINCIPALES
-[Las 5 keywords más importantes que tiene que rankear este video, con volumen de búsqueda estimado]`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_yd');
-    stopProg('yd', obj);
-    showResult('yd', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">📝 Descripción SEO lista</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('yd', obj);
-    showResult('yd', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-
-// ── REELS DE CASOS ────────────────────────────────────────────────────
-async function genCasos() {
-  const btn = document.getElementById('cs-btn');
-  btn.disabled = true;
-  const obj = startProg('cs');
-  if (!casosLoaded) await fetchCasosTrends();
-  const tipo = document.getElementById('cs-tipo').value;
-  const dur = document.getElementById('cs-dur').value;
-  const ritmo = document.getElementById('cs-ritmo').value;
-  const region = document.getElementById('cs-region').value;
-  const video = document.getElementById('cs-video').value;
-  const cant = document.getElementById('cs-cant').value;
-  const ht = document.getElementById('cs-ht').value;
-  const cta = document.getElementById('cs-cta').value;
-  const tends = getCasosTrends();
-
-  const prompt = `Sos el creador de Zona de Terror TV con 230.000 seguidores. Generame ${cant} textos para Reels usando CASOS REALES DOCUMENTADOS con nombres, fechas y detalles especificos verificables. PROHIBIDO inventar casos vagos o usar frases como "algo estaba muy mal", "encontraron lo que nadie esperaba", "un misterio sin resolver" sin dar el detalle concreto de que fue ese misterio.
-
-EJEMPLOS EXACTOS DE LO QUE TENES QUE GENERAR:
-
-EJEMPLO CORRECTO 1 — datos reales especificos:
-En 1991, Konerak Sinthasomphone, de 14 anos, logro escapar del apartamento de Jeffrey Dahmer.
-Desorientado y en la calle, dos mujeres llamaron a la policia para ayudarlo.
-Pero cuando los agentes llegaron, Dahmer afirmo que el joven era su pareja y que solo habian discutido.
-Los oficiales le creyeron...
-y devolvieron al adolescente al apartamento.
-Horas despues, Konerak perdio la vida alli.
-Un error policial que sigue generando indignacion decadas despues.
-
-EJEMPLO CORRECTO 2 — datos reales especificos:
-En 2016, Mike Mansholt, un joven aleman de 17 anos, salio a recorrer Malta en bicicleta con una GoPro.
-A las 10:11 envio su ultimo mensaje a sus padres.
-Despues... desaparecio.
-Ocho dias mas tarde, su cuerpo fue encontrado al pie de los acantilados de Dingli.
-Su bicicleta estaba arriba. Sus zapatos, colocados prolijamente a un lado.
-La autopsia revelo algo aun mas extrano: faltaban la mayoria de sus organos internos y su cuerpo pesaba apenas 16 kilos.
-Hasta hoy, nadie ha podido explicar exactamente que ocurrio.
-
-EJEMPLOS DE LO QUE NO DEBES HACER:
-MAL: "En 2011, tres jovenes desaparecieron en Mexico. La ultima vez que se los vio fue en una fiesta. Dias despues, lo que encontraron fue un misterio." — VAGO, sin nombres, sin el dato especifico de que fue lo que encontraron.
-MAL: "Algo estaba muy mal en esa casa. Un dia la policia recibio una llamada y encontraron lo que nadie esperaba." — NO DICE NADA.
-
-REGLAS:
-- Usar CASOS REALES con nombres completos de personas y lugares reales
-- Cada caso tiene que tener AL MENOS: nombre real de la persona, ano exacto, lugar especifico, y EL DATO PERTURBADOR CONCRETO que hace que el caso sea impactante
-- Frases cortas, una idea por linea
-- Tension creciente — el dato mas perturbador siempre al final
-- Puntos suspensivos en los momentos de mayor tension
-- Ultima linea que genera debate o deja pregunta abierta con datos concretos
-- Sin emojis
-- Que se lea en ${dur}
-
-Tendencias: ${tends}
-Tipo: ${tipo}
-Ritmo: ${ritmo}
-Region: ${region}
-CTA: ${cta}
-Hashtags: ${ht}
-
-Formato:
----
-REEL [N] — [nombre real del caso]
-
-[texto narrativo completo con datos reales especificos]
-
-CAPTION: [gancho + CTA + hashtags]
----
-
-LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron, asesino=el responsable.`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_cs');
-    stopProg('cs', obj);
-    showResult('cs', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🎬 Reels de casos listos</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('cs', obj);
-    showResult('cs', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-
-// ── FETCH CASOS TRENDS ─────────────────────────────────────────────────
-let casosLoaded = false;
-let casosCache = null;
-
-async function fetchCasosTrends(force) {
-  if (casosLoaded && !force) return;
-  document.getElementById('cs-ts').className = 'tstatus ts-loading';
-  document.getElementById('cs-ts').textContent = 'Buscando...';
-  const tlist = document.getElementById('cs-tlist');
-  if(tlist) tlist.innerHTML = [80,65,75,55].map(w=>`<div class="skel" style="width:${w}%"></div>`).join('');
-
-  // Try Redis cache first (TTL 6hs)
-  if (!force) {
-    try {
-      const cr = await fetch('/api/generate?key=trends_casos');
-      const cj = await cr.json();
-      if (cj.value) {
-        const parsed = JSON.parse(cj.value);
-        casosCache = parsed; casosLoaded = true;
-        renderCasosTrends(parsed);
-        document.getElementById('cs-ts').className = 'tstatus ts-cache';
-        document.getElementById('cs-ts').textContent = 'Cache ⚡';
-        return;
-      }
-    } catch(e){}
-  }
-
-  const prompt = `Buscá en internet qué casos, leyendas y crímenes están siendo más comentados y virales AHORA en redes sociales en español, especialmente en Facebook, TikTok e Instagram en el nicho de terror y true crime latinoamericano. Buscá: casos criminales sin resolver que están siendo discutidos esta semana, leyendas urbanas latinoamericanas que están virales ahora, documentales o series de casos reales recién estrenados, casos con aniversario esta semana, crímenes o misterios que están en boca de todos en América Latina.
-
-Respondé SOLO con este JSON exacto sin texto extra ni backticks:
-{"resumen":"2 líneas de lo más viral ahora en casos y terror","casos":[{"f":"🔥","n":"nombre del caso o leyenda","m":"por qué está viral ahora"},{"f":"🔥","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"📈","n":"...","m":"..."},{"f":"💀","n":"...","m":"..."},{"f":"💀","n":"...","m":"..."}]}`;
-
-  try {
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        useSearch: true,
-        saveKey: 'trends_casos',
-        messages: [{role:'user', content: prompt}]
-      })
-    });
-    const data = await res.json();
-    if(data.error) throw new Error(data.error);
-    const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    const clean = txt.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(clean.slice(clean.indexOf('{'), clean.lastIndexOf('}')+1));
-    casosCache = parsed; casosLoaded = true;
-    renderCasosTrends(parsed);
-    document.getElementById('cs-ts').className = 'tstatus ts-live';
-    document.getElementById('cs-ts').textContent = 'En vivo ✓';
-    setLive('Casos virales actualizados ✓', parsed.resumen || 'True crime y terror en tendencia');
-  } catch(e) {
-    const fallback = {
-      resumen: 'Casos latinoamericanos y true crime internacional dominan el engagement.',
-      casos: [
-        {f:'🔥',n:'Caso Debanhi Escobar',m:'sigue generando debate en México · alta búsqueda'},
-        {f:'🔥',n:'Leyenda La Llorona',m:'versiones regionales virales en TikTok'},
-        {f:'📈',n:'El Silencio de los Inocentes',m:'aniversario · documental viral'},
-        {f:'📈',n:'Caso Marita Verón',m:'Argentina · debate activo en redes'},
-        {f:'📈',n:'Duendes y apariciones',m:'testimonios paranormales latinoamericanos viral'},
-        {f:'💀',n:'Casos FBI sin resolver',m:'documentales Netflix reactivaron búsquedas'},
-        {f:'💀',n:'Cementerio de los Inocentes',m:'leyenda urbana Colombia · muy compartida'}
-      ]
-    };
-    casosCache = fallback; casosLoaded = true;
-    renderCasosTrends(fallback);
-    document.getElementById('cs-ts').className = 'tstatus ts-cache';
-    document.getElementById('cs-ts').textContent = 'Cache ⚡';
+    document.getElementById('ampliarInput').value='';
+    document.getElementById('amp-result').classList.remove('show');
+    document.getElementById('amp-err').classList.remove('show');
+    selectedIdea=null;
+    document.getElementById('ampSelected').innerHTML=`<div class="amp-sel-label">Idea seleccionada</div><div class="amp-sel-title">Ninguna</div><div class="amp-sel-desc">Elegí una idea del panel de 15 Ideas o escribí tu tema abajo.</div>`;
   }
 }
 
-function renderCasosTrends(d) {
-  const el = document.getElementById('cs-tlist');
-  if (!el || !d.casos) return;
-  el.innerHTML = d.casos.map(t =>
-    `<div class="titem"><span>${t.f}</span><span class="tname">${t.n}</span><span class="tmeta"> · ${t.m}</span></div>`
-  ).join('');
-}
-
-function getCasosTrends() {
-  if (!casosCache || !casosCache.casos) return 'casos virales de terror y true crime latinoamericano';
-  return casosCache.casos.map(t => t.n + ': ' + t.m).join('; ');
-}
-
-
-// ── TREND TIMER ────────────────────────────────────────────────────────
-let timerInterval = null;
-function startTrendTimer() {
-  try { localStorage.setItem('trends_updated_at', Date.now()); } catch(e){}
-  updateTimerDisplay();
-  if (timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(updateTimerDisplay, 60000);
-}
-function updateTimerDisplay() {
-  const el = document.getElementById('trendTimer');
-  if (!el) return;
-  let savedAt;
-  try { savedAt = parseInt(localStorage.getItem('trends_updated_at')); } catch(e){}
-  if (!savedAt || isNaN(savedAt)) { el.textContent = ''; return; }
-  const elapsed = Date.now() - savedAt;
-  const remaining = (6*60*60*1000) - elapsed;
-  if (remaining <= 0) { el.textContent = '🔄 Vencidas · tocá Actualizar'; el.style.color='#c0392b'; return; }
-  const em = Math.floor(elapsed/60000);
-  const rm = Math.floor(remaining/60000);
-  const elStr = em < 60 ? `hace ${em}min` : `hace ${Math.floor(em/60)}h ${em%60}min`;
-  const rmStr = rm < 60 ? `en ${rm}min` : `en ${Math.floor(rm/60)}h ${rm%60}min`;
-  el.textContent = `⏱ Actualizado ${elStr} · próxima ${rmStr}`;
-  el.style.color = remaining < 30*60*1000 ? '#e67e22' : '#888';
-}
-
-
-// ── COACH ──────────────────────────────────────────────────────────────
-async function genCoach() {
-  const btn = document.getElementById('co-btn');
-  const pregunta = document.getElementById('co-pregunta').value.trim();
-  if (!pregunta) { alert('Escribí tu pregunta primero.'); return; }
-  btn.disabled = true;
-  const obj = startProg('co');
-
-  const prompt = `Sos un coach experto en monetizacion de paginas de terror en Facebook con mas de 5 anos de experiencia. Trabajas con la pagina Zona de Terror TV que tiene 230.000 seguidores en Facebook, gana actualmente $300/mes, publica contenido de terror (casos reales, leyendas, fenomenos perturbadores) y usa Reels de casos de 15 segundos como principal herramienta de crecimiento.
-
-El creador te hace esta consulta:
-${pregunta}
-
-Respondele de forma directa, concreta y especifica para SU situacion. No des consejos genericos. Si menciona numeros o metricas, analizalos en contexto de una pagina de terror de 230k seguidores. Dame pasos accionables que pueda implementar esta semana. Maximo 300 palabras, en espanol latinoamericano con voseo.`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_co');
-    stopProg('co', obj);
-    showResult('co', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">🧠 Respuesta del coach</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('co', obj);
-    showResult('co', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-
-// ── AMPLIAR REEL ──────────────────────────────────────────────────────
-async function genAmpliarReel() {
-  const btn = document.getElementById('arl-btn');
-  const post = document.getElementById('arl-post').value.trim();
-  if (!post) { alert('Pegá el texto del Reel que querés ampliar primero.'); return; }
-  btn.disabled = true;
-  const obj = startProg('cs');
-  const modo = document.getElementById('arl-modo').value;
-  const dur = document.getElementById('arl-dur').value;
-
-  const prompt = `Sos el creador de Zona de Terror TV. Tengo este texto de Reel que quiero mejorar:
-
---- TEXTO ACTUAL ---
-${post}
---- FIN ---
-
-Amplialó con ${modo}. Duracion final: ${dur}.
-
-REGLAS:
-- Mantene el mismo caso pero con MUCHO MAS detalle real y especifico
-- Narrativa fluida, frases cortas, una idea por linea
-- NUNCA uses frases vagas como "algo extrano ocurrio" o "encontraron lo que nadie esperaba" - siempre decis EXACTAMENTE que fue
-- Datos reales: nombres completos, anos exactos, lugares especificos, numeros concretos
-- Tension creciente, lo mas perturbador al final
-- Puntos suspensivos en los momentos de tension
-- Sin emojis
-- LENGUAJE SEGURO: sangre=rastros, suicidio=su decision final, matar=termino con su vida, cadaver=lo que encontraron
-
-Dame SOLO el texto ampliado, sin explicaciones.`;
-
-  try {
-    const txt = await callAPI(prompt, false, 'th_arl');
-    stopProg('cs', obj);
-    showResult('arl', '<p style="margin:0 0 10px;font-size:13px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">✨ Reel ampliado</p>' + mdToHtml(txt));
-  } catch(e) {
-    stopProg('cs', obj);
-    showResult('arl', '<p style="color:var(--red-bright)">⚠️ Error: '+e.message+'</p>');
-  }
-  btn.disabled = false;
-}
-
-// ── PWA ────────────────────────────────────────────────────────────────
+// ══ PWA ════════════════════════════════════════════
 let dProm;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();dProm=e;
-  document.getElementById('installBanner').classList.add('show');
-});
-document.getElementById('installBtn').addEventListener('click',async()=>{
-  if(!dProm)return;
-  dProm.prompt();await dProm.userChoice;
-  dProm=null;document.getElementById('installBanner').classList.remove('show');
-});
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dProm=e;});
+if('serviceWorker'in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
-fetchTrends();
-fetchCasosTrends();
-restoreResults();
-updateTimerDisplay();
+// ══ INIT ═══════════════════════════════════════════
+renderCounters();
+renderCompetition();
+renderActivity();
+renderFollowers();
+buildAgenda();
+generarIdeas(false);
 </script>
 </body>
 </html>

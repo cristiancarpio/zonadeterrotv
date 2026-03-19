@@ -1,15 +1,15 @@
 {
-  "name": "Terror Content Hub",
-  "short_name": "TerrorHub",
-  "description": "Generador de contenido de terror para Facebook, YouTube y TikTok",
+  "name": "Zona de Terror TV",
+  "short_name": "ZonaTerror",
+  "description": "Panel de control de contenido para Zona de Terror TV",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#0a0800",
+  "theme_color": "#0a0800",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230a0a0a'/><text y='130' x='20' font-size='140'>💀</text></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230a0800'/><text y='130' x='16' font-size='130'>💀</text></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml"
     }
