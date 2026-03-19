@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0d0b0f">
+<meta name="theme-color" content="#0a0800">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ZonaTerror">
@@ -12,1680 +12,636 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d0b0f;
-  --bg2: #161219;
-  --bg3: #1f1a24;
-  --bg4: #2a232f;
-  --gold: #f5c518;
-  --gold2: #ffd84d;
-  --gold-dim: rgba(245,197,24,0.1);
-  --gold-glow: rgba(245,197,24,0.2);
-  --red: #e63b2e;
-  --red-dim: rgba(230,59,46,0.12);
-  --green: #22c55e;
-  --green-dim: rgba(34,197,94,0.12);
-  --blue: #3b82f6;
-  --blue-dim: rgba(59,130,246,0.12);
-  --purple: #a855f7;
-  --purple-dim: rgba(168,85,247,0.12);
-  --pink: #ec4899;
-  --pink-dim: rgba(236,72,153,0.12);
-  --text: #f5f0ff;
-  --text2: #a89ec0;
-  --text3: #5a5270;
-  --border: rgba(255,255,255,0.06);
-  --border2: rgba(245,197,24,0.2);
-  --radius: 18px;
-  --radius-sm: 12px;
-  --radius-xs: 8px;
-  --fd: 'Bebas Neue', sans-serif;
-  --fb: 'Outfit', sans-serif;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --bg:#0a0800; --bg2:#141008; --bg3:#1e1810; --bg4:#2a2215;
+  --gold:#f5c518; --gold2:#ffd84d; --golddim:rgba(245,197,24,0.1); --goldglow:rgba(245,197,24,0.2);
+  --red:#e63b2e; --reddim:rgba(230,59,46,0.12);
+  --text:#f5f0e8; --text2:#a89878; --text3:#5a4e38;
+  --border:rgba(245,197,24,0.08); --border2:rgba(245,197,24,0.2);
+  --r:16px; --rs:10px;
+  --fd:'Bebas Neue',sans-serif; --fb:'Outfit',sans-serif;
 }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text);font-family:var(--fb);min-height:100vh;overflow-x:hidden}
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { height: 100%; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--fb);
-  min-height: 100%;
-  overflow-x: hidden;
-  font-size: 16px;
-  line-height: 1.5;
-}
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
 
-/* NOISE */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-}
+.app{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
 
-.app {
-  max-width: 430px;
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
+/* ── HEADER ── */
+.header{padding:52px 20px 14px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(245,197,24,0.04) 0%,transparent 100%);display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;background:var(--bg)}
+.logo-img{width:46px;height:46px;border-radius:12px;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 16px var(--goldglow);flex-shrink:0}
+.header-info{flex:1;min-width:0}
+.brand{font-family:var(--fd);font-size:21px;color:var(--gold);letter-spacing:1px;line-height:1;text-shadow:0 0 20px var(--goldglow)}
+.brand-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.date-chip{font-size:10px;color:var(--text3);background:var(--bg3);padding:4px 10px;border-radius:20px;border:1px solid var(--border);white-space:nowrap}
+.time-chip{font-size:10px;color:var(--gold);background:var(--golddim);padding:3px 8px;border-radius:20px;border:1px solid var(--border2);display:none}
+.time-chip.show{display:block}
 
-/* ── HEADER ─────────────────────────────────────────── */
-.header {
-  padding: 52px 20px 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-}
-.header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(245,197,24,0.04) 0%, transparent 100%);
-  pointer-events: none;
-}
-.logo-img {
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  object-fit: cover;
-  border: 2px solid var(--gold);
-  box-shadow: 0 0 16px var(--gold-glow);
-  flex-shrink: 0;
-}
-.header-info { flex: 1; min-width: 0; }
-.brand-name {
-  font-family: var(--fd);
-  font-size: 20px;
-  color: var(--gold);
-  letter-spacing: 1px;
-  line-height: 1;
-  text-shadow: 0 0 24px var(--gold-glow);
-}
-.brand-sub { font-size: 11px; color: var(--text3); margin-top: 2px; letter-spacing: 0.02em; }
-.header-date {
-  font-size: 11px;
-  color: var(--text3);
-  background: var(--bg3);
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
+/* ── NAV ── */
+.nav{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border-radius:var(--rs);cursor:pointer;border:none;background:transparent;transition:all 0.2s}
+.nav-btn .ni{font-size:22px;line-height:1}
+.nav-btn .nl{font-size:11px;color:var(--text3);font-weight:500}
+.nav-btn.active{background:var(--golddim);border:1px solid var(--border2)}
+.nav-btn.active .nl{color:var(--gold)}
 
-/* ── CONTENT ─────────────────────────────────────────── */
-.content {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: calc(90px + var(--safe-bottom));
-}
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:30px}
+.panel{display:none;padding:18px 16px;animation:fi 0.2s ease}
+.panel.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── BOTTOM NAV ─────────────────────────────────────── */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 430px;
-  background: rgba(13,11,15,0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border);
-  padding: 10px 8px calc(10px + var(--safe-bottom));
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
-  z-index: 200;
-}
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 8px 4px;
-  border-radius: var(--radius-xs);
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  transition: all 0.2s;
-}
-.nav-item .nav-icon { font-size: 22px; line-height: 1; }
-.nav-item .nav-label { font-size: 10px; color: var(--text3); font-weight: 500; letter-spacing: 0.02em; }
-.nav-item.active { background: var(--gold-dim); }
-.nav-item.active .nav-label { color: var(--gold); }
+/* ── TYPE ── */
+.page-title{font-family:var(--fd);font-size:26px;color:var(--gold);letter-spacing:1.5px;margin-bottom:3px;text-transform:uppercase}
+.page-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5}
 
-/* ── PANELS ─────────────────────────────────────────── */
-.panel { display: none; padding: 20px 16px; animation: fadeUp 0.25s ease; }
-.panel.active { display: block; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* ── LIVE BAR ── */
+.live-bar{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:11px 14px;margin-bottom:14px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
+.live-info{flex:1}
+.live-title{font-size:14px;font-weight:600;color:var(--text)}
+.live-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.live-btn{font-size:13px;font-weight:600;padding:7px 14px;background:transparent;border:1px solid var(--border2);border-radius:var(--rs);color:var(--gold);cursor:pointer;white-space:nowrap}
+.live-btn:active{opacity:0.7}
 
-/* ── TYPOGRAPHY ─────────────────────────────────────── */
-.page-title {
-  font-family: var(--fd);
-  font-size: 28px;
-  color: var(--gold);
-  letter-spacing: 1.5px;
-  margin-bottom: 4px;
-  text-transform: uppercase;
-}
-.page-sub { font-size: 14px; color: var(--text2); margin-bottom: 20px; }
+/* ── COUNTDOWN ── */
+.countdown-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.cd-label{font-size:12px;color:var(--text3)}
+.cd-time{font-family:var(--fd);font-size:20px;color:var(--gold);letter-spacing:1px}
 
-/* ── CARDS ─────────────────────────────────────────── */
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin-bottom: 14px;
-}
-.card-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text3);
-  font-weight: 600;
-  margin-bottom: 14px;
-}
+/* ── CAT FILTER ── */
+.cat-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.cat-pill{font-size:12px;font-weight:500;padding:6px 13px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;transition:all 0.15s}
+.cat-pill.active{border-color:var(--gold);background:var(--golddim);color:var(--gold)}
 
-/* ── COUNTER CARDS ──────────────────────────────────── */
-.counters { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-.counter-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 16px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.counter-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-.counter-card.reels::after { background: linear-gradient(90deg, var(--red), #ff6b5b); }
-.counter-card.posts::after { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
-.counter-label { font-size: 11px; color: var(--text3); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-.counter-num { font-family: var(--fd); font-size: 58px; line-height: 1; letter-spacing: -1px; }
-.counter-card.reels .counter-num { color: var(--red); }
-.counter-card.posts .counter-num { color: var(--gold); }
-.counter-meta { font-size: 12px; color: var(--text3); margin-top: 6px; }
+/* ── IDEA CARDS ── */
+.ideas-wrap{display:flex;flex-direction:column;gap:10px}
+.idea-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color 0.2s}
+.idea-card:hover{border-color:var(--border2)}
+.idea-head{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;cursor:pointer}
+.idea-num{font-family:var(--fd);font-size:13px;color:var(--text3);min-width:26px;flex-shrink:0;margin-top:2px}
+.idea-cat-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.idea-titulo{font-size:15px;font-weight:600;color:var(--text);flex:1;line-height:1.4}
+.idea-arrow{font-size:18px;color:var(--text3);flex-shrink:0;transition:transform 0.2s;margin-top:1px}
+.idea-arrow.open{transform:rotate(180deg)}
+.idea-body{display:none;padding:0 16px 14px;border-top:1px solid var(--border)}
+.idea-body.show{display:block;padding-top:12px}
+.idea-hook{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;font-family:var(--fd);letter-spacing:0.5px;text-transform:uppercase}
+.idea-dato{font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:10px}
+.idea-fuente{font-size:11px;color:var(--text3);margin-bottom:12px;font-style:italic}
+.idea-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.idea-tag{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500}
+.copy-idea-btn{width:100%;padding:11px;background:var(--golddim);border:1px solid var(--border2);border-radius:var(--rs);color:var(--gold);font-size:14px;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:var(--fb)}
+.copy-idea-btn:active{opacity:0.7}
 
-/* ── TEAM BUTTONS ─────────────────────────────────── */
-.team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-.team-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-}
-.team-name { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
-.team-btn {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  color: var(--text);
-  font-size: 14px;
-  font-family: var(--fb);
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  transition: all 0.15s;
-}
-.team-btn:last-child { margin-bottom: 0; }
-.team-btn:active { transform: scale(0.97); }
-.team-btn.reel:hover, .team-btn.reel:active { background: var(--red-dim); border-color: var(--red); color: #ff8070; }
-.team-btn.post:hover, .team-btn.post:active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+/* ── SKELETON ── */
+.skel{background:var(--bg3);border-radius:var(--r);animation:sh 1.5s infinite}
+@keyframes sh{0%{opacity:0.3}50%{opacity:0.6}100%{opacity:0.3}}
 
-/* ── COMPETITION ─────────────────────────────────── */
-.competition-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin-bottom: 14px;
-}
-.comp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-.comp-row:last-child { margin-bottom: 0; }
-.comp-avatar {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
-.comp-avatar.c { background: rgba(230,59,46,0.2); border: 2px solid var(--red); }
-.comp-avatar.v { background: rgba(168,85,247,0.2); border: 2px solid var(--purple); }
-.comp-info { flex: 1; }
-.comp-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-.comp-bar-wrap { height: 6px; background: var(--bg4); border-radius: 3px; overflow: hidden; }
-.comp-bar { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
-.comp-bar.c { background: linear-gradient(90deg, var(--red), #ff6b5b); }
-.comp-bar.v { background: linear-gradient(90deg, var(--purple), #c084fc); }
-.comp-points { font-size: 22px; font-weight: 700; color: var(--text); min-width: 44px; text-align: right; }
-.comp-pts-label { font-size: 10px; color: var(--text3); text-align: right; }
-.comp-leader {
-  font-size: 13px;
-  color: var(--gold);
-  font-weight: 600;
-  text-align: center;
-  padding: 10px;
-  background: var(--gold-dim);
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(245,197,24,0.2);
-  margin-top: 14px;
-}
+/* ── ERR ── */
+.err{background:rgba(230,59,46,0.08);border:1px solid rgba(230,59,46,0.3);border-radius:var(--rs);padding:12px 14px;font-size:13px;color:#ff8070;line-height:1.55;margin-bottom:12px;display:none}
+.err.show{display:block}
 
-/* ── FOLLOWERS ──────────────────────────────────── */
-.plat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-.plat-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px;
-  position: relative;
-}
-.plat-icon { font-size: 24px; margin-bottom: 6px; display: block; }
-.plat-name { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-.plat-num {
-  font-family: var(--fd);
-  font-size: 28px;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.plat-delta { font-size: 11px; font-weight: 500; }
-.plat-delta.up { color: var(--green); }
-.plat-delta.down { color: var(--red); }
-.plat-delta.flat { color: var(--text3); }
-.plat-input {
-  width: 100%;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xs);
-  padding: 7px 10px;
-  color: var(--text);
-  font-size: 16px;
-  font-family: var(--fd);
-  outline: none;
-  text-align: center;
-  margin-top: 8px;
-}
-.plat-input:focus { border-color: var(--gold); }
-.plat-save-btn {
-  width: 100%;
-  margin-top: 6px;
-  padding: 7px;
-  background: var(--gold-dim);
-  border: 1px solid rgba(245,197,24,0.25);
-  border-radius: var(--radius-xs);
-  color: var(--gold);
-  font-size: 13px;
-  font-family: var(--fb);
-  font-weight: 600;
-  cursor: pointer;
-}
+/* ── ANTICOPY ── */
+.info-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:13px 16px;margin-bottom:14px;border-left:3px solid var(--gold)}
+.info-title{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px}
+.info-body{font-size:13px;color:var(--text2);line-height:1.6}
+textarea{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;resize:vertical;min-height:140px;line-height:1.65;margin-bottom:10px}
+textarea:focus{border-color:var(--gold)}
+textarea::placeholder{color:var(--text3)}
 
-/* ── AI ANALYSIS ─────────────────────────────── */
-.ai-analysis-card {
-  background: linear-gradient(135deg, rgba(245,197,24,0.06), rgba(168,85,247,0.06));
-  border: 1px solid rgba(245,197,24,0.15);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin-bottom: 14px;
-}
-.ai-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--gold);
-  background: var(--gold-dim);
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(245,197,24,0.2);
-  margin-bottom: 10px;
-  letter-spacing: 0.05em;
-}
-.ai-text { font-size: 15px; color: var(--text2); line-height: 1.65; }
-.ai-prompts { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-.ai-prompt-item {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  font-size: 14px;
-  color: var(--text);
-  line-height: 1.5;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-.ai-prompt-item:hover { border-color: var(--gold); background: var(--gold-dim); }
-.ai-prompt-num { font-size: 11px; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+/* ── PROGRESS ── */
+.prog{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px;margin-bottom:10px;display:none}
+.prog.show{display:block}
+.prog-step{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text3);margin-bottom:7px;transition:color 0.3s}
+.prog-step:last-child{margin-bottom:0}
+.prog-step.active{color:var(--gold)}
+.prog-step.done{color:var(--text2)}
+.pbar-wrap{height:2px;background:var(--bg4);border-radius:2px;margin-top:10px;overflow:hidden}
+.pbar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transition:width 0.4s}
 
-/* ── AGENDA ─────────────────────────────────── */
-.agenda-day {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 12px;
-  overflow: hidden;
-}
-.agenda-day-header {
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg3);
-}
-.agenda-day-name { font-size: 16px; font-weight: 700; color: var(--text); }
-.agenda-day-date { font-size: 12px; color: var(--text3); }
-.agenda-slots { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-.agenda-slot {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 13px;
-  background: var(--bg3);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-.slot-time { font-family: var(--fd); font-size: 16px; color: var(--text2); min-width: 52px; }
-.slot-type {
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.slot-type.reel { background: var(--red-dim); color: #ff8070; border: 1px solid rgba(230,59,46,0.3); }
-.slot-type.post { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(245,197,24,0.2); }
-.slot-who { font-size: 13px; color: var(--text2); flex: 1; }
-.slot-plat { font-size: 18px; }
-.slot-check {
-  width: 26px; height: 26px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  transition: all 0.15s;
-  flex-shrink: 0;
-}
-.slot-check.done { background: var(--green); border-color: var(--green); }
+/* ── RESULT ── */
+.result{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:16px;margin-bottom:10px;display:none}
+.result.show{display:block}
+.result-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.result-label{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase}
+.result-text{font-size:14px;color:var(--text);line-height:1.7;white-space:pre-wrap}
 
-/* ── IDEAS ──────────────────────────────────── */
-.ideas-header-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  margin-bottom: 14px;
-}
-.ideas-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.ideas-live-info { flex: 1; }
-.ideas-live-title { font-size: 15px; font-weight: 600; color: var(--text); }
-.ideas-live-sub { font-size: 12px; color: var(--text3); }
-.ideas-refresh-btn {
-  padding: 8px 14px;
-  background: transparent;
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-sm);
-  color: var(--gold);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-}
+/* ── BUTTONS ── */
+.btn-gold{width:100%;padding:16px;font-family:var(--fd);font-size:19px;letter-spacing:2px;border:none;border-radius:var(--r);cursor:pointer;background:linear-gradient(135deg,#7a5500,var(--gold));color:#0a0800;font-weight:900;transition:transform 0.15s;margin-bottom:8px;text-transform:uppercase}
+.btn-gold:active{transform:scale(0.97)}
+.btn-gold:disabled{opacity:0.4;cursor:default}
+.btn-ghost{width:100%;padding:13px;background:transparent;border:1px solid var(--border);border-radius:var(--rs);color:var(--text2);font-size:14px;font-family:var(--fb);cursor:pointer}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.copy-btn{padding:6px 14px;border:1px solid var(--border2);border-radius:20px;background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer}
+.copy-btn:hover{background:var(--golddim);color:var(--gold)}
 
-.cat-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-.cat-pill {
-  font-size: 13px;
-  font-weight: 500;
-  padding: 7px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  color: var(--text2);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.cat-pill.active { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
-
-.idea-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 10px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.idea-card-head {
-  padding: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-.idea-dot-big { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-.idea-id-tag { font-size: 10px; color: var(--text3); font-weight: 600; background: var(--bg3); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
-.idea-title { font-size: 16px; font-weight: 600; color: var(--text); flex: 1; line-height: 1.35; }
-.idea-toggle { font-size: 20px; color: var(--text3); cursor: pointer; flex-shrink: 0; transition: transform 0.2s; }
-.idea-toggle.open { transform: rotate(180deg); }
-.idea-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
-.idea-body.show { display: block; padding-top: 14px; }
-.idea-desc-text { font-size: 14px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; }
-.idea-action-btn {
-  padding: 10px 18px;
-  background: var(--gold-dim);
-  border: 1px solid rgba(245,197,24,0.25);
-  border-radius: var(--radius-sm);
-  color: var(--gold);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.idea-action-btn:hover { background: rgba(245,197,24,0.2); }
-
-.skel { background: var(--bg3); border-radius: var(--radius); margin-bottom: 10px; animation: sh 1.5s infinite; }
-@keyframes sh { 0%{opacity:0.3} 50%{opacity:0.6} 100%{opacity:0.3} }
-
-/* ── ANTICOPY / AMPLIAR ──────────────────────── */
-.info-banner {
-  background: var(--bg2);
-  border: 1px solid rgba(245,197,24,0.2);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  margin-bottom: 16px;
-  border-left: 3px solid var(--gold);
-}
-.info-banner-title { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
-.info-banner-body { font-size: 13px; color: var(--text2); line-height: 1.6; }
-
-textarea {
-  width: 100%;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  color: var(--text);
-  font-size: 15px;
-  font-family: var(--fb);
-  outline: none;
-  resize: vertical;
-  min-height: 140px;
-  line-height: 1.65;
-  margin-bottom: 10px;
-}
-textarea::placeholder { color: var(--text3); }
-textarea:focus { border-color: var(--gold); }
-
-.cfg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-.cfg-item { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
-.cfg-lbl { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-select {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: var(--text);
-  font-size: 15px;
-  font-family: var(--fb);
-  outline: none;
-  cursor: pointer;
-}
-select option { background: #1f1a24; color: #f5f0ff; }
-
-/* ── BIG BUTTON ─────────────────────────────── */
-.big-btn {
-  width: 100%;
-  padding: 18px;
-  border-radius: var(--radius);
-  border: none;
-  font-family: var(--fd);
-  font-size: 20px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: transform 0.15s, opacity 0.15s;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.big-btn:active { transform: scale(0.97); }
-.big-btn:disabled { opacity: 0.4; cursor: default; }
-.big-btn.gold { background: linear-gradient(135deg, #8c6800, #f5c518); color: #0d0b0f; font-weight: 900; }
-.big-btn.red { background: linear-gradient(135deg, #7a0000, #e63b2e); color: #fff; }
-.big-btn.ghost {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text2);
-  font-size: 15px;
-  font-family: var(--fb);
-  font-weight: 500;
-  letter-spacing: 0;
-  padding: 14px;
-}
-
-/* ── PROGRESS ───────────────────────────────── */
-.prog-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 12px; display: none; }
-.prog-box.show { display: block; }
-.prog-step { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text3); margin-bottom: 8px; transition: color 0.3s; }
-.prog-step:last-child { margin-bottom: 0; }
-.prog-step.active { color: var(--gold); }
-.prog-step.done { color: var(--text2); }
-.prog-step .ps-ic { font-size: 16px; width: 22px; text-align: center; flex-shrink: 0; }
-.prog-bar-wrap { height: 3px; background: var(--bg4); border-radius: 2px; margin-top: 12px; overflow: hidden; }
-.prog-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; transition: width 0.4s; }
-
-/* ── RESULT BOX ─────────────────────────────── */
-.result-box { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; display: none; }
-.result-box.show { display: block; }
-.result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.result-label { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; text-transform: uppercase; }
-.copy-btn {
-  padding: 7px 16px;
-  border: 1px solid var(--border2);
-  border-radius: 20px;
-  background: transparent;
-  color: var(--text2);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.copy-btn:hover { background: var(--gold-dim); color: var(--gold); }
-.result-text { font-size: 15px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
-
-/* ── ERROR ──────────────────────────────────── */
-.err-box { background: rgba(230,59,46,0.08); border: 1px solid rgba(230,59,46,0.3); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 14px; color: #ff8070; line-height: 1.5; margin-bottom: 12px; display: none; }
-.err-box.show { display: block; }
-
-/* ── ACTIVITY ───────────────────────────────── */
-.activity-list { display: flex; flex-direction: column; gap: 6px; }
-.act-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border);
-}
-.act-item:last-child { border-bottom: none; }
-.act-time { font-size: 13px; color: var(--text3); font-weight: 600; min-width: 52px; font-family: var(--fd); letter-spacing: 0.5px; }
-.act-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.act-text { font-size: 14px; color: var(--text2); flex: 1; }
-.act-empty { text-align: center; padding: 28px; color: var(--text3); font-size: 14px; }
-
-/* ── GOAL CONFIG ────────────────────────────── */
-.goal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.goal-item { display: flex; flex-direction: column; gap: 6px; }
-.goal-lbl { font-size: 12px; color: var(--text3); font-weight: 500; }
-.goal-inp {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px;
-  color: var(--text);
-  font-size: 18px;
-  font-family: var(--fd);
-  text-align: center;
-  outline: none;
-  width: 100%;
-}
-.goal-inp:focus { border-color: var(--gold); }
-
-/* ── DIVIDER ──────────────────────────────── */
-.divider { height: 1px; background: var(--border); margin: 16px 0; }
-.tp-quick { padding:10px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-size:14px;font-family:var(--fb);font-weight:500;cursor:pointer;transition:all 0.15s; }
-.tp-quick:hover,.tp-quick:active { background:var(--gold-dim);border-color:var(--gold);color:var(--gold); }
-
-/* ── AMPLIAR SELECTED ────────────────────── */
-.amp-selected {
-  background: var(--bg2);
-  border: 1px solid rgba(245,197,24,0.2);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  margin-bottom: 14px;
-}
-.amp-sel-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-.amp-sel-title { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
-.amp-sel-desc { font-size: 13px; color: var(--text2); line-height: 1.55; }
+/* ── INSTALL ── */
+.install-bar{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:10px 14px;margin:8px 16px;display:none;align-items:center;gap:10px}
+.install-bar.show{display:flex}
+.install-text{flex:1;font-size:11px;color:var(--text2);line-height:1.4}
+.install-text strong{color:var(--gold);display:block}
+.install-btn{font-size:12px;font-weight:700;padding:6px 14px;background:var(--gold);color:#0a0800;border:none;border-radius:var(--rs);cursor:pointer;font-family:var(--fd)}
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- HEADER -->
-  <div class="header">
-    <img class="logo-img" src="/mnt/user-data/uploads/428665454_382961591348182_331831650396344219_n.jpg" alt="Logo" onerror="this.style.display='none'">
-    <div class="header-info">
-      <div class="brand-name">Zona de Terror TV</div>
-      <div class="brand-sub">Panel de Control · 230K seguidores</div>
+<div class="header">
+  <img class="logo-img" src="/mnt/user-data/uploads/428665454_382961591348182_331831650396344219_n.jpg" alt="Logo" onerror="this.style.display='none'">
+  <div class="header-info">
+    <div class="brand">Zona de Terror TV</div>
+    <div class="brand-sub">230K seguidores · Panel de contenido</div>
+  </div>
+  <div class="header-right">
+    <div class="date-chip" id="dateChip">—</div>
+    <div class="time-chip" id="timeChip"></div>
+  </div>
+</div>
+
+<div class="install-bar" id="installBar">
+  <div style="font-size:20px">📲</div>
+  <div class="install-text"><strong>Instalar app</strong>Acceso directo desde el celular</div>
+  <button class="install-btn" id="installBtn">Instalar</button>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="setPanel('ideas',this)">
+    <span class="ni">💀</span><span class="nl">15 Ideas del día</span>
+  </button>
+  <button class="nav-btn" onclick="setPanel('anticopy',this)">
+    <span class="ni">🛡️</span><span class="nl">Anticopy</span>
+  </button>
+</nav>
+
+<div class="content">
+
+  <!-- ══ IDEAS ══════════════════════════════════════ -->
+  <div class="panel active" id="panel-ideas">
+    <div class="page-title">💀 Ideas del día</div>
+    <div class="page-sub">15 ideas con datos reales · generadas cada día a las 10 AM</div>
+
+    <div class="live-bar">
+      <div class="live-dot"></div>
+      <div class="live-info">
+        <div class="live-title" id="liveTitle">Cargando ideas de hoy...</div>
+        <div class="live-sub" id="liveSub">Buscando datos reales y verificables</div>
+      </div>
+      <button class="live-btn" onclick="generarIdeas(true)">↺ Nuevas</button>
     </div>
-    <div class="header-date" id="headerDate">—</div>
+
+    <div class="countdown-bar" id="cdBar" style="display:none">
+      <span class="cd-label">Próxima generación automática</span>
+      <span class="cd-time" id="cdTime">—</span>
+    </div>
+
+    <div class="err show" id="ideasErr" style="display:none"></div>
+
+    <div class="cat-row">
+      <button class="cat-pill active" onclick="filterCat('all',this)">Todas</button>
+      <button class="cat-pill" onclick="filterCat('paranormal',this)">👻 Paranormal</button>
+      <button class="cat-pill" onclick="filterCat('crimenes',this)">🔴 Crímenes</button>
+      <button class="cat-pill" onclick="filterCat('ovnis',this)">👽 OVNIs</button>
+      <button class="cat-pill" onclick="filterCat('ciencia',this)">🧪 Ciencia</button>
+      <button class="cat-pill" onclick="filterCat('misterios',this)">🔵 Misterios</button>
+    </div>
+
+    <div id="ideasWrap">
+      <div class="skel" style="height:70px;margin-bottom:10px"></div>
+      <div class="skel" style="height:70px;margin-bottom:10px"></div>
+      <div class="skel" style="height:70px;margin-bottom:10px"></div>
+      <div class="skel" style="height:70px;margin-bottom:10px"></div>
+      <div class="skel" style="height:70px"></div>
+    </div>
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <!-- ══ ANTICOPY ══════════════════════════════════ -->
+  <div class="panel" id="panel-anticopy">
+    <div class="page-title">🛡️ Anticopy</div>
+    <div class="page-sub">Transforma cualquier texto al estilo único de Zona de Terror TV</div>
 
-
-
-    <!-- ══ PANEL: SEGUIDORES ════════════════════════ -->
-    <div class="panel" id="panel-followers">
-      <div class="page-title">📈 Seguidores</div>
-      <div class="page-sub">Actualizá los números diariamente</div>
-
-      <div class="plat-grid">
-        <div class="plat-card">
-          <span class="plat-icon">📘</span>
-          <div class="plat-name">Facebook</div>
-          <div class="plat-num" id="num-fb" style="color:#1877f2">230K</div>
-          <div class="plat-delta" id="delta-fb"></div>
-          <input class="plat-input" id="inp-fb" type="number" placeholder="Ej: 231000">
-          <button class="plat-save-btn" onclick="saveFollowers('fb')">Guardar</button>
-        </div>
-        <div class="plat-card">
-          <span class="plat-icon">📸</span>
-          <div class="plat-name">Instagram</div>
-          <div class="plat-num" id="num-ig" style="color:#e1306c">—</div>
-          <div class="plat-delta" id="delta-ig"></div>
-          <input class="plat-input" id="inp-ig" type="number" placeholder="Ej: 15000">
-          <button class="plat-save-btn" onclick="saveFollowers('ig')">Guardar</button>
-        </div>
-        <div class="plat-card">
-          <span class="plat-icon">🎵</span>
-          <div class="plat-name">TikTok</div>
-          <div class="plat-num" id="num-tt" style="color:#69c9d0">—</div>
-          <div class="plat-delta" id="delta-tt"></div>
-          <input class="plat-input" id="inp-tt" type="number" placeholder="Ej: 8000">
-          <button class="plat-save-btn" onclick="saveFollowers('tt')">Guardar</button>
-        </div>
-        <div class="plat-card">
-          <span class="plat-icon">▶️</span>
-          <div class="plat-name">YouTube</div>
-          <div class="plat-num" id="num-yt" style="color:#ff0000">—</div>
-          <div class="plat-delta" id="delta-yt"></div>
-          <input class="plat-input" id="inp-yt" type="number" placeholder="Ej: 5000">
-          <button class="plat-save-btn" onclick="saveFollowers('yt')">Guardar</button>
-        </div>
-      </div>
-
-      <div class="err-box" id="followers-err"></div>
-
-      <div class="ai-analysis-card" id="ai-analysis-card">
-        <div class="ai-badge">✨ Análisis IA · Groq</div>
-        <div class="ai-text" id="ai-analysis-text">Cargá los seguidores de al menos 2 plataformas para que la IA analice tu crecimiento y te dé estrategias concretas.</div>
-        <div class="ai-prompts" id="ai-prompts"></div>
-      </div>
-
-      <button class="big-btn gold" id="analyze-btn" onclick="analyzeFollowers()">✨ Analizar con IA</button>
-      <div class="gen-note" style="font-size:13px;color:var(--text3);text-align:center;margin-bottom:14px">La IA detecta qué plataforma priorizar esta semana</div>
+    <div class="info-box">
+      <div class="info-title">¿Cómo funciona?</div>
+      <div class="info-body">Pegá texto de cualquier fuente. La IA lo reescribe completamente — cambia la estructura, el inicio y el vocabulario para que Facebook lo detecte como contenido 100% original. El misterio y los datos reales se mantienen.</div>
     </div>
 
-    <!-- ══ PANEL: AGENDA UNIFICADA ══════════════════ -->
-    <div class="panel active" id="panel-agenda">
-      <div class="page-title">📅 Agenda</div>
-      <div class="page-sub">Contadores · registro · semana dinámica</div>
+    <textarea id="acInput" placeholder="Pegá acá el texto que querés transformar..."></textarea>
 
-      <!-- COUNTERS -->
-      <div class="counters">
-        <div class="counter-card reels">
-          <div class="counter-label">Reels Faltan</div>
-          <div class="counter-num" id="cnt-reels">21</div>
-          <div class="counter-meta">de <span id="gr-disp">21</span> esta semana</div>
-        </div>
-        <div class="counter-card posts">
-          <div class="counter-label">Posts Faltan</div>
-          <div class="counter-num" id="cnt-posts">35</div>
-          <div class="counter-meta">de <span id="gp-disp">35</span> esta semana</div>
-        </div>
-      </div>
-
-      <!-- REGISTER NEW PUBLICATION -->
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden">
-        <div style="padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:space-between">
-          <span style="font-size:14px;font-weight:700;color:var(--text)">+ Registrar publicación</span>
-        </div>
-        <div style="padding:14px 16px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
-              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Quién</div>
-              <select id="log-quien" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fb);outline:none">
-                <option value="Cristian">💀 Cristian</option>
-                <option value="Vanessa">👁️ Vanessa</option>
-              </select>
-            </div>
-            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
-              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Tipo</div>
-              <select id="log-tipo" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fb);outline:none">
-                <option value="Reel">🎬 Reel</option>
-                <option value="Post">📝 Post</option>
-              </select>
-            </div>
-            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
-              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Plataforma</div>
-              <select id="log-plat" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fb);outline:none">
-                <option value="📘 Facebook">📘 Facebook</option>
-                <option value="📸 Instagram">📸 Instagram</option>
-                <option value="🎵 TikTok">🎵 TikTok</option>
-                <option value="▶️ YouTube">▶️ YouTube</option>
-              </select>
-            </div>
-            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
-              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Horario</div>
-              <input type="time" id="log-time" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fd);outline:none;letter-spacing:1px">
-            </div>
-          </div>
-          <input type="text" id="log-desc" placeholder="Tema o descripción (opcional)..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;margin-bottom:10px">
-          <button onclick="addLogEntry()" style="width:100%;padding:14px;background:linear-gradient(135deg,#8c6800,#f5c518);color:#0d0b0f;border:none;border-radius:var(--radius-sm);font-family:var(--fd);font-size:18px;font-weight:900;letter-spacing:1px;cursor:pointer">✓ REGISTRAR</button>
-        </div>
-
-        <!-- LOG LIST -->
-        <div id="activityList" style="max-height:300px;overflow-y:auto;border-top:1px solid var(--border)">
-          <div class="act-empty">Sin publicaciones registradas aún.</div>
-        </div>
-      </div>
-
-      <!-- GOAL CONFIG -->
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px">
-        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">⚙️ Meta semanal</div>
-        <div class="goal-row">
-          <div class="goal-item">
-            <span class="goal-lbl">Meta Reels</span>
-            <input class="goal-inp" id="inp-reels" type="number" value="21" min="1" onchange="updateGoals()">
-          </div>
-          <div class="goal-item">
-            <span class="goal-lbl">Meta Posts</span>
-            <input class="goal-inp" id="inp-posts" type="number" value="35" min="1" onchange="updateGoals()">
-          </div>
-        </div>
-        <div class="divider"></div>
-        <button class="big-btn ghost" onclick="resetWeek()">↺ Nueva semana — reiniciar todo</button>
-      </div>
-
-      <!-- AGENDA DINAMICA -->
-      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">📋 Semana en curso</div>
-      <div style="font-size:12px;color:var(--text3);margin-bottom:12px">Se actualiza automáticamente con cada publicación registrada</div>
-      <div id="agendaContainer"></div>
+    <div class="err" id="acErr"></div>
+    <div class="prog" id="acProg">
+      <div class="prog-step" id="ac1"><span style="font-size:14px;width:18px">🔍</span>Analizando estructura original</div>
+      <div class="prog-step" id="ac2"><span style="font-size:14px;width:18px">✂️</span>Destruyendo patrones detectables</div>
+      <div class="prog-step" id="ac3"><span style="font-size:14px;width:18px">💀</span>Reescribiendo en estilo Zona de Terror TV</div>
+      <div class="pbar-wrap"><div class="pbar" id="acBar"></div></div>
     </div>
 
-    <!-- ══ PANEL: IDEAS ═════════════════════════════ -->
-    <div class="panel" id="panel-ideas">
-      <div class="page-title">💡 15 Ideas</div>
-      <div class="page-sub">Generadas por Gemini con tendencias de hoy</div>
+    <button class="btn-gold" id="acBtn" onclick="anticopy()">💀 Convertir al estilo Zona de Terror TV</button>
 
-      <div class="ideas-header-bar">
-        <div class="ideas-live-dot"></div>
-        <div class="ideas-live-info">
-          <div class="ideas-live-title" id="ideas-title">Generando con Gemini...</div>
-          <div class="ideas-live-sub" id="ideas-sub">Ideas frescas para hoy</div>
-        </div>
-        <button class="ideas-refresh-btn" onclick="generarIdeas(true)">↺ Nuevas</button>
+    <div class="result" id="acResult">
+      <div class="result-head">
+        <span class="result-label">Resultado</span>
+        <button class="copy-btn" id="acCopyBtn" onclick="copyText('acText','acCopyBtn')">Copiar</button>
       </div>
-
-      <div class="err-box" id="ideas-err"></div>
-
-      <div class="cat-filter">
-        <button class="cat-pill active" onclick="filterCat('all',this)">Todas</button>
-        <button class="cat-pill" onclick="filterCat('paranormal',this)">👻</button>
-        <button class="cat-pill" onclick="filterCat('aliens',this)">👽</button>
-        <button class="cat-pill" onclick="filterCat('misterios',this)">🔵</button>
-        <button class="cat-pill" onclick="filterCat('crimenes',this)">🔴</button>
-        <button class="cat-pill" onclick="filterCat('tendencias',this)">⚡</button>
-      </div>
-
-      <div id="ideasList">
-        <div class="skel" style="height:72px"></div>
-        <div class="skel" style="height:72px"></div>
-        <div class="skel" style="height:72px"></div>
-        <div class="skel" style="height:72px"></div>
-        <div class="skel" style="height:72px"></div>
-      </div>
+      <div class="result-text" id="acText"></div>
     </div>
 
-    <!-- ══ PANEL: HERRAMIENTAS ══════════════════════ -->
-    <div class="panel" id="panel-tools">
-      <div class="page-title">🛠️ Herramientas</div>
-      <div class="page-sub">Anticopy · Ampliar posts · Zona creativa</div>
+    <button class="btn-ghost" onclick="clearAc()">Limpiar</button>
+  </div>
 
-      <!-- TABS -->
-      <div style="display:flex;gap:8px;margin-bottom:18px">
-        <button class="cat-pill active" id="tab-anticopy" onclick="setTool('anticopy')">🛡️ Anticopy</button>
-        <button class="cat-pill" id="tab-ampliar" onclick="setTool('ampliar')">📝 Ampliar</button>
-      </div>
-
-      <!-- ANTICOPY -->
-      <div id="tool-anticopy">
-        <div class="info-banner">
-          <div class="info-banner-title">🛡️ Zona Anticopy</div>
-          <div class="info-banner-body">Pegá texto de otra página. Groq lo reescribe desde cero para que Facebook lo detecte como contenido 100% original de Zona de Terror TV.</div>
-        </div>
-        <textarea id="anticopyInput" placeholder="Pegá acá el texto que querés transformar al estilo Zona de Terror TV..."></textarea>
-        <div class="err-box" id="ac-err"></div>
-        <div class="prog-box" id="ac-prog">
-          <div class="prog-step" id="ac-s1"><span class="ps-ic">🔍</span>Analizando estructura y vocabulario</div>
-          <div class="prog-step" id="ac-s2"><span class="ps-ic">✂️</span>Destruyendo patrones detectables</div>
-          <div class="prog-step" id="ac-s3"><span class="ps-ic">💀</span>Reconstruyendo en estilo Zona de Terror TV</div>
-          <div class="prog-bar-wrap"><div class="prog-bar" id="ac-bar"></div></div>
-        </div>
-        <button class="big-btn gold" id="ac-btn" onclick="anticopy()">💀 Convertir a Estilo Zona de Terror TV</button>
-        <div class="result-box" id="ac-result">
-          <div class="result-header">
-            <span class="result-label">Resultado</span>
-            <button class="copy-btn" onclick="copyResult('ac-text','ac-copy')">Copiar</button>
-          </div>
-          <div class="result-text" id="ac-text"></div>
-        </div>
-        <button class="big-btn ghost" onclick="clearTool('ac')">Limpiar</button>
-      </div>
-
-      <!-- AMPLIAR -->
-      <div id="tool-ampliar" style="display:none">
-        <div class="amp-selected" id="ampSelected">
-          <div class="amp-sel-label">Idea seleccionada</div>
-          <div class="amp-sel-title">Ninguna</div>
-          <div class="amp-sel-desc">Elegí una idea del panel de 15 Ideas o escribí tu tema abajo.</div>
-        </div>
-        <textarea id="ampliarInput" placeholder="O escribí el tema que querés desarrollar..." style="min-height:90px"></textarea>
-        <div class="cfg-row">
-          <div class="cfg-item">
-            <div class="cfg-lbl">Tono</div>
-            <select id="amp-tono">
-              <option value="sombrío, tenso y perturbador con atmósfera densa">Sombrío</option>
-              <option value="dramático y escalofriante con ritmo acelerado">Dramático</option>
-              <option value="investigativo periodístico como caso sin resolver">Investigativo</option>
-              <option value="narrativo en primera persona como si el autor lo vivió">1ra persona</option>
-            </select>
-          </div>
-          <div class="cfg-item">
-            <div class="cfg-lbl">Largo</div>
-            <select id="amp-largo">
-              <option value="300 a 400 palabras">300-400 palabras</option>
-              <option value="400 a 600 palabras">400-600 palabras</option>
-              <option value="600 a 800 palabras">600-800 palabras</option>
-            </select>
-          </div>
-          <div class="cfg-item">
-            <div class="cfg-lbl">CTA final</div>
-            <select id="amp-cta">
-              <option value="pregunta perturbadora que obligue a comentar">Pregunta</option>
-              <option value="encuesta de opinión al final">Encuesta</option>
-              <option value="invitación al grupo privado">Grupo privado</option>
-              <option value="pedir que compartan si les dio miedo">Compartir</option>
-            </select>
-          </div>
-          <div class="cfg-item">
-            <div class="cfg-lbl">Hashtags</div>
-            <select id="amp-ht">
-              <option value="con 5 hashtags en español">5 hashtags</option>
-              <option value="sin hashtags">Sin hashtags</option>
-              <option value="con 8 hashtags de terror">8 hashtags</option>
-            </select>
-          </div>
-        </div>
-        <div class="err-box" id="amp-err"></div>
-        <div class="prog-box" id="amp-prog">
-          <div class="prog-step" id="amp-s1"><span class="ps-ic">💀</span>Modo Director Creativo activado</div>
-          <div class="prog-step" id="amp-s2"><span class="ps-ic">🌑</span>Construyendo atmósfera y narrativa</div>
-          <div class="prog-step" id="amp-s3"><span class="ps-ic">✍️</span>Redactando post con ganchos de engagement</div>
-          <div class="prog-bar-wrap"><div class="prog-bar" id="amp-bar"></div></div>
-        </div>
-        <button class="big-btn red" id="amp-btn" onclick="ampliar()">📝 Generar Post Completo</button>
-        <div class="result-box" id="amp-result">
-          <div class="result-header">
-            <span class="result-label">Post Generado</span>
-            <button class="copy-btn" onclick="copyResult('amp-text','amp-copy')" id="amp-copy">Copiar</button>
-          </div>
-          <div class="result-text" id="amp-text"></div>
-        </div>
-        <button class="big-btn ghost" onclick="clearTool('amp')">Limpiar</button>
-      </div>
-    </div>
-
-  </div><!-- /content -->
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" onclick="setPanel('agenda',this)">
-      <span class="nav-icon">📅</span><span class="nav-label">Agenda</span>
-    </button>
-    <button class="nav-item" onclick="setPanel('followers',this)">
-      <span class="nav-icon">📈</span><span class="nav-label">Seguidores</span>
-    </button>
-    <button class="nav-item" onclick="setPanel('ideas',this)">
-      <span class="nav-icon">💡</span><span class="nav-label">Ideas</span>
-    </button>
-    <button class="nav-item" onclick="setPanel('tools',this)">
-      <span class="nav-icon">🛠️</span><span class="nav-label">Tools</span>
-    </button>
-  </nav>
-
+</div><!-- /content -->
 </div><!-- /app -->
 
 <script>
-// ══ HELPERS ════════════════════════════════════════
+// ══ HELPERS ══════════════════════════════════════════
 const S = {
-  get:(k,d)=>{try{const v=localStorage.getItem('ztv_'+k);return v?JSON.parse(v):d}catch{return d}},
-  set:(k,v)=>{try{localStorage.setItem('ztv_'+k,JSON.stringify(v))}catch{}}
+  get:(k,d)=>{try{const v=localStorage.getItem('ztv2_'+k);return v?JSON.parse(v):d}catch{return d}},
+  set:(k,v)=>{try{localStorage.setItem('ztv2_'+k,JSON.stringify(v))}catch{}}
 };
 
-// ══ DATE ═══════════════════════════════════════════
+// ══ DATE / TIME ═══════════════════════════════════════
 const NOW = new Date();
-document.getElementById('headerDate').textContent =
+document.getElementById('dateChip').textContent =
   NOW.toLocaleDateString('es-AR',{weekday:'short',day:'2-digit',month:'short'}).toUpperCase();
 
-// ══ API CALLS (via Vercel functions) ═══════════════
-async function callGemini(prompt) {
-  const res = await fetch('/api/gemini', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({prompt})
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Error Gemini');
-  return data.text;
+// Live clock
+function updateClock() {
+  const t = new Date();
+  const h = String(t.getHours()).padStart(2,'0');
+  const m = String(t.getMinutes()).padStart(2,'0');
+  document.getElementById('timeChip').textContent = h+':'+m;
+  document.getElementById('timeChip').classList.add('show');
 }
+updateClock();
+setInterval(updateClock, 30000);
 
-async function callGroq(prompt) {
-  const res = await fetch('/api/groq', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({prompt})
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Error Groq');
-  return data.text;
-}
-
-// ══ PANEL SWITCH ═══════════════════════════════════
+// ══ PANEL ══════════════════════════════════════════════
 function setPanel(id, el) {
-  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   document.querySelector('.content').scrollTop = 0;
 }
 
-// ══ TIME PICKER ════════════════════════════════════
-let tpPending = { quien: null, tipo: null };
-
-function openTimePicker(quien, tipo) {
-  tpPending = { quien, tipo };
-  const now = new Date();
-  const hh = String(now.getHours()).padStart(2,'0');
-  const mm = String(now.getMinutes()).padStart(2,'0');
-  document.getElementById('tp-time').value = hh+':'+mm;
-  const icon = tipo==='Reel'?'🎬':'📝';
-  document.getElementById('tp-title').textContent = icon+' '+quien+' — '+tipo;
-  const overlay = document.getElementById('timepicker-overlay');
-  overlay.style.display = 'flex';
-  setTimeout(()=>overlay.style.opacity='1',10);
-}
-
-function closeTimePicker() {
-  document.getElementById('timepicker-overlay').style.display = 'none';
-  tpPending = { quien: null, tipo: null };
-}
-
-function setQuickTime(val) {
-  document.getElementById('tp-time').value = val;
-}
-
-function confirmRegistrar() {
-  const timeVal = document.getElementById('tp-time').value;
-  const { quien, tipo } = tpPending;
-  if(!quien||!tipo) return;
-  closeTimePicker();
-
-  // Format display time
-  let displayTime = timeVal;
-  if(timeVal) {
-    const [h,m] = timeVal.split(':').map(Number);
-    const ampm = h>=12?'PM':'AM';
-    const h12 = h%12||12;
-    displayTime = h12+':'+String(m).padStart(2,'0')+' '+ampm;
-  }
-
-  registrar(quien, tipo, displayTime);
-}
-
-// ══ BATTLE STATE ═══════════════════════════════════
-let state = S.get('state',{reels:21,posts:35,goalReels:21,goalPosts:35});
-let pts = S.get('pts',{c:0,v:0});
-let activity = S.get('activity',[]);
-
-function renderCounters() {
-  document.getElementById('cnt-reels').textContent = Math.max(0,state.reels);
-  document.getElementById('cnt-posts').textContent = Math.max(0,state.posts);
-  document.getElementById('gr-disp').textContent = state.goalReels;
-  document.getElementById('gp-disp').textContent = state.goalPosts;
-  document.getElementById('inp-reels').value = state.goalReels;
-  document.getElementById('inp-posts').value = state.goalPosts;
-}
-
-
-function updateGoals() {
-  state.goalReels = parseInt(document.getElementById('inp-reels').value)||21;
-  state.goalPosts = parseInt(document.getElementById('inp-posts').value)||35;
-  state.reels = state.goalReels;
-  state.posts = state.goalPosts;
-  S.set('state',state);
-  renderCounters();
-}
-
-function resetWeek() {
-  if(!confirm('¿Reiniciar para nueva semana? Se resetean contadores y puntos.')) return;
-  state.reels = state.goalReels;
-  state.posts = state.goalPosts;
-  pts = {c:0,v:0};
-  S.set('state',state); S.set('pts',pts);
-  renderCounters();
-  addActivity('Sistema','nueva semana iniciada','🔄','#888');
-}
-
-function registrar(quien, tipo, customTime) {
-  if(tipo==='Reel') {
-    if(state.reels>0) state.reels--;
-    if(state.posts>0) state.posts--; // Reel cuenta como Post también
-  }
-  if(tipo==='Post'&&state.posts>0) state.posts--;
-  const key = quien==='Cristian'?'c':'v';
-  pts[key] += tipo==='Reel'?2:1;
-  S.set('state',state); S.set('pts',pts);
-  renderCounters();
-  const label = tipo==='Reel'?'Reel (+2pts · también -1 Post)':'Post (+1pt)';
-  addActivity(quien, label, tipo==='Reel'?'🎬':'📝', quien==='Cristian'?'#e63b2e':'#a855f7', customTime);
-  if(navigator.vibrate) navigator.vibrate(40);
-}
-
-function addActivity(quien,accion,icon,color,customTime) {
-  const time = customTime || new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
-  activity.unshift({time,quien,accion,icon,color:color||'#888'});
-  if(activity.length>60) activity.pop();
-  S.set('activity',activity);
-  renderActivity();
-}
-
-function renderActivity() {
-  const el = document.getElementById('activityList');
-  if(!el) return;
-  if(!activity.length){el.innerHTML='<div class="act-empty">Sin publicaciones registradas aún.</div>';return;}
-  el.innerHTML = activity.map((a,i)=>`
-    <div class="act-item" style="position:relative">
-      <span class="act-time" style="min-width:52px">${a.time||'—'}</span>
-      <span class="act-dot" style="background:${a.color||'#888'}"></span>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:14px;font-weight:600;color:var(--text)">${a.quien} <span style="font-weight:400;color:var(--text2)">${a.accion}</span></div>
-        ${a.plat?`<div style="font-size:12px;color:var(--text3);margin-top:2px">${a.plat}${a.desc?' · '+a.desc:''}</div>`:''}
-      </div>
-      <button onclick="deleteActivity(${i})" style="background:transparent;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:4px 6px;flex-shrink:0">×</button>
-    </div>`).join('');
-}
-
-function deleteActivity(idx) {
-  activity.splice(idx, 1);
-  S.set('activity', activity);
-  renderActivity();
-  buildAgenda();
-}
-
-function addLogEntry() {
-  const quien = document.getElementById('log-quien').value;
-  const tipo  = document.getElementById('log-tipo').value;
-  const plat  = document.getElementById('log-plat').value;
-  const desc  = document.getElementById('log-desc').value.trim();
-  let timeVal = document.getElementById('log-time').value;
-
-  // Format time
-  let displayTime = timeVal || new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
-  if(timeVal) {
-    const [h,m] = timeVal.split(':').map(Number);
-    const ampm = h>=12?'PM':'AM';
-    const h12 = h%12||12;
-    displayTime = h12+':'+String(m).padStart(2,'0')+' '+ampm;
-  }
-
-  const color = quien==='Cristian'?'#e63b2e':'#a855f7';
-  const icon  = tipo==='Reel'?'🎬':'📝';
-
-  // Update counters too
-  if(tipo==='Reel'){ if(state.reels>0) state.reels--; if(state.posts>0) state.posts--; pts[quien==='Cristian'?'c':'v']+=2; }
-  if(tipo==='Post'){ if(state.posts>0) state.posts--; pts[quien==='Cristian'?'c':'v']+=1; }
-  S.set('state',state); S.set('pts',pts);
-  renderCounters();
-
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('es-AR',{weekday:'short',day:'2-digit',month:'short'});
-
-  activity.unshift({
-    time: displayTime,
-    time24: timeVal || new Date().toTimeString().slice(0,5),
-    rawDate: new Date().toISOString(),
-    fecha: dateStr,
-    quien,
-    accion: `subió ${icon} ${tipo}`,
-    plat,
-    desc,
-    color,
-    icon
+// ══ API CALL ═══════════════════════════════════════════
+async function callGroq(prompt, system) {
+  const body = { prompt };
+  if (system) body.system = system;
+  const res = await fetch('/api/groq', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(body)
   });
-  if(activity.length>100) activity.pop();
-  S.set('activity',activity);
-  renderActivity();
-
-  // Clear fields
-  document.getElementById('log-desc').value='';
-  document.getElementById('log-time').value='';
-  buildAgenda();
-  if(navigator.vibrate) navigator.vibrate(40);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Error API');
+  return data.text;
 }
 
-function clearActivity() {
-  if(!confirm('¿Limpiar todo el historial?')) return;
-  activity=[]; S.set('activity',activity); renderActivity();
-}
+// ══ MASTER SYSTEM PROMPT ═══════════════════════════════
+const SYSTEM_PROMPT = `Sos un investigador periodístico especializado en casos documentados, fenómenos verificables y datos históricos reales. Trabajás para Zona de Terror TV — una página de Facebook con 230.000 seguidores que monetiza contenido de terror, misterio y lo insólito.
 
-// ══ FOLLOWERS ══════════════════════════════════════
-const PLATS = {
-  fb:{label:'Facebook',color:'#1877f2'},
-  ig:{label:'Instagram',color:'#e1306c'},
-  tt:{label:'TikTok',color:'#69c9d0'},
-  yt:{label:'YouTube',color:'#ff0000'}
+TU ÚNICO OBJETIVO: generar ideas de contenido que hagan que el lector detenga el scroll, sienta algo (miedo, incredulidad, curiosidad obsesiva) y comparta el post.
+
+REGLAS ABSOLUTAS — VIOLADAS UNA SOLA VEZ Y EL CONTENIDO ES BASURA:
+
+1. DATOS REALES ÚNICAMENTE
+   - Solo usás hechos verificables: nombres reales, fechas exactas, lugares documentados, cifras confirmadas
+   - Si no tenés el dato exacto, NO lo inventés — mejor omitirlo que fabricarlo
+   - Prohibido usar frases vagas como "se dice que", "algunos creen que", "hay quienes afirman" sin una fuente concreta
+   - Si mencionás un estudio, debe existir: universidad real, año real, resultado real
+
+2. CERO RELLENO
+   - Cada palabra justifica su existencia o no va
+   - Prohibido: "lo que nadie te contó", "esto te va a impactar", "lo que pasó después fue increíble"
+   - Prohibido abrir con preguntas retóricas vacías
+   - Prohibido cerrar con "¿vos qué opinás?" genérico sin anclarlo al dato específico del post
+   - Si una oración no agrega información concreta o tensión narrativa, no existe
+
+3. ESTILO CINEMATOGRÁFICO OBLIGATORIO
+   - Escribís como un guionista de documentales de Netflix, no como un bloguero
+   - Frases cortas que golpeen. Párrafos de máximo 3 líneas
+   - Los datos se revelan en capas — nunca todo de golpe
+   - Usás detalles sensoriales y atmosféricos cuando son reales: "a -40°C", "a 3.800 metros de altitud", "el 17 de agosto de 1977 a las 11:16 PM"
+
+4. EUFEMISMOS NARRATIVOS (suenan mejor y evitan filtros)
+   - "asesinato" → "un escenario que desafió toda lógica forense"
+   - "cadáver" → "lo que encontró el equipo de respuesta"
+   - "sangre" → "evidencia que los investigadores se negaron a fotografiar"
+   - "ovni" → "anomalía aeroespacial no identificada"
+   - "fantasma" → "presencia documentada por múltiples testigos independientes"
+   - "mató" → "fue el último en verlo con vida"
+
+5. EL GANCHO ES EL 80% DEL ÉXITO
+   - Primera línea: máximo 8 palabras, hecho concreto que genere reacción física
+   - Prohibido empezar con: "En 1977...", "¿Sabías que...", "Hoy te traigo...", "Imaginate..."
+   - El inicio tiene que funcionar como el primer fotograma de un thriller — si no engancha en 2 segundos, el algoritmo lo entierra`;
+
+// ══ IDEAS ══════════════════════════════════════════════
+let IDEAS = [];
+let currentFilter = 'all';
+let ideasLoaded = false;
+let generatingNow = false;
+
+const CAT = {
+  paranormal: { color:'#9b59b6', label:'👻 Paranormal' },
+  crimenes:   { color:'#e63b2e', label:'🔴 Crimen' },
+  ovnis:      { color:'#27ae60', label:'👽 OVNI' },
+  ciencia:    { color:'#3b82f6', label:'🧪 Ciencia' },
+  misterios:  { color:'#f5c518', label:'🔵 Misterio' },
 };
 
-let followers = S.get('followers',{fb:230000,ig:0,tt:0,yt:0});
-let followersHistory = S.get('followersHistory',{fb:[],ig:[],tt:[],yt:[]});
+const USER_PROMPT_IDEAS = () => {
+  const hoy = new Date().toLocaleDateString('es-AR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+  return `HOY ES: ${hoy}
 
-function renderFollowers() {
-  Object.keys(PLATS).forEach(p=>{
-    const val = followers[p];
-    const numEl = document.getElementById('num-'+p);
-    const deltaEl = document.getElementById('delta-'+p);
-    if(val) {
-      numEl.textContent = val>=1000000?(val/1000000).toFixed(1)+'M':val>=1000?(val/1000).toFixed(1)+'K':val;
-      const hist = followersHistory[p];
-      if(hist && hist.length>=2) {
-        const diff = hist[hist.length-1] - hist[hist.length-2];
-        if(diff>0){deltaEl.textContent='▲ +'+diff.toLocaleString();deltaEl.className='plat-delta up';}
-        else if(diff<0){deltaEl.textContent='▼ '+diff.toLocaleString();deltaEl.className='plat-delta down';}
-        else{deltaEl.textContent='— sin cambios';deltaEl.className='plat-delta flat';}
-      }
-    } else {
-      numEl.textContent = '—';
-      deltaEl.textContent = '';
-    }
-  });
-}
+MISIÓN: Generá exactamente 15 ideas de contenido para Facebook. Cada idea debe basarse en un hecho real, documentado y verificable. Distribuidas en 5 categorías: paranormal (3), crimenes (3), ovnis (3), ciencia (3), misterios (3).
 
-function saveFollowers(plat) {
-  const val = parseInt(document.getElementById('inp-'+plat).value);
-  if(!val||val<0){alert('Ingresá un número válido.');return;}
-  const prev = followers[plat];
-  followers[plat] = val;
-  if(!followersHistory[plat]) followersHistory[plat]=[];
-  if(prev&&prev!==val) followersHistory[plat].push(prev);
-  followersHistory[plat].push(val);
-  if(followersHistory[plat].length>30) followersHistory[plat].shift();
-  S.set('followers',followers); S.set('followersHistory',followersHistory);
-  document.getElementById('inp-'+plat).value='';
-  renderFollowers();
-  addActivity('Datos',`${PLATS[plat].label} actualizado: ${val.toLocaleString()}seg`,'📊','#22c55e');
-}
+PARA CADA IDEA INCLUÍ OBLIGATORIAMENTE:
+- TÍTULO: máximo 10 palabras, sin adjetivos vacíos, con el dato más impactante adentro
+- GANCHO: la primera línea del post — el hecho más perturbador en menos de 15 palabras, con fecha/lugar/nombre real si existe
+- DATO_CENTRAL: el núcleo de la historia — 2 o 3 hechos concretos y verificables que forman la narrativa. Incluí cifras, fechas, nombres de personas reales o instituciones cuando aplique
+- GIRO: el elemento inesperado, la contradicción, lo que cambia todo — tiene que ser un dato real, no especulación
+- PREGUNTA_CIERRE: una pregunta específica y perturbadora que divida a la audiencia en dos posiciones irreconciliables. No puede ser genérica
+- FUENTE: de dónde viene este dato (diario, estudio, institución, expediente desclasificado, etc.) — si no sabés la fuente exacta, escribí "Registro histórico documentado"
 
-async function analyzeFollowers() {
-  const hasData = Object.values(followers).some(v=>v>0);
-  if(!hasData){alert('Cargá al menos el seguidor de una plataforma.');return;}
-
-  const btn = document.getElementById('analyze-btn');
-  btn.disabled=true; btn.textContent='Analizando...';
-  document.getElementById('followers-err').classList.remove('show');
-
-  const dataStr = Object.entries(PLATS).map(([k,p])=>
-    followers[k]?`${p.label}: ${followers[k].toLocaleString()} seguidores`:null
-  ).filter(Boolean).join(', ');
-
-  const prompt = `Sos el estratega de crecimiento de Zona de Terror TV — una página de terror con 230K seguidores en Facebook que está expandiéndose a múltiples plataformas. Tu trabajo es analizar números y dar recomendaciones que realmente muevan la aguja, no consejos genéricos.
-
-DATOS ACTUALES DE LA PÁGINA:
-${dataStr}
-
-ANÁLISIS REQUERIDO — SÉ BRUTALMENTE HONESTO Y ESPECÍFICO:
-
-1. DIAGNÓSTICO: ¿Qué plataforma está creciendo más rápido en proporción? ¿Cuál está estancada o siendo ignorada? ¿Hay algún número que sea una señal de alarma?
-
-2. OPORTUNIDAD DE LA SEMANA: ¿En qué plataforma hay que meter más energía esta semana y por qué? Justificá con los números.
-
-3. ACCIONES CONCRETAS: Exactamente qué tiene que hacer el equipo esta semana para maximizar el crecimiento. Nada genérico — decí qué tipo de contenido, en qué horario, con qué frecuencia.
-
-4. PREDICCIÓN: Si implementan tus recomendaciones, ¿cuántos seguidores nuevos podrían ganar en 7 días en la plataforma priorizada?
-
-Respondé en español. Tono directo, sin rodeos, como un consultor que cobra caro y da resultados. Máximo 150 palabras para el análisis. Luego listá exactamente 3 acciones en formato: "PROMPT 1: [acción muy específica con plataforma, tipo de contenido y horario]"`;
-
-  try {
-    const txt = await callGroq(prompt);
-    const lines = txt.split('\n').filter(l=>l.trim());
-    const prompts = lines.filter(l=>l.match(/PROMPT\s*\d/i));
-    const analysis = lines.filter(l=>!l.match(/PROMPT\s*\d/i)).join('\n').trim();
-
-    document.getElementById('ai-analysis-text').textContent = analysis || txt;
-
-    const promptsEl = document.getElementById('ai-prompts');
-    if(prompts.length) {
-      promptsEl.innerHTML = prompts.map((p,i)=>`
-        <div class="ai-prompt-item">
-          <span class="ai-prompt-num">${i+1}</span>
-          <span>${p.replace(/PROMPT\s*\d+:\s*/i,'')}</span>
-        </div>`).join('');
-    } else {
-      promptsEl.innerHTML='';
-    }
-  } catch(e) {
-    document.getElementById('followers-err').textContent='⚠️ '+e.message;
-    document.getElementById('followers-err').classList.add('show');
-  }
-
-  btn.disabled=false; btn.textContent='✨ Analizar con IA';
-}
-
-// ══ AGENDA ══════════════════════════════════════════
-const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
-
-function buildAgenda() {
-  const container = document.getElementById('agendaContainer');
-  if(!container) return;
-  const today = NOW.getDay();
-  const weekStart = new Date(NOW);
-  weekStart.setDate(NOW.getDate()-(today===0?6:today-1));
-
-  container.innerHTML = DAYS.map((day,i)=>{
-    const d = new Date(weekStart);
-    d.setDate(weekStart.getDate()+i);
-    const dateStr = d.toLocaleDateString('es-AR',{day:'2-digit',month:'short'});
-    const isToday = d.toDateString()===NOW.toDateString();
-
-    // Entradas reales registradas para este día
-    const dayEntries = activity.filter(a => {
-      if(!a.rawDate) return false;
-      return new Date(a.rawDate).toDateString() === d.toDateString();
-    }).sort((a,b)=>(a.time24||'00:00').localeCompare(b.time24||'00:00'));
-
-    let slotsHtml = '';
-    if(dayEntries.length > 0) {
-      slotsHtml = dayEntries.map(e => {
-        const globalIdx = activity.indexOf(e);
-        const isReel = e.accion && e.accion.includes('Reel');
-        const platIcon = (e.plat||'📘').split(' ')[0];
-        return '<div class="agenda-slot">'
-          + '<span class="slot-time">' + (e.time||'—') + '</span>'
-          + '<span class="slot-type ' + (isReel?'reel':'post') + '">' + (isReel?'🎬 Reel':'📝 Post') + '</span>'
-          + '<span class="slot-plat" style="font-size:16px">' + platIcon + '</span>'
-          + '<span class="slot-who">' + e.quien + (e.desc?' · '+e.desc:'') + '</span>'
-          + '<button onclick="deleteActivityRebuild(' + globalIdx + ')" style="background:transparent;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:2px 8px;flex-shrink:0">×</button>'
-          + '</div>';
-      }).join('');
-    } else {
-      const emptyMsg = isToday ? 'Sin publicaciones hoy — registrá arriba' : 'Sin publicaciones';
-      slotsHtml = '<div style="padding:12px 16px;font-size:13px;color:var(--text3);text-align:center">' + emptyMsg + '</div>';
-    }
-
-    const badge = dayEntries.length > 0
-      ? '<span style="font-size:11px;background:var(--gold-dim);color:var(--gold);border-radius:20px;padding:2px 8px;border:1px solid rgba(245,197,24,0.2)">' + dayEntries.length + ' pub.</span>'
-      : '';
-
-    const headerStyle = isToday ? 'background:var(--gold-dim);border-bottom:1px solid rgba(245,197,24,0.2)' : '';
-    const nameStyle   = isToday ? 'color:var(--gold)' : '';
-    const dayId       = isToday ? 'id="today-agenda"' : '';
-
-    return '<div class="agenda-day" ' + dayId + '>'
-      + '<div class="agenda-day-header" style="' + headerStyle + '">'
-      + '<span class="agenda-day-name" style="' + nameStyle + '">' + day + (isToday?' · HOY':'') + '</span>'
-      + '<div style="display:flex;align-items:center;gap:8px">' + badge + '<span class="agenda-day-date">' + dateStr + '</span></div>'
-      + '</div>'
-      + '<div class="agenda-slots">' + slotsHtml + '</div>'
-      + '</div>';
-  }).join('');
-
-  if(document.getElementById('today-agenda')) {
-    setTimeout(()=>document.getElementById('today-agenda').scrollIntoView({behavior:'smooth',block:'start'}),300);
-  }
-}
-
-function deleteActivityRebuild(idx) {
-  activity.splice(idx,1);
-  S.set('activity',activity);
-  renderActivity();
-  buildAgenda();
-}
-
-// ══ IDEAS ══════════════════════════════════════════
-let IDEAS=[], ideasLoaded=false, currentFilter='all';
-const CAT_COLORS={paranormal:'#9b59b6',aliens:'#22c55e',misterios:'#3b82f6',crimenes:'#e63b2e',tendencias:'#f5c518'};
-let selectedIdea=null;
-
-async function generarIdeas(force) {
-  if(ideasLoaded&&!force) return;
-  document.getElementById('ideas-title').textContent='Generando con Gemini...';
-  document.getElementById('ideas-sub').textContent='Ideas frescas para hoy';
-  document.getElementById('ideas-err').classList.remove('show');
-  document.getElementById('ideasList').innerHTML=
-    Array(5).fill('<div class="skel" style="height:72px"></div>').join('');
-
-  const hoy = NOW.toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'});
-  const prompt=`Actuá como un investigador especializado en casos criminales reales y fenómenos paranormales. Tu estilo es cinematográfico, oscuro y detallista — como un guionista de documentales de Netflix o un podcaster de misterio de alto impacto. Trabajás para Zona de Terror TV, una página con 230.000 seguidores en Facebook. Tu misión es generar las 15 ideas más virales, perturbadoras e intrigantes posibles para publicar hoy.
-
-HOY ES: ${hoy}
-
-REGLAS DE ORO — SEGUIRLAS AL PIE DE LA LETRA:
-
-TÍTULOS (el 80% del éxito viral):
-- Máximo 10 palabras, que detengan el scroll en menos de 3 segundos
-- Incluí un dato específico, nombre real o número concreto cuando sea posible
-- Generá la reacción "necesito saber más" o "no puedo creer que esto sea real"
-- PROHIBIDO en títulos: "aterrador", "escalofriante", "perturbador", "impactante", "increíble" — son palabras muertas que el algoritmo ignora
-
-DESCRIPCIONES (2 líneas que enganchen):
-- Primera línea: el dato más impactante — fecha, nombre, lugar, número real
-- Segunda línea: el elemento que deja más preguntas que respuestas
-- Usá lenguaje descriptivo: atmósfera, clima, sensaciones físicas
-- Incluí al menos 1 dato específico que "pocos conocen"
-
-EUFEMISMOS NARRATIVOS (para evitar filtros y sonar más cinematográfico):
-- En lugar de "asesinato" → "un escenario que desafiaba toda lógica forense"
-- En lugar de "ovni" → "anomalía aeroespacial de origen no convencional"
-- En lugar de "cadáver" → "lo que encontraron cambiará para siempre al equipo de respuesta"
-- En lugar de "sangre" → "evidencia que los investigadores se negaron a fotografiar"
-
-5 categorías × 3 ideas: paranormal, aliens, misterios, crimenes, tendencias
+CRITERIO DE CALIDAD — rechazá cualquier idea que:
+- No tenga al menos UN dato con nombre, fecha o lugar concreto
+- Use frases de relleno o adjetivos vacíos
+- Sea una leyenda urbana sin base verificable
+- Repita estructuras similares a las otras 14 ideas
 
 Respondé SOLO con JSON array sin texto extra ni backticks:
-[{"id":"001","cat":"paranormal","titulo":"Título gancho cinematográfico máx 10 palabras","desc":"Primera línea con dato real específico. Segunda línea que deja la pregunta abierta."},{"id":"002","cat":"paranormal","titulo":"...","desc":"..."},{"id":"003","cat":"paranormal","titulo":"...","desc":"..."},{"id":"004","cat":"aliens","titulo":"...","desc":"..."},{"id":"005","cat":"aliens","titulo":"...","desc":"..."},{"id":"006","cat":"aliens","titulo":"...","desc":"..."},{"id":"007","cat":"misterios","titulo":"...","desc":"..."},{"id":"008","cat":"misterios","titulo":"...","desc":"..."},{"id":"009","cat":"misterios","titulo":"...","desc":"..."},{"id":"010","cat":"crimenes","titulo":"...","desc":"..."},{"id":"011","cat":"crimenes","titulo":"...","desc":"..."},{"id":"012","cat":"crimenes","titulo":"...","desc":"..."},{"id":"013","cat":"tendencias","titulo":"...","desc":"..."},{"id":"014","cat":"tendencias","titulo":"...","desc":"..."},{"id":"015","cat":"tendencias","titulo":"...","desc":"..."}]`;
+[
+  {
+    "id": "001",
+    "cat": "paranormal",
+    "titulo": "Título con el dato más impactante en máx 10 palabras",
+    "gancho": "Primera línea del post — hecho concreto en máx 15 palabras",
+    "dato_central": "El núcleo verificable de la historia con datos específicos",
+    "giro": "El elemento inesperado que cambia todo — dato real",
+    "pregunta_cierre": "Pregunta específica que divide a la audiencia",
+    "fuente": "Fuente del dato"
+  }
+]`;
+};
+
+async function generarIdeas(force) {
+  if (generatingNow) return;
+  if (ideasLoaded && !force) return;
+
+  // Check cache
+  if (!force) {
+    const cached = S.get('ideas', null);
+    const cachedDate = S.get('ideasDate', '');
+    const todayStr = new Date().toDateString();
+    if (cached && cached.length && cachedDate === todayStr) {
+      IDEAS = cached;
+      ideasLoaded = true;
+      setLive('Ideas de hoy cargadas ✓', 'Groq · datos verificados · ' + new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'short'}));
+      renderIdeas();
+      startCountdown();
+      return;
+    }
+  }
+
+  generatingNow = true;
+  ideasLoaded = false;
+  document.getElementById('ideasErr').style.display = 'none';
+  document.getElementById('ideasErr').classList.remove('show');
+  setLive('Generando 15 ideas con datos reales...', 'Esto puede tardar 10-20 segundos');
+  showSkels();
 
   try {
-    const txt = await callGemini(prompt);
-    IDEAS = JSON.parse(txt.replace(/```json|```/g,'').trim());
-    ideasLoaded=true;
-    S.set('ideas_cache',IDEAS);
-    document.getElementById('ideas-title').textContent='15 ideas generadas ✓';
-    document.getElementById('ideas-sub').textContent=`Gemini · ${hoy}`;
+    const txt = await callGroq(USER_PROMPT_IDEAS(), SYSTEM_PROMPT);
+    const clean = txt.replace(/```json|```/g,'').trim();
+    // Find JSON array in response
+    const match = clean.match(/\[[\s\S]*\]/);
+    if (!match) throw new Error('No se encontró JSON en la respuesta');
+    IDEAS = JSON.parse(match[0]);
+    if (!IDEAS.length) throw new Error('El array está vacío');
+    ideasLoaded = true;
+    S.set('ideas', IDEAS);
+    S.set('ideasDate', new Date().toDateString());
+    setLive('15 ideas generadas ✓', 'Datos reales · ' + new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}));
     renderIdeas();
+    startCountdown();
   } catch(e) {
-    const cached=S.get('ideas_cache',null);
-    if(cached&&cached.length){IDEAS=cached;ideasLoaded=true;renderIdeas();
-      document.getElementById('ideas-title').textContent='Ideas en caché';
-      document.getElementById('ideas-sub').textContent='Tocá ↺ Nuevas para regenerar';}
-    else{document.getElementById('ideasList').innerHTML='<div class="act-empty">No se pudieron generar ideas.</div>';}
-    document.getElementById('ideas-err').textContent='⚠️ '+e.message;
-    document.getElementById('ideas-err').classList.add('show');
-    document.getElementById('ideas-title').textContent='Error al conectar';
-    document.getElementById('ideas-sub').textContent=e.message.substring(0,50);
+    const cached = S.get('ideas', null);
+    if (cached && cached.length) {
+      IDEAS = cached;
+      ideasLoaded = true;
+      renderIdeas();
+      setLive('Ideas en caché', 'Tocá ↺ Nuevas para regenerar');
+    } else {
+      document.getElementById('ideasWrap').innerHTML = '<div style="text-align:center;padding:28px;color:var(--text3);font-size:14px">No se pudieron generar ideas.<br>Verificá la conexión y probá de nuevo.</div>';
+      setLive('Error al generar', e.message.substring(0,60));
+    }
+    const errEl = document.getElementById('ideasErr');
+    errEl.textContent = '⚠️ ' + e.message;
+    errEl.style.display = 'block';
+    errEl.classList.add('show');
   }
+  generatingNow = false;
+}
+
+function setLive(title, sub) {
+  document.getElementById('liveTitle').textContent = title;
+  document.getElementById('liveSub').textContent = sub;
+}
+
+function showSkels() {
+  document.getElementById('ideasWrap').innerHTML =
+    Array(5).fill('<div class="skel" style="height:70px;margin-bottom:10px"></div>').join('');
 }
 
 function renderIdeas() {
-  const filtered=currentFilter==='all'?IDEAS:IDEAS.filter(i=>i.cat===currentFilter);
-  if(!filtered.length){document.getElementById('ideasList').innerHTML='<div class="act-empty">No hay ideas en esta categoría.</div>';return;}
-  document.getElementById('ideasList').innerHTML=filtered.map(idea=>`
-    <div class="idea-card">
-      <div class="idea-card-head">
-        <span class="idea-dot-big" style="background:${CAT_COLORS[idea.cat]||'#888'}"></span>
-        <span class="idea-id-tag">${idea.id}</span>
-        <span class="idea-title">${idea.titulo}</span>
-        <span class="idea-toggle" onclick="toggleIdea('${idea.id}',this)">⌄</span>
+  const filtered = currentFilter === 'all' ? IDEAS : IDEAS.filter(i=>i.cat===currentFilter);
+  if (!filtered.length) {
+    document.getElementById('ideasWrap').innerHTML = '<div style="text-align:center;padding:24px;color:var(--text3);font-size:14px">No hay ideas en esta categoría.</div>';
+    return;
+  }
+  document.getElementById('ideasWrap').innerHTML = filtered.map((idea,idx) => {
+    const c = CAT[idea.cat] || { color:'#888', label:idea.cat };
+    const tagColor = `background:${c.color}22;color:${c.color};border:1px solid ${c.color}44`;
+    return `<div class="idea-card">
+      <div class="idea-head" onclick="toggleIdea('ib${idea.id}',this)">
+        <span class="idea-num">${idea.id}</span>
+        <span class="idea-cat-dot" style="background:${c.color}"></span>
+        <span class="idea-titulo">${idea.titulo}</span>
+        <span class="idea-arrow" id="arr${idea.id}">⌄</span>
       </div>
-      <div class="idea-body" id="ib-${idea.id}">
-        <div class="idea-desc-text">${idea.desc}</div>
-        <button class="idea-action-btn" onclick="selectIdea('${idea.id}')">📝 Ampliar este post</button>
+      <div class="idea-body" id="ib${idea.id}">
+        <div class="idea-hook">📌 Gancho de apertura</div>
+        <div class="idea-dato" style="font-weight:600;color:var(--text)">${idea.gancho}</div>
+        <div class="idea-hook" style="margin-top:10px">📊 Dato central</div>
+        <div class="idea-dato">${idea.dato_central}</div>
+        <div class="idea-hook" style="margin-top:10px">🔀 El giro</div>
+        <div class="idea-dato">${idea.giro}</div>
+        <div class="idea-hook" style="margin-top:10px">❓ Pregunta de cierre</div>
+        <div class="idea-dato" style="font-style:italic">${idea.pregunta_cierre}</div>
+        <div class="idea-tags">
+          <span class="idea-tag" style="${tagColor}">${c.label}</span>
+          ${idea.fuente ? `<span class="idea-tag" style="background:var(--golddim);color:var(--gold);border:1px solid var(--border2)">📚 ${idea.fuente}</span>` : ''}
+        </div>
+        <button class="copy-idea-btn" onclick="copyIdea('${idea.id}')">📋 Copiar idea completa</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-function toggleIdea(id,el) {
-  const body=document.getElementById('ib-'+id);
+function toggleIdea(bodyId, headEl) {
+  const body = document.getElementById(bodyId);
+  const arrow = headEl.querySelector('.idea-arrow');
+  if (!body) return;
   body.classList.toggle('show');
-  el.classList.toggle('open');
+  if (arrow) arrow.classList.toggle('open');
 }
 
-function filterCat(cat,el) {
-  currentFilter=cat;
+function filterCat(cat, el) {
+  currentFilter = cat;
   document.querySelectorAll('.cat-pill').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   renderIdeas();
 }
 
-function selectIdea(id) {
-  selectedIdea=IDEAS.find(i=>i.id===id);
-  if(!selectedIdea)return;
-  document.getElementById('ampSelected').innerHTML=`
-    <div class="amp-sel-label">Idea seleccionada</div>
-    <div class="amp-sel-title">[${selectedIdea.id}] ${selectedIdea.titulo}</div>
-    <div class="amp-sel-desc">${selectedIdea.desc}</div>`;
-  setTool('ampliar');
-  setPanel('tools',document.querySelectorAll('.nav-item')[4]);
+function copyIdea(id) {
+  const idea = IDEAS.find(i=>i.id===id);
+  if (!idea) return;
+  const txt = `📌 GANCHO:\n${idea.gancho}\n\n📊 DATO CENTRAL:\n${idea.dato_central}\n\n🔀 EL GIRO:\n${idea.giro}\n\n❓ CIERRE:\n${idea.pregunta_cierre}\n\n📚 Fuente: ${idea.fuente||'Registro histórico'}`;
+  navigator.clipboard.writeText(txt).catch(()=>{});
+  const btn = event.target;
+  btn.textContent = '✓ Copiado';
+  setTimeout(()=>{ btn.textContent = '📋 Copiar idea completa'; }, 1500);
 }
 
-// ══ TOOLS ══════════════════════════════════════════
-function setTool(tool) {
-  document.getElementById('tool-anticopy').style.display=tool==='anticopy'?'block':'none';
-  document.getElementById('tool-ampliar').style.display=tool==='ampliar'?'block':'none';
-  document.getElementById('tab-anticopy').classList.toggle('active',tool==='anticopy');
-  document.getElementById('tab-ampliar').classList.toggle('active',tool==='ampliar');
+// ══ COUNTDOWN TO 10 AM ════════════════════════════════
+function startCountdown() {
+  const bar = document.getElementById('cdBar');
+  bar.style.display = 'flex';
+  function tick() {
+    const now = new Date();
+    const next10 = new Date(now);
+    next10.setHours(10,0,0,0);
+    if (now >= next10) next10.setDate(next10.getDate()+1);
+    const diff = next10 - now;
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    document.getElementById('cdTime').textContent =
+      String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
 }
 
-// ══ PROGRESS ═══════════════════════════════════════
-function startProg(p) {
-  const wrap=document.getElementById(p+'-prog');
-  const bar=document.getElementById(p+'-bar');
-  wrap.classList.add('show'); bar.style.width='0%';
-  let s=0;
-  const steps=[1,2,3].map(i=>document.getElementById(p+'-s'+i));
-  steps.forEach(el=>{if(el)el.className='prog-step';});
-  if(steps[0])steps[0].className='prog-step active';
+// Auto-generate at 10 AM
+function checkAutoGen() {
+  const now = new Date();
+  if (now.getHours() === 10 && now.getMinutes() === 0) {
+    S.set('ideasDate','');
+    generarIdeas(true);
+  }
+}
+setInterval(checkAutoGen, 60000);
+
+// ══ ANTICOPY ══════════════════════════════════════════
+async function anticopy() {
+  const txt = document.getElementById('acInput').value.trim();
+  if (!txt || txt.length < 50) { alert('Pegá un texto de al menos 50 caracteres.'); return; }
+
+  const btn = document.getElementById('acBtn');
+  btn.disabled = true;
+  document.getElementById('acResult').classList.remove('show');
+  document.getElementById('acErr').classList.remove('show');
+
+  const prog = document.getElementById('acProg');
+  const bar  = document.getElementById('acBar');
+  prog.classList.add('show');
+  bar.style.width = '0%';
+  let s = 0;
+  const steps = [1,2,3].map(i=>document.getElementById('ac'+i));
+  steps.forEach(el=>{ if(el) el.className='prog-step'; });
+  if(steps[0]) steps[0].className='prog-step active';
   bar.style.width='15%';
-  const iv=setInterval(()=>{
+  const iv = setInterval(()=>{
     s++;
-    steps.forEach((el,i)=>{if(!el)return;
-      if(i<s)el.className='prog-step done';
-      else if(i===s)el.className='prog-step active';
+    steps.forEach((el,i)=>{
+      if(!el) return;
+      if(i<s) el.className='prog-step done';
+      else if(i===s) el.className='prog-step active';
       else el.className='prog-step';
     });
-    bar.style.width=Math.min(15+s*30,88)+'%';
-    if(s>=steps.length)clearInterval(iv);
+    bar.style.width = Math.min(15+s*30,88)+'%';
+    if(s>=steps.length) clearInterval(iv);
   },1600);
-  return{iv,bar,wrap};
-}
 
-function stopProg(p,obj) {
-  if(obj.iv)clearInterval(obj.iv);
-  obj.bar.style.width='100%';
-  setTimeout(()=>{obj.wrap.classList.remove('show');obj.bar.style.width='0';},500);
-}
+  const acPrompt = `MISIÓN ANTICOPY — NIVEL MÁXIMO:
 
-// ══ ANTICOPY ═══════════════════════════════════════
-async function anticopy() {
-  const txt=document.getElementById('anticopyInput').value.trim();
-  if(!txt||txt.length<50){alert('Pegá un texto de al menos 50 caracteres.');return;}
-  const btn=document.getElementById('ac-btn');
-  btn.disabled=true;
-  document.getElementById('ac-result').classList.remove('show');
-  document.getElementById('ac-err').classList.remove('show');
-  const obj=startProg('ac');
-
-  const prompt=`Sos el Director Creativo de Zona de Terror TV, una página con 230.000 seguidores experta en contenido de terror viral. Sos un maestro en transformar contenido ordinario en posts que la gente no puede dejar de leer y compartir.
-
-MISIÓN ANTICOPY — NIVEL EXPERTO:
-Tenés que transformar el texto original en algo completamente nuevo que:
-1. Facebook lo detecte como contenido 100% original (cambiá estructura, inicio y vocabulario)
-2. Sea MEJOR que el original — más impactante, más atmosférico, más compartible
-3. Tenga la voz oscura y magnética de Zona de Terror TV
+Transformá este texto en algo completamente nuevo que:
+1. Facebook detecte como contenido 100% original (estructura, inicio y vocabulario completamente distintos)
+2. Sea MEJOR que el original — más impactante, más atmosférico, más específico
+3. Tenga la voz oscura y cinematográfica de Zona de Terror TV
 
 TÉCNICAS OBLIGATORIAS:
-- INICIO: Empezá con el dato más perturbador o impactante del texto, no con contexto
-- ESTRUCTURA: Invertí o reorganizá completamente el orden de la información
-- VOZ: Frases cortas que golpeen. Nunca más de 20 palabras por oración
-- TENSIÓN: Construí suspenso antes de revelar cada dato importante
-- VOCABULARIO: Reemplazá cada adjetivo y verbo por uno más preciso y oscuro
-- DATOS: Mantené todos los hechos reales — son lo que le da credibilidad viral
-- CIERRE: Terminá con una pregunta que divida a la audiencia en dos bandos claros (los que creen y los que no). Eso genera debate y el algoritmo de Facebook lo ama.
-- PROHIBIDO: "aterrador", "escalofriante", "perturbador", "increíble", "impresionante" — son palabras muertas
-
-Escribí SOLO el texto reescrito. Sin explicaciones, sin títulos, sin aclaraciones.
+- Empezá desde el ángulo más perturbador del texto, no desde el principio cronológico
+- Reorganizá completamente la estructura — si el original va A→B→C, vos podés ir C→A→B o cualquier otro orden
+- Reemplazá cada adjetivo por uno más preciso y oscuro
+- Frases cortas. Máximo 20 palabras por oración
+- Mantené TODOS los datos reales: fechas, nombres, lugares, cifras
+- Terminá con una pregunta que divida en dos posiciones irreconciliables
+- NO menciones que es una reescritura
+- Escribí SOLO el texto transformado, sin explicaciones
 
 TEXTO ORIGINAL:
 ${txt}`;
 
   try {
-    const result=await callGroq(prompt);
-    stopProg('ac',obj);
-    document.getElementById('ac-text').textContent=result.trim();
-    document.getElementById('ac-result').classList.add('show');
+    const result = await callGroq(acPrompt, SYSTEM_PROMPT);
+    clearInterval(iv);
+    bar.style.width = '100%';
+    setTimeout(()=>{ prog.classList.remove('show'); bar.style.width='0'; },500);
+    document.getElementById('acText').textContent = result.trim();
+    document.getElementById('acResult').classList.add('show');
   } catch(e) {
-    stopProg('ac',obj);
-    document.getElementById('ac-err').textContent='⚠️ '+e.message;
-    document.getElementById('ac-err').classList.add('show');
+    clearInterval(iv);
+    prog.classList.remove('show');
+    const errEl = document.getElementById('acErr');
+    errEl.textContent = '⚠️ ' + e.message;
+    errEl.classList.add('show');
   }
-  btn.disabled=false;
+  btn.disabled = false;
 }
 
-// ══ AMPLIAR ════════════════════════════════════════
-async function ampliar() {
-  const custom=document.getElementById('ampliarInput').value.trim();
-  const tono=document.getElementById('amp-tono').value;
-  const largo=document.getElementById('amp-largo').value;
-  const cta=document.getElementById('amp-cta').value;
-  const ht=document.getElementById('amp-ht').value;
-
-  let tema=custom||(selectedIdea?`"${selectedIdea.titulo}": ${selectedIdea.desc}`:'');
-  if(!tema){alert('Elegí una idea o escribí tu tema.');return;}
-
-  const btn=document.getElementById('amp-btn');
-  btn.disabled=true;
-  document.getElementById('amp-result').classList.remove('show');
-  document.getElementById('amp-err').classList.remove('show');
-  const obj=startProg('amp');
-
-  const prompt=`Actuá como un investigador especializado en casos criminales reales y fenómenos paranormales, con el estilo cinematográfico y detallista de un guionista de documentales de Netflix o un podcaster de misterio de alto impacto. Trabajás para Zona de Terror TV — 230.000 seguidores en Facebook que esperan el contenido más perturbador, intrigante y compartible de internet.
-
-MISIÓN: Escribir un post de Facebook de ${largo} sobre el siguiente tema que funcione como un hilo viral de alto impacto.
-
-TEMA: ${tema}
-TONO: ${tono}
-
-ESTRUCTURA OBLIGATORIA DEL POST VIRAL:
-
-1. GANCHO (primeras 2 líneas — el 80% del éxito)
-   - Primera línea: máximo 8 palabras. Tiene que generar una reacción física inmediata
-   - Segunda línea: el dato más específico y perturbador — fecha, nombre real, lugar exacto
-   - PROHIBIDO empezar con: "En el mundo de...", "Hoy te traigo...", "¿Sabías que...", "Imaginate...", "Hola a todos"
-   - Si el gancho no engancha en 2 segundos, el algoritmo de Facebook lo entierra
-
-2. DESARROLLO EN CAPAS
-   - Incluí al menos 3 datos específicos, fechas o nombres reales que pocos conocen
-   - Construí la historia revelando una capa por párrafo — nunca des todo de golpe
-   - Frases cortas que golpeen. Párrafos de máximo 3 líneas
-   - Usá lenguaje descriptivo: atmósfera, clima, sensaciones físicas, detalles sensoriales
-   - Creá micro-suspensos: dejá preguntas abiertas antes de responderlas
-
-3. GIRO O REVELACIÓN
-   - El momento "no puedo creer esto" del post
-   - Un dato oculto, una contradicción oficial, algo que cambia toda la perspectiva
-   - Tiene que funcionar como el plot twist de una película
-
-4. CIERRE con ${cta}
-   - Que divida a la audiencia en dos bandos claros — genera debate y el algoritmo lo amplifica
-   - Una pregunta sin respuesta fácil es más poderosa que una afirmación
-
-5. ${ht}
-
-EUFEMISMOS NARRATIVOS OBLIGATORIOS (suenan más cinematográficos y evitan filtros):
-- En lugar de "asesinato" → "un escenario que desafiaba toda lógica forense"
-- En lugar de "ovni" → "anomalía aeroespacial de origen no convencional"
-- En lugar de "cadáver" / "cuerpo" → "lo que encontró el equipo de respuesta cambió sus carreras para siempre"
-- En lugar de "sangre" → "evidencia que los investigadores se negaron a fotografiar"
-- En lugar de "fantasma" → "presencia registrada por múltiples testigos independientes"
-- En lugar de "mató" → "fue el último en verlo con vida"
-
-REGLAS ABSOLUTAS:
-- Voz activa siempre, nunca pasiva
-- PROHIBIDO: "aterrador", "escalofriante", "perturbador", "impresionante", "increíble" — palabras muertas que el algoritmo ignora
-- Cada oración justifica su existencia — si no agrega tensión o información concreta, no va
-- El post tiene que poder leerse en voz alta y sonar como el inicio de un documental
-- No omitás detalles técnicos ni nombres si son de dominio público — le dan credibilidad viral
-- Escribí SOLO el post. Sin títulos de sección, sin aclaraciones, sin "aquí está el post"`;
-
-  try {
-    const result=await callGemini(prompt);
-    stopProg('amp',obj);
-    document.getElementById('amp-text').textContent=result.trim();
-    document.getElementById('amp-result').classList.add('show');
-    addActivity('Zona TV',`generó post: "${tema.substring(0,30)}..."`, '📝','#f5c518');
-  } catch(e) {
-    stopProg('amp',obj);
-    document.getElementById('amp-err').textContent='⚠️ '+e.message;
-    document.getElementById('amp-err').classList.add('show');
-  }
-  btn.disabled=false;
-}
-
-// ══ COPY ═══════════════════════════════════════════
-function copyResult(textId,btnId) {
-  const txt=document.getElementById(textId)?.textContent||'';
+function copyText(textId, btnId) {
+  const txt = document.getElementById(textId)?.textContent||'';
   navigator.clipboard.writeText(txt).catch(()=>{});
-  const btn=document.getElementById(btnId)||event.target;
-  const orig=btn.textContent;
-  btn.textContent='✓ Copiado';
-  setTimeout(()=>{btn.textContent=orig;},1500);
+  const btn = document.getElementById(btnId);
+  if(btn){ const o=btn.textContent; btn.textContent='✓ Copiado'; setTimeout(()=>{btn.textContent=o;},1500); }
 }
 
-function clearTool(prefix) {
-  if(prefix==='ac'){
-    document.getElementById('anticopyInput').value='';
-    document.getElementById('ac-result').classList.remove('show');
-    document.getElementById('ac-err').classList.remove('show');
-  } else {
-    document.getElementById('ampliarInput').value='';
-    document.getElementById('amp-result').classList.remove('show');
-    document.getElementById('amp-err').classList.remove('show');
-    selectedIdea=null;
-    document.getElementById('ampSelected').innerHTML=`<div class="amp-sel-label">Idea seleccionada</div><div class="amp-sel-title">Ninguna</div><div class="amp-sel-desc">Elegí una idea del panel de 15 Ideas o escribí tu tema abajo.</div>`;
-  }
+function clearAc() {
+  document.getElementById('acInput').value='';
+  document.getElementById('acResult').classList.remove('show');
+  document.getElementById('acErr').classList.remove('show');
 }
 
-// ══ PWA ════════════════════════════════════════════
+// ══ PWA ═══════════════════════════════════════════════
 let dProm;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dProm=e;});
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); dProm=e;
+  document.getElementById('installBar').classList.add('show');
+});
+document.getElementById('installBtn').addEventListener('click',async()=>{
+  if(!dProm) return;
+  dProm.prompt(); await dProm.userChoice;
+  dProm=null; document.getElementById('installBar').classList.remove('show');
+});
 if('serviceWorker'in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
-// ══ INIT ═══════════════════════════════════════════
-renderCounters();
-renderActivity();
-renderFollowers();
-buildAgenda();
+// ══ INIT ══════════════════════════════════════════════
 generarIdeas(false);
 </script>
 </body>
