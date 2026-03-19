@@ -1092,13 +1092,17 @@ function resetWeek() {
 }
 
 function registrar(quien, tipo) {
-  if(tipo==='Reel'&&state.reels>0) state.reels--;
+  if(tipo==='Reel') {
+    if(state.reels>0) state.reels--;
+    if(state.posts>0) state.posts--; // Reel cuenta como Post también
+  }
   if(tipo==='Post'&&state.posts>0) state.posts--;
   const key = quien==='Cristian'?'c':'v';
   pts[key] += tipo==='Reel'?2:1;
   S.set('state',state); S.set('pts',pts);
   renderCounters(); renderCompetition();
-  addActivity(quien,`subió un ${tipo} (${tipo==='Reel'?'+2':'+1'} pts)`,tipo==='Reel'?'🎬':'📝',quien==='Cristian'?'#e63b2e':'#a855f7');
+  const label = tipo==='Reel'?'Reel · -1 Reel -1 Post (+2pts)':'Post · -1 Post (+1pt)';
+  addActivity(quien,label,tipo==='Reel'?'🎬':'📝',quien==='Cristian'?'#e63b2e':'#a855f7');
   if(navigator.vibrate) navigator.vibrate(40);
 }
 
