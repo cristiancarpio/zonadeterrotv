@@ -11,11 +11,10 @@ export default async function handler(req, res) {
   const { prompt } = req.body;
   if (!prompt) return res.status(400).json({ error: 'Falta el prompt' });
 
-  // Gemini primero, fallback a otros si falla
   const MODELS = [
     'google/gemini-2.0-flash-exp:free',
     'google/gemini-flash-1.5-8b:free',
-    'google/gemini-2.0-flash-thinking-exp:free',
+    'google/gemma-3-27b-it:free',
     'meta-llama/llama-3.3-70b-instruct:free',
   ];
 
@@ -42,7 +41,7 @@ export default async function handler(req, res) {
       if (!response.ok) {
         const err = await response.json().catch(() => ({}));
         const msg = err?.error?.message || `Error ${response.status}`;
-        if (msg.includes('not found') || msg.includes('unavailable')) continue;
+        if (msg.includes('not a valid model') || msg.includes('not found') || msg.includes('unavailable')) continue;
         return res.status(response.status).json({ error: msg });
       }
 
@@ -58,5 +57,5 @@ export default async function handler(req, res) {
     }
   }
 
-  return res.status(500).json({ error: 'No se pudo conectar con Gemini vía OpenRouter' });
+  return res.status(500).json({ error: 'No se pudo conectar con ningún modelo' });
 }
