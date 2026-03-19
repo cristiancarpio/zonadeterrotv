@@ -18,6 +18,8 @@ export default async function handler(req, res) {
     'meta-llama/llama-3.3-70b-instruct:free',
   ];
 
+  const errors = [];
+
   for (const model of MODELS) {
     try {
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -36,26 +38,30 @@ export default async function handler(req, res) {
         })
       });
 
-      if (response.status === 429 || response.status === 503 || response.status === 404) continue;
+      const data = await response.json();
 
       if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        const msg = err?.error?.message || `Error ${response.status}`;
-        if (msg.includes('not a valid model') || msg.includes('not found') || msg.includes('unavailable')) continue;
-        return res.status(response.status).json({ error: msg });
+        const msg = data?.error?.message || `HTTP ${response.status}`;
+        errors.push(`${model}: ${msg}`);
+        continue;
       }
 
-      const data = await response.json();
       const text = data.choices?.[0]?.message?.content || '';
+      if (!text) {
+        errors.push(`${model}: respuesta vacía`);
+        continue;
+      }
+
       return res.status(200).json({ text, model });
 
     } catch (e) {
-      if (model === MODELS[MODELS.length - 1]) {
-        return res.status(500).json({ error: e.message });
-      }
+      errors.push(`${model}: ${e.message}`);
       continue;
     }
   }
 
-  return res.status(500).json({ error: 'No se pudo conectar con ningún modelo' });
+  return res.status(500).json({ 
+    error: 'Todos los modelos fallaron',
+    details: errors
+  });
 }
