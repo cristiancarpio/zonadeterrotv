@@ -1254,17 +1254,22 @@ async function analyzeFollowers() {
     followers[k]?`${p.label}: ${followers[k].toLocaleString()} seguidores`:null
   ).filter(Boolean).join(', ');
 
-  const prompt = `Sos el estratega digital de Zona de Terror TV, una página de terror con 230K seguidores en Facebook. Analizá estos números:
+  const prompt = `Sos el estratega de crecimiento de Zona de Terror TV — una página de terror con 230K seguidores en Facebook que está expandiéndose a múltiples plataformas. Tu trabajo es analizar números y dar recomendaciones que realmente muevan la aguja, no consejos genéricos.
 
+DATOS ACTUALES DE LA PÁGINA:
 ${dataStr}
 
-Con base en estos datos:
-1. Identificá qué plataforma tiene más potencial de crecimiento esta semana
-2. Detectá cuál está siendo descuidada
-3. Dá 3 prompts de acción concreta y específica (qué publicar, cuándo, en qué plataforma)
-4. Una predicción de crecimiento si siguen tu recomendación
+ANÁLISIS REQUERIDO — SÉ BRUTALMENTE HONESTO Y ESPECÍFICO:
 
-Respondé en español, tono directo y estratégico. Máximo 120 palabras para el análisis. Luego listá exactamente 3 prompts de acción en formato: "PROMPT 1: [acción concreta]"`;
+1. DIAGNÓSTICO: ¿Qué plataforma está creciendo más rápido en proporción? ¿Cuál está estancada o siendo ignorada? ¿Hay algún número que sea una señal de alarma?
+
+2. OPORTUNIDAD DE LA SEMANA: ¿En qué plataforma hay que meter más energía esta semana y por qué? Justificá con los números.
+
+3. ACCIONES CONCRETAS: Exactamente qué tiene que hacer el equipo esta semana para maximizar el crecimiento. Nada genérico — decí qué tipo de contenido, en qué horario, con qué frecuencia.
+
+4. PREDICCIÓN: Si implementan tus recomendaciones, ¿cuántos seguidores nuevos podrían ganar en 7 días en la plataforma priorizada?
+
+Respondé en español. Tono directo, sin rodeos, como un consultor que cobra caro y da resultados. Máximo 150 palabras para el análisis. Luego listá exactamente 3 acciones en formato: "PROMPT 1: [acción muy específica con plataforma, tipo de contenido y horario]"`;
 
   try {
     const txt = await callGroq(prompt);
@@ -1371,14 +1376,28 @@ async function generarIdeas(force) {
     Array(5).fill('<div class="skel" style="height:72px"></div>').join('');
 
   const hoy = NOW.toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'});
-  const prompt=`Sos el Director Creativo de Zona de Terror TV (230.000 seguidores en Facebook). Tono: sombrío, tenso, profesional. Cero clichés. Frases cortas.
+  const prompt=`Sos el Director Creativo de contenido viral de Zona de Terror TV, una página con 230.000 seguidores en Facebook especializada en terror, misterio y lo paranormal. Tu trabajo es generar el contenido más perturbador, intrigante y compartible posible. Cada idea tiene que despertar una reacción emocional inmediata: miedo, incredulidad, curiosidad obsesiva.
 
-HOY: ${hoy}
+HOY ES: ${hoy}
 
-Generá exactamente 15 ideas de terror basadas en tendencias actuales, estrenos recientes y misterios sin resolver. 5 categorías × 3 ideas: paranormal, aliens, misterios, crimenes, tendencias.
+MISIÓN CRÍTICA: Generá 15 ideas de contenido de terror con POTENCIAL VIRAL MÁXIMO. Basate en:
+- Casos reales documentados o noticias recientes perturbadoras
+- Estrenos, trailers o revelaciones del mundo del terror esta semana
+- Misterios sin resolver que generan debate y teorías
+- Fenómenos paranormales con evidencia o testimonios recientes
+- Crímenes perturbadores o casos fríos que volvieron a la agenda
 
-Respondé SOLO con JSON array, sin texto extra ni backticks:
-[{"id":"001","cat":"paranormal","titulo":"Título gancho impactante","desc":"2 líneas perturbadoras con dato real + elemento inquietante."},{"id":"002","cat":"paranormal","titulo":"...","desc":"..."},{"id":"003","cat":"paranormal","titulo":"...","desc":"..."},{"id":"004","cat":"aliens","titulo":"...","desc":"..."},{"id":"005","cat":"aliens","titulo":"...","desc":"..."},{"id":"006","cat":"aliens","titulo":"...","desc":"..."},{"id":"007","cat":"misterios","titulo":"...","desc":"..."},{"id":"008","cat":"misterios","titulo":"...","desc":"..."},{"id":"009","cat":"misterios","titulo":"...","desc":"..."},{"id":"010","cat":"crimenes","titulo":"...","desc":"..."},{"id":"011","cat":"crimenes","titulo":"...","desc":"..."},{"id":"012","cat":"crimenes","titulo":"...","desc":"..."},{"id":"013","cat":"tendencias","titulo":"...","desc":"..."},{"id":"014","cat":"tendencias","titulo":"...","desc":"..."},{"id":"015","cat":"tendencias","titulo":"...","desc":"..."}]`;
+REGLAS DE ORO PARA VIRALIZAR:
+- El TÍTULO es el 80% del éxito — tiene que detener el scroll en menos de 3 segundos
+- Prohibido usar "aterrador", "escalofriante", "perturbador" en el título — son clichés muertos
+- Cada idea debe generar la reacción "necesito saber más" o "no puedo creer que esto sea real"
+- Los datos reales en la descripción le dan credibilidad y generan más shares
+- Las preguntas sin respuesta generan más comentarios que las afirmaciones
+
+5 categorías × 3 ideas: paranormal, aliens, misterios, crimenes, tendencias
+
+Respondé SOLO con JSON array sin texto extra ni backticks:
+[{"id":"001","cat":"paranormal","titulo":"Título gancho que detenga el scroll — máx 10 palabras, sin clichés","desc":"Primera línea: el dato más impactante o inquietante. Segunda línea: el elemento que deja al lector con más preguntas que respuestas."},{"id":"002","cat":"paranormal","titulo":"...","desc":"..."},{"id":"003","cat":"paranormal","titulo":"...","desc":"..."},{"id":"004","cat":"aliens","titulo":"...","desc":"..."},{"id":"005","cat":"aliens","titulo":"...","desc":"..."},{"id":"006","cat":"aliens","titulo":"...","desc":"..."},{"id":"007","cat":"misterios","titulo":"...","desc":"..."},{"id":"008","cat":"misterios","titulo":"...","desc":"..."},{"id":"009","cat":"misterios","titulo":"...","desc":"..."},{"id":"010","cat":"crimenes","titulo":"...","desc":"..."},{"id":"011","cat":"crimenes","titulo":"...","desc":"..."},{"id":"012","cat":"crimenes","titulo":"...","desc":"..."},{"id":"013","cat":"tendencias","titulo":"...","desc":"..."},{"id":"014","cat":"tendencias","titulo":"...","desc":"..."},{"id":"015","cat":"tendencias","titulo":"...","desc":"..."}]`;
 
   try {
     const txt = await callGemini(prompt);
@@ -1490,17 +1509,25 @@ async function anticopy() {
   document.getElementById('ac-err').classList.remove('show');
   const obj=startProg('ac');
 
-  const prompt=`Sos el Director Creativo de Zona de Terror TV (230.000 seguidores). Tono: sombrío, tenso, profesional. Cero clichés.
+  const prompt=`Sos el Director Creativo de Zona de Terror TV, una página con 230.000 seguidores experta en contenido de terror viral. Sos un maestro en transformar contenido ordinario en posts que la gente no puede dejar de leer y compartir.
 
-MISIÓN ANTICOPY: Reescribí completamente este texto para que Facebook lo detecte como contenido 100% original.
+MISIÓN ANTICOPY — NIVEL EXPERTO:
+Tenés que transformar el texto original en algo completamente nuevo que:
+1. Facebook lo detecte como contenido 100% original (cambiá estructura, inicio y vocabulario)
+2. Sea MEJOR que el original — más impactante, más atmosférico, más compartible
+3. Tenga la voz oscura y magnética de Zona de Terror TV
 
-REGLAS:
-- Cambiá el inicio completamente — empezá desde ángulo distinto
-- Reorganizá la estructura (si es A→B→C, hacé C→A→B o cualquier otro orden)
-- Reemplazá todo el vocabulario manteniendo datos reales y el misterio
-- Atmósfera oscura y densa de Zona de Terror TV
-- Terminá con pregunta perturbadora que invite a comentar
-- Escribí SOLO el texto reescrito, sin explicaciones
+TÉCNICAS OBLIGATORIAS:
+- INICIO: Empezá con el dato más perturbador o impactante del texto, no con contexto
+- ESTRUCTURA: Invertí o reorganizá completamente el orden de la información
+- VOZ: Frases cortas que golpeen. Nunca más de 20 palabras por oración
+- TENSIÓN: Construí suspenso antes de revelar cada dato importante
+- VOCABULARIO: Reemplazá cada adjetivo y verbo por uno más preciso y oscuro
+- DATOS: Mantené todos los hechos reales — son lo que le da credibilidad viral
+- CIERRE: Terminá con una pregunta que divida a la audiencia en dos bandos claros (los que creen y los que no). Eso genera debate y el algoritmo de Facebook lo ama.
+- PROHIBIDO: "aterrador", "escalofriante", "perturbador", "increíble", "impresionante" — son palabras muertas
+
+Escribí SOLO el texto reescrito. Sin explicaciones, sin títulos, sin aclaraciones.
 
 TEXTO ORIGINAL:
 ${txt}`;
@@ -1535,21 +1562,46 @@ async function ampliar() {
   document.getElementById('amp-err').classList.remove('show');
   const obj=startProg('amp');
 
-  const prompt=`Sos el Director Creativo de Zona de Terror TV (230.000 seguidores en Facebook). Tono: sombrío, tenso, profesional. Cero clichés. Frases cortas. Mucha atmósfera.
+  const prompt=`Sos el Director Creativo de contenido viral de Zona de Terror TV — 230.000 seguidores en Facebook que esperan el contenido más perturbador e intrigante de internet. Tu reputación se basa en posts que generan cientos de comentarios y miles de shares.
 
-MISIÓN: Desarrollá este tema en un post de Facebook de ${largo}.
+MISIÓN: Crear un post de Facebook de ${largo} sobre el siguiente tema que tenga MÁXIMO POTENCIAL VIRAL.
 
 TEMA: ${tema}
 TONO: ${tono}
 
-ESTRUCTURA:
-1. GANCHO — máx 8 palabras que detengan el scroll
-2. DESARROLLO — atmósfera + datos reales + detalles perturbadores
-3. GIRO O REVELACIÓN — algo inesperado
+ARQUITECTURA DEL POST VIRAL:
+
+1. GANCHO (primeras 2 líneas — lo más importante)
+   - Máximo 8 palabras en la primera línea
+   - Tiene que generar una reacción física: piel de gallina, incredulidad, miedo
+   - Prohibido empezar con: "En el mundo de...", "Hoy te traigo...", "¿Sabías que...", "Imaginate..."
+   - El gancho tiene que funcionar como thumbnail de video — si no engancha en 2 segundos, perdiste al lector
+
+2. DESARROLLO (el cuerpo)
+   - Construí la historia en capas: cada párrafo revela algo nuevo
+   - Usá datos concretos: fechas, lugares, nombres, números — le dan credibilidad
+   - Frases cortas que golpeen. Párrafos de máximo 3 líneas
+   - Creá micro-suspensos: dejá preguntas abiertas antes de responderlas
+   - Nunca des toda la información de golpe — construí tensión
+
+3. GIRO O REVELACIÓN
+   - El momento "no puedo creer esto" del post
+   - Algo que el lector no vio venir
+   - Puede ser un dato oculto, una contradicción, una pregunta sin respuesta oficial
+
 4. CIERRE con ${cta}
+   - El cierre tiene que obligar a comentar o compartir
+   - Si es pregunta: que divida en dos bandos claros (genera debate = algoritmo te ama)
+   - Si es encuesta: opciones que representen posiciones irreconciliables
+
 5. ${ht}
 
-REGLAS: Voz activa siempre. Datos concretos. Prohibido empezar con clichés. Escribí SOLO el post.`;
+REGLAS ABSOLUTAS:
+- Voz activa siempre, nunca pasiva
+- Prohibido: "aterrador", "escalofriante", "perturbador", "impresionante" — son palabras muertas
+- Cada oración tiene que justificar su existencia — si no agrega tensión o información, borrala
+- El post tiene que poder leerse en voz alta y sonar como una historia, no como un artículo
+- Escribí SOLO el post. Sin títulos de sección, sin aclaraciones previas, sin "aquí está el post"`;
 
   try {
     const result=await callGemini(prompt);

@@ -5,30 +5,28 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const key = process.env.OPENROUTER_API_KEY;
-  if (!key) return res.status(500).json({ error: 'OPENROUTER_API_KEY no configurada en Vercel' });
+  const key = process.env.GROQ_API_KEY;
+  if (!key) return res.status(500).json({ error: 'GROQ_API_KEY no configurada en Vercel' });
 
   const { prompt } = req.body;
   if (!prompt) return res.status(400).json({ error: 'Falta el prompt' });
 
   const MODELS = [
-    'google/gemini-2.0-flash-exp:free',
-    'google/gemini-flash-1.5-8b:free',
-    'google/gemma-3-27b-it:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
+    'llama-3.3-70b-versatile',
+    'llama3-70b-8192',
+    'llama3-8b-8192',
+    'mixtral-8x7b-32768',
   ];
 
   const errors = [];
 
   for (const model of MODELS) {
     try {
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${key}`,
-          'HTTP-Referer': 'https://zona-terror-tv.vercel.app',
-          'X-Title': 'Zona de Terror TV'
+          'Authorization': `Bearer ${key}`
         },
         body: JSON.stringify({
           model,
@@ -60,7 +58,7 @@ export default async function handler(req, res) {
     }
   }
 
-  return res.status(500).json({ 
+  return res.status(500).json({
     error: 'Todos los modelos fallaron',
     details: errors
   });
