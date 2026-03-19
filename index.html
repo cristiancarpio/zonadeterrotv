@@ -632,13 +632,12 @@ select option { background: #1f1a24; color: #f5f0ff; }
 .act-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 12px 14px;
-  background: var(--bg3);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
-.act-time { font-size: 12px; color: var(--text3); font-weight: 600; min-width: 44px; }
+.act-item:last-child { border-bottom: none; }
+.act-time { font-size: 13px; color: var(--text3); font-weight: 600; min-width: 52px; font-family: var(--fd); letter-spacing: 0.5px; }
 .act-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .act-text { font-size: 14px; color: var(--text2); flex: 1; }
 .act-empty { text-align: center; padding: 28px; color: var(--text3); font-size: 14px; }
@@ -695,118 +694,7 @@ select option { background: #1f1a24; color: #f5f0ff; }
   <!-- CONTENT -->
   <div class="content">
 
-    <!-- ══ PANEL: BATALLA ══════════════════════════ -->
-    <div class="panel active" id="panel-batalla">
-      <div class="page-title">⚔️ Contador</div>
-      <div class="page-sub">Meta semanal del equipo</div>
 
-      <div class="counters">
-        <div class="counter-card reels">
-          <div class="counter-label">Reels Faltan</div>
-          <div class="counter-num" id="cnt-reels">21</div>
-          <div class="counter-meta">de <span id="gr-disp">21</span> esta semana</div>
-        </div>
-        <div class="counter-card posts">
-          <div class="counter-label">Posts Faltan</div>
-          <div class="counter-num" id="cnt-posts">35</div>
-          <div class="counter-meta">de <span id="gp-disp">35</span> esta semana</div>
-        </div>
-      </div>
-
-      <!-- COMPETITION -->
-      <div class="competition-card">
-        <div class="card-title">🏆 Competencia motivadora · esta semana</div>
-        <div class="comp-row">
-          <div class="comp-avatar c">💀</div>
-          <div class="comp-info">
-            <div class="comp-name">Cristian</div>
-            <div class="comp-bar-wrap">
-              <div class="comp-bar c" id="bar-c" style="width:0%"></div>
-            </div>
-          </div>
-          <div>
-            <div class="comp-points" id="pts-c">0</div>
-            <div class="comp-pts-label">pts</div>
-          </div>
-        </div>
-        <div class="comp-row">
-          <div class="comp-avatar v">👁️</div>
-          <div class="comp-info">
-            <div class="comp-name">Vanessa</div>
-            <div class="comp-bar-wrap">
-              <div class="comp-bar v" id="bar-v" style="width:0%"></div>
-            </div>
-          </div>
-          <div>
-            <div class="comp-points" id="pts-v">0</div>
-            <div class="comp-pts-label">pts</div>
-          </div>
-        </div>
-        <div class="comp-leader" id="comp-leader">¡Empate! Los dos arrancando la semana 🔥</div>
-      </div>
-
-      <!-- TIME PICKER MODAL -->
-      <div id="timepicker-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;align-items:flex-end;justify-content:center" onclick="closeTimePicker()">
-        <div onclick="event.stopPropagation()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:24px 24px 0 0;padding:24px 20px 40px;width:100%;max-width:430px">
-          <div style="width:40px;height:4px;background:var(--bg4);border-radius:2px;margin:0 auto 20px"></div>
-          <div id="tp-title" style="font-size:19px;font-weight:700;color:var(--text);margin-bottom:5px"></div>
-          <div style="font-size:14px;color:var(--text3);margin-bottom:20px">¿A qué hora está programada?</div>
-          <input type="time" id="tp-time" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px;color:var(--text);font-size:24px;font-family:var(--fd);text-align:center;outline:none;margin-bottom:14px;letter-spacing:2px">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
-            <button onclick="setQuickTime('08:00')" class="tp-quick">8:00 AM</button>
-            <button onclick="setQuickTime('10:00')" class="tp-quick">10:00 AM</button>
-            <button onclick="setQuickTime('12:00')" class="tp-quick">12:00 PM</button>
-            <button onclick="setQuickTime('15:00')" class="tp-quick">3:00 PM</button>
-            <button onclick="setQuickTime('18:00')" class="tp-quick">6:00 PM</button>
-            <button onclick="setQuickTime('21:30')" class="tp-quick">9:30 PM</button>
-          </div>
-          <button onclick="confirmRegistrar()" style="width:100%;padding:16px;background:linear-gradient(135deg,#8c6800,#f5c518);color:#0d0b0f;border:none;border-radius:var(--radius);font-family:var(--fd);font-size:19px;font-weight:900;letter-spacing:2px;cursor:pointer">✓ CONFIRMAR</button>
-          <button onclick="closeTimePicker()" style="width:100%;padding:12px;background:transparent;border:none;color:var(--text3);font-size:14px;cursor:pointer;margin-top:8px">Cancelar</button>
-        </div>
-      </div>
-
-      <!-- TEAM BUTTONS -->
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-name">💀 Cristian</div>
-          <button class="team-btn reel" onclick="openTimePicker('Cristian','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
-          <button class="team-btn post" onclick="openTimePicker('Cristian','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
-        </div>
-        <div class="team-card">
-          <div class="team-name">👁️ Vanessa</div>
-          <button class="team-btn reel" onclick="openTimePicker('Vanessa','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
-          <button class="team-btn post" onclick="openTimePicker('Vanessa','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
-        </div>
-      </div>
-
-      <!-- GOAL CONFIG -->
-      <div class="card">
-        <div class="card-title">⚙️ Meta semanal</div>
-        <div class="goal-row">
-          <div class="goal-item">
-            <span class="goal-lbl">Meta de Reels</span>
-            <input class="goal-inp" id="inp-reels" type="number" value="21" min="1" onchange="updateGoals()">
-          </div>
-          <div class="goal-item">
-            <span class="goal-lbl">Meta de Posts</span>
-            <input class="goal-inp" id="inp-posts" type="number" value="35" min="1" onchange="updateGoals()">
-          </div>
-        </div>
-        <div class="divider"></div>
-        <button class="big-btn ghost" onclick="resetWeek()">↺ Nueva semana — reiniciar</button>
-      </div>
-
-      <!-- ACTIVITY -->
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div class="card-title" style="margin-bottom:0">📋 Diario de actividad</div>
-          <span style="font-size:13px;color:var(--text3);cursor:pointer" onclick="clearActivity()">Limpiar</span>
-        </div>
-        <div class="activity-list" id="activityList">
-          <div class="act-empty">Sin actividad registrada aún.</div>
-        </div>
-      </div>
-    </div>
 
     <!-- ══ PANEL: SEGUIDORES ════════════════════════ -->
     <div class="panel" id="panel-followers">
@@ -860,10 +748,90 @@ select option { background: #1f1a24; color: #f5f0ff; }
       <div class="gen-note" style="font-size:13px;color:var(--text3);text-align:center;margin-bottom:14px">La IA detecta qué plataforma priorizar esta semana</div>
     </div>
 
-    <!-- ══ PANEL: AGENDA ════════════════════════════ -->
-    <div class="panel" id="panel-agenda">
+    <!-- ══ PANEL: AGENDA UNIFICADA ══════════════════ -->
+    <div class="panel active" id="panel-agenda">
       <div class="page-title">📅 Agenda</div>
-      <div class="page-sub">Publicaciones de la semana · tildá cuando publiques</div>
+      <div class="page-sub">Contadores · registro · semana dinámica</div>
+
+      <!-- COUNTERS -->
+      <div class="counters">
+        <div class="counter-card reels">
+          <div class="counter-label">Reels Faltan</div>
+          <div class="counter-num" id="cnt-reels">21</div>
+          <div class="counter-meta">de <span id="gr-disp">21</span> esta semana</div>
+        </div>
+        <div class="counter-card posts">
+          <div class="counter-label">Posts Faltan</div>
+          <div class="counter-num" id="cnt-posts">35</div>
+          <div class="counter-meta">de <span id="gp-disp">35</span> esta semana</div>
+        </div>
+      </div>
+
+      <!-- REGISTER NEW PUBLICATION -->
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden">
+        <div style="padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:14px;font-weight:700;color:var(--text)">+ Registrar publicación</span>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
+              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Quién</div>
+              <select id="log-quien" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fb);outline:none">
+                <option value="Cristian">💀 Cristian</option>
+                <option value="Vanessa">👁️ Vanessa</option>
+              </select>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
+              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Tipo</div>
+              <select id="log-tipo" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fb);outline:none">
+                <option value="Reel">🎬 Reel</option>
+                <option value="Post">📝 Post</option>
+              </select>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
+              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Plataforma</div>
+              <select id="log-plat" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fb);outline:none">
+                <option value="📘 Facebook">📘 Facebook</option>
+                <option value="📸 Instagram">📸 Instagram</option>
+                <option value="🎵 TikTok">🎵 TikTok</option>
+                <option value="▶️ YouTube">▶️ YouTube</option>
+              </select>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px">
+              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Horario</div>
+              <input type="time" id="log-time" style="width:100%;background:transparent;border:none;color:var(--text);font-size:15px;font-family:var(--fd);outline:none;letter-spacing:1px">
+            </div>
+          </div>
+          <input type="text" id="log-desc" placeholder="Tema o descripción (opcional)..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;color:var(--text);font-size:14px;font-family:var(--fb);outline:none;margin-bottom:10px">
+          <button onclick="addLogEntry()" style="width:100%;padding:14px;background:linear-gradient(135deg,#8c6800,#f5c518);color:#0d0b0f;border:none;border-radius:var(--radius-sm);font-family:var(--fd);font-size:18px;font-weight:900;letter-spacing:1px;cursor:pointer">✓ REGISTRAR</button>
+        </div>
+
+        <!-- LOG LIST -->
+        <div id="activityList" style="max-height:300px;overflow-y:auto;border-top:1px solid var(--border)">
+          <div class="act-empty">Sin publicaciones registradas aún.</div>
+        </div>
+      </div>
+
+      <!-- GOAL CONFIG -->
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">⚙️ Meta semanal</div>
+        <div class="goal-row">
+          <div class="goal-item">
+            <span class="goal-lbl">Meta Reels</span>
+            <input class="goal-inp" id="inp-reels" type="number" value="21" min="1" onchange="updateGoals()">
+          </div>
+          <div class="goal-item">
+            <span class="goal-lbl">Meta Posts</span>
+            <input class="goal-inp" id="inp-posts" type="number" value="35" min="1" onchange="updateGoals()">
+          </div>
+        </div>
+        <div class="divider"></div>
+        <button class="big-btn ghost" onclick="resetWeek()">↺ Nueva semana — reiniciar todo</button>
+      </div>
+
+      <!-- AGENDA DINAMICA -->
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">📋 Semana en curso</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:12px">Se actualiza automáticamente con cada publicación registrada</div>
       <div id="agendaContainer"></div>
     </div>
 
@@ -1004,14 +972,11 @@ select option { background: #1f1a24; color: #f5f0ff; }
 
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
-    <button class="nav-item active" onclick="setPanel('batalla',this)">
-      <span class="nav-icon">⚔️</span><span class="nav-label">Contador</span>
+    <button class="nav-item active" onclick="setPanel('agenda',this)">
+      <span class="nav-icon">📅</span><span class="nav-label">Agenda</span>
     </button>
     <button class="nav-item" onclick="setPanel('followers',this)">
       <span class="nav-icon">📈</span><span class="nav-label">Seguidores</span>
-    </button>
-    <button class="nav-item" onclick="setPanel('agenda',this)">
-      <span class="nav-icon">📅</span><span class="nav-label">Agenda</span>
     </button>
     <button class="nav-item" onclick="setPanel('ideas',this)">
       <span class="nav-icon">💡</span><span class="nav-label">Ideas</span>
@@ -1124,18 +1089,6 @@ function renderCounters() {
   document.getElementById('inp-posts').value = state.goalPosts;
 }
 
-function renderCompetition() {
-  const pc = pts.c, pv = pts.v;
-  document.getElementById('pts-c').textContent = pc;
-  document.getElementById('pts-v').textContent = pv;
-  const max = Math.max(pc,pv,1);
-  document.getElementById('bar-c').style.width = (pc/max*100)+'%';
-  document.getElementById('bar-v').style.width = (pv/max*100)+'%';
-  const leader = document.getElementById('comp-leader');
-  if (pc > pv) leader.textContent = `💀 Cristian lidera con ${pc-pv} pts de ventaja`;
-  else if (pv > pc) leader.textContent = `👁️ Vanessa lidera con ${pv-pc} pts de ventaja`;
-  else leader.textContent = pc === 0 ? '¡Empate! Los dos arrancando la semana 🔥' : `¡Empate perfecto en ${pc} puntos! 🔥`;
-}
 
 function updateGoals() {
   state.goalReels = parseInt(document.getElementById('inp-reels').value)||21;
@@ -1152,7 +1105,7 @@ function resetWeek() {
   state.posts = state.goalPosts;
   pts = {c:0,v:0};
   S.set('state',state); S.set('pts',pts);
-  renderCounters(); renderCompetition();
+  renderCounters();
   addActivity('Sistema','nueva semana iniciada','🔄','#888');
 }
 
@@ -1165,7 +1118,7 @@ function registrar(quien, tipo, customTime) {
   const key = quien==='Cristian'?'c':'v';
   pts[key] += tipo==='Reel'?2:1;
   S.set('state',state); S.set('pts',pts);
-  renderCounters(); renderCompetition();
+  renderCounters();
   const label = tipo==='Reel'?'Reel (+2pts · también -1 Post)':'Post (+1pt)';
   addActivity(quien, label, tipo==='Reel'?'🎬':'📝', quien==='Cristian'?'#e63b2e':'#a855f7', customTime);
   if(navigator.vibrate) navigator.vibrate(40);
@@ -1181,17 +1134,80 @@ function addActivity(quien,accion,icon,color,customTime) {
 
 function renderActivity() {
   const el = document.getElementById('activityList');
-  if(!activity.length){el.innerHTML='<div class="act-empty">Sin actividad aún.</div>';return;}
-  el.innerHTML = activity.slice(0,15).map(a=>`
-    <div class="act-item">
-      <span class="act-time">${a.time}</span>
-      <span class="act-dot" style="background:${a.color}"></span>
-      <span class="act-text"><strong style="color:var(--text)">${a.quien}</strong> ${a.accion}</span>
+  if(!el) return;
+  if(!activity.length){el.innerHTML='<div class="act-empty">Sin publicaciones registradas aún.</div>';return;}
+  el.innerHTML = activity.map((a,i)=>`
+    <div class="act-item" style="position:relative">
+      <span class="act-time" style="min-width:52px">${a.time||'—'}</span>
+      <span class="act-dot" style="background:${a.color||'#888'}"></span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:600;color:var(--text)">${a.quien} <span style="font-weight:400;color:var(--text2)">${a.accion}</span></div>
+        ${a.plat?`<div style="font-size:12px;color:var(--text3);margin-top:2px">${a.plat}${a.desc?' · '+a.desc:''}</div>`:''}
+      </div>
+      <button onclick="deleteActivity(${i})" style="background:transparent;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:4px 6px;flex-shrink:0">×</button>
     </div>`).join('');
 }
 
+function deleteActivity(idx) {
+  activity.splice(idx, 1);
+  S.set('activity', activity);
+  renderActivity();
+  buildAgenda();
+}
+
+function addLogEntry() {
+  const quien = document.getElementById('log-quien').value;
+  const tipo  = document.getElementById('log-tipo').value;
+  const plat  = document.getElementById('log-plat').value;
+  const desc  = document.getElementById('log-desc').value.trim();
+  let timeVal = document.getElementById('log-time').value;
+
+  // Format time
+  let displayTime = timeVal || new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+  if(timeVal) {
+    const [h,m] = timeVal.split(':').map(Number);
+    const ampm = h>=12?'PM':'AM';
+    const h12 = h%12||12;
+    displayTime = h12+':'+String(m).padStart(2,'0')+' '+ampm;
+  }
+
+  const color = quien==='Cristian'?'#e63b2e':'#a855f7';
+  const icon  = tipo==='Reel'?'🎬':'📝';
+
+  // Update counters too
+  if(tipo==='Reel'){ if(state.reels>0) state.reels--; if(state.posts>0) state.posts--; pts[quien==='Cristian'?'c':'v']+=2; }
+  if(tipo==='Post'){ if(state.posts>0) state.posts--; pts[quien==='Cristian'?'c':'v']+=1; }
+  S.set('state',state); S.set('pts',pts);
+  renderCounters();
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('es-AR',{weekday:'short',day:'2-digit',month:'short'});
+
+  activity.unshift({
+    time: displayTime,
+    time24: timeVal || new Date().toTimeString().slice(0,5),
+    rawDate: new Date().toISOString(),
+    fecha: dateStr,
+    quien,
+    accion: `subió ${icon} ${tipo}`,
+    plat,
+    desc,
+    color,
+    icon
+  });
+  if(activity.length>100) activity.pop();
+  S.set('activity',activity);
+  renderActivity();
+
+  // Clear fields
+  document.getElementById('log-desc').value='';
+  document.getElementById('log-time').value='';
+  buildAgenda();
+  if(navigator.vibrate) navigator.vibrate(40);
+}
+
 function clearActivity() {
-  if(!confirm('¿Limpiar historial?')) return;
+  if(!confirm('¿Limpiar todo el historial?')) return;
   activity=[]; S.set('activity',activity); renderActivity();
 }
 
@@ -1298,24 +1314,11 @@ Respondé en español. Tono directo, sin rodeos, como un consultor que cobra car
 }
 
 // ══ AGENDA ══════════════════════════════════════════
-const SCHEDULE = [
-  {time:'8:00 AM', type:'post', who:'Cristian', plat:'📘', desc:'Post debate/curiosidad'},
-  {time:'10:00 AM',type:'reel',who:'Vanessa', plat:'📘', desc:'Reel de alcance'},
-  {time:'12:00 PM',type:'post',who:'Vanessa', plat:'📘', desc:'Post opinión'},
-  {time:'3:00 PM', type:'post',who:'Cristian',plat:'📘', desc:'Post reseña/análisis'},
-  {time:'6:00 PM', type:'reel',who:'Cristian',plat:'📘', desc:'Reel prime time'},
-  {time:'6:30 PM', type:'post',who:'Vanessa', plat:'📸', desc:'Post Instagram'},
-  {time:'7:00 PM', type:'reel',who:'Vanessa', plat:'🎵', desc:'Reel TikTok'},
-  {time:'8:00 PM', type:'post',who:'Cristian',plat:'📘', desc:'Post noche'},
-  {time:'9:00 PM', type:'post',who:'Vanessa', plat:'📘', desc:'Post CTA monetización 🎯'},
-  {time:'9:30 PM', type:'reel',who:'Cristian',plat:'📘', desc:'Reel cierre nocturno'},
-];
-
 const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
-let agendaState = S.get('agenda',{});
 
 function buildAgenda() {
   const container = document.getElementById('agendaContainer');
+  if(!container) return;
   const today = NOW.getDay();
   const weekStart = new Date(NOW);
   weekStart.setDate(NOW.getDate()-(today===0?6:today-1));
@@ -1326,40 +1329,58 @@ function buildAgenda() {
     const dateStr = d.toLocaleDateString('es-AR',{day:'2-digit',month:'short'});
     const isToday = d.toDateString()===NOW.toDateString();
 
-    const slots = SCHEDULE.map((s,si)=>{
-      const key = `${i}-${si}`;
-      const done = agendaState[key];
-      return `<div class="agenda-slot">
-        <span class="slot-time">${s.time}</span>
-        <span class="slot-type ${s.type}">${s.type==='reel'?'🎬 Reel':'📝 Post'}</span>
-        <span class="slot-plat">${s.plat}</span>
-        <span class="slot-who">${s.who} · ${s.desc}</span>
-        <button class="slot-check ${done?'done':''}" onclick="toggleSlot('${key}','${s.who}','${s.type}',this)">${done?'✓':''}</button>
-      </div>`;
-    }).join('');
+    // Entradas reales registradas para este día
+    const dayEntries = activity.filter(a => {
+      if(!a.rawDate) return false;
+      return new Date(a.rawDate).toDateString() === d.toDateString();
+    }).sort((a,b)=>(a.time24||'00:00').localeCompare(b.time24||'00:00'));
 
-    return `<div class="agenda-day" ${isToday?'id="today-agenda"':''}>
-      <div class="agenda-day-header" style="${isToday?'background:var(--gold-dim);border-bottom:1px solid rgba(245,197,24,0.2)':''}">
-        <span class="agenda-day-name" style="${isToday?'color:var(--gold)':''}">${day} ${isToday?'· HOY':''}</span>
-        <span class="agenda-day-date">${dateStr}</span>
-      </div>
-      <div class="agenda-slots">${slots}</div>
-    </div>`;
+    let slotsHtml = '';
+    if(dayEntries.length > 0) {
+      slotsHtml = dayEntries.map(e => {
+        const globalIdx = activity.indexOf(e);
+        const isReel = e.accion && e.accion.includes('Reel');
+        const platIcon = (e.plat||'📘').split(' ')[0];
+        return '<div class="agenda-slot">'
+          + '<span class="slot-time">' + (e.time||'—') + '</span>'
+          + '<span class="slot-type ' + (isReel?'reel':'post') + '">' + (isReel?'🎬 Reel':'📝 Post') + '</span>'
+          + '<span class="slot-plat" style="font-size:16px">' + platIcon + '</span>'
+          + '<span class="slot-who">' + e.quien + (e.desc?' · '+e.desc:'') + '</span>'
+          + '<button onclick="deleteActivityRebuild(' + globalIdx + ')" style="background:transparent;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:2px 8px;flex-shrink:0">×</button>'
+          + '</div>';
+      }).join('');
+    } else {
+      const emptyMsg = isToday ? 'Sin publicaciones hoy — registrá arriba' : 'Sin publicaciones';
+      slotsHtml = '<div style="padding:12px 16px;font-size:13px;color:var(--text3);text-align:center">' + emptyMsg + '</div>';
+    }
+
+    const badge = dayEntries.length > 0
+      ? '<span style="font-size:11px;background:var(--gold-dim);color:var(--gold);border-radius:20px;padding:2px 8px;border:1px solid rgba(245,197,24,0.2)">' + dayEntries.length + ' pub.</span>'
+      : '';
+
+    const headerStyle = isToday ? 'background:var(--gold-dim);border-bottom:1px solid rgba(245,197,24,0.2)' : '';
+    const nameStyle   = isToday ? 'color:var(--gold)' : '';
+    const dayId       = isToday ? 'id="today-agenda"' : '';
+
+    return '<div class="agenda-day" ' + dayId + '>'
+      + '<div class="agenda-day-header" style="' + headerStyle + '">'
+      + '<span class="agenda-day-name" style="' + nameStyle + '">' + day + (isToday?' · HOY':'') + '</span>'
+      + '<div style="display:flex;align-items:center;gap:8px">' + badge + '<span class="agenda-day-date">' + dateStr + '</span></div>'
+      + '</div>'
+      + '<div class="agenda-slots">' + slotsHtml + '</div>'
+      + '</div>';
   }).join('');
 
   if(document.getElementById('today-agenda')) {
-    setTimeout(()=>document.getElementById('today-agenda').scrollIntoView({behavior:'smooth'}),300);
+    setTimeout(()=>document.getElementById('today-agenda').scrollIntoView({behavior:'smooth',block:'start'}),300);
   }
 }
 
-function toggleSlot(key, quien, tipo, btn) {
-  agendaState[key] = !agendaState[key];
-  S.set('agenda',agendaState);
-  btn.className = 'slot-check'+(agendaState[key]?' done':'');
-  btn.textContent = agendaState[key]?'✓':'';
-  if(agendaState[key]) {
-    addActivity(quien,`marcó ${tipo} en agenda ✓`,'✅',quien==='Cristian'?'#e63b2e':'#a855f7');
-  }
+function deleteActivityRebuild(idx) {
+  activity.splice(idx,1);
+  S.set('activity',activity);
+  renderActivity();
+  buildAgenda();
 }
 
 // ══ IDEAS ══════════════════════════════════════════
@@ -1376,28 +1397,34 @@ async function generarIdeas(force) {
     Array(5).fill('<div class="skel" style="height:72px"></div>').join('');
 
   const hoy = NOW.toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'});
-  const prompt=`Sos el Director Creativo de contenido viral de Zona de Terror TV, una página con 230.000 seguidores en Facebook especializada en terror, misterio y lo paranormal. Tu trabajo es generar el contenido más perturbador, intrigante y compartible posible. Cada idea tiene que despertar una reacción emocional inmediata: miedo, incredulidad, curiosidad obsesiva.
+  const prompt=`Actuá como un investigador especializado en casos criminales reales y fenómenos paranormales. Tu estilo es cinematográfico, oscuro y detallista — como un guionista de documentales de Netflix o un podcaster de misterio de alto impacto. Trabajás para Zona de Terror TV, una página con 230.000 seguidores en Facebook. Tu misión es generar las 15 ideas más virales, perturbadoras e intrigantes posibles para publicar hoy.
 
 HOY ES: ${hoy}
 
-MISIÓN CRÍTICA: Generá 15 ideas de contenido de terror con POTENCIAL VIRAL MÁXIMO. Basate en:
-- Casos reales documentados o noticias recientes perturbadoras
-- Estrenos, trailers o revelaciones del mundo del terror esta semana
-- Misterios sin resolver que generan debate y teorías
-- Fenómenos paranormales con evidencia o testimonios recientes
-- Crímenes perturbadores o casos fríos que volvieron a la agenda
+REGLAS DE ORO — SEGUIRLAS AL PIE DE LA LETRA:
 
-REGLAS DE ORO PARA VIRALIZAR:
-- El TÍTULO es el 80% del éxito — tiene que detener el scroll en menos de 3 segundos
-- Prohibido usar "aterrador", "escalofriante", "perturbador" en el título — son clichés muertos
-- Cada idea debe generar la reacción "necesito saber más" o "no puedo creer que esto sea real"
-- Los datos reales en la descripción le dan credibilidad y generan más shares
-- Las preguntas sin respuesta generan más comentarios que las afirmaciones
+TÍTULOS (el 80% del éxito viral):
+- Máximo 10 palabras, que detengan el scroll en menos de 3 segundos
+- Incluí un dato específico, nombre real o número concreto cuando sea posible
+- Generá la reacción "necesito saber más" o "no puedo creer que esto sea real"
+- PROHIBIDO en títulos: "aterrador", "escalofriante", "perturbador", "impactante", "increíble" — son palabras muertas que el algoritmo ignora
+
+DESCRIPCIONES (2 líneas que enganchen):
+- Primera línea: el dato más impactante — fecha, nombre, lugar, número real
+- Segunda línea: el elemento que deja más preguntas que respuestas
+- Usá lenguaje descriptivo: atmósfera, clima, sensaciones físicas
+- Incluí al menos 1 dato específico que "pocos conocen"
+
+EUFEMISMOS NARRATIVOS (para evitar filtros y sonar más cinematográfico):
+- En lugar de "asesinato" → "un escenario que desafiaba toda lógica forense"
+- En lugar de "ovni" → "anomalía aeroespacial de origen no convencional"
+- En lugar de "cadáver" → "lo que encontraron cambiará para siempre al equipo de respuesta"
+- En lugar de "sangre" → "evidencia que los investigadores se negaron a fotografiar"
 
 5 categorías × 3 ideas: paranormal, aliens, misterios, crimenes, tendencias
 
 Respondé SOLO con JSON array sin texto extra ni backticks:
-[{"id":"001","cat":"paranormal","titulo":"Título gancho que detenga el scroll — máx 10 palabras, sin clichés","desc":"Primera línea: el dato más impactante o inquietante. Segunda línea: el elemento que deja al lector con más preguntas que respuestas."},{"id":"002","cat":"paranormal","titulo":"...","desc":"..."},{"id":"003","cat":"paranormal","titulo":"...","desc":"..."},{"id":"004","cat":"aliens","titulo":"...","desc":"..."},{"id":"005","cat":"aliens","titulo":"...","desc":"..."},{"id":"006","cat":"aliens","titulo":"...","desc":"..."},{"id":"007","cat":"misterios","titulo":"...","desc":"..."},{"id":"008","cat":"misterios","titulo":"...","desc":"..."},{"id":"009","cat":"misterios","titulo":"...","desc":"..."},{"id":"010","cat":"crimenes","titulo":"...","desc":"..."},{"id":"011","cat":"crimenes","titulo":"...","desc":"..."},{"id":"012","cat":"crimenes","titulo":"...","desc":"..."},{"id":"013","cat":"tendencias","titulo":"...","desc":"..."},{"id":"014","cat":"tendencias","titulo":"...","desc":"..."},{"id":"015","cat":"tendencias","titulo":"...","desc":"..."}]`;
+[{"id":"001","cat":"paranormal","titulo":"Título gancho cinematográfico máx 10 palabras","desc":"Primera línea con dato real específico. Segunda línea que deja la pregunta abierta."},{"id":"002","cat":"paranormal","titulo":"...","desc":"..."},{"id":"003","cat":"paranormal","titulo":"...","desc":"..."},{"id":"004","cat":"aliens","titulo":"...","desc":"..."},{"id":"005","cat":"aliens","titulo":"...","desc":"..."},{"id":"006","cat":"aliens","titulo":"...","desc":"..."},{"id":"007","cat":"misterios","titulo":"...","desc":"..."},{"id":"008","cat":"misterios","titulo":"...","desc":"..."},{"id":"009","cat":"misterios","titulo":"...","desc":"..."},{"id":"010","cat":"crimenes","titulo":"...","desc":"..."},{"id":"011","cat":"crimenes","titulo":"...","desc":"..."},{"id":"012","cat":"crimenes","titulo":"...","desc":"..."},{"id":"013","cat":"tendencias","titulo":"...","desc":"..."},{"id":"014","cat":"tendencias","titulo":"...","desc":"..."},{"id":"015","cat":"tendencias","titulo":"...","desc":"..."}]`;
 
   try {
     const txt = await callGemini(prompt);
@@ -1562,46 +1589,54 @@ async function ampliar() {
   document.getElementById('amp-err').classList.remove('show');
   const obj=startProg('amp');
 
-  const prompt=`Sos el Director Creativo de contenido viral de Zona de Terror TV — 230.000 seguidores en Facebook que esperan el contenido más perturbador e intrigante de internet. Tu reputación se basa en posts que generan cientos de comentarios y miles de shares.
+  const prompt=`Actuá como un investigador especializado en casos criminales reales y fenómenos paranormales, con el estilo cinematográfico y detallista de un guionista de documentales de Netflix o un podcaster de misterio de alto impacto. Trabajás para Zona de Terror TV — 230.000 seguidores en Facebook que esperan el contenido más perturbador, intrigante y compartible de internet.
 
-MISIÓN: Crear un post de Facebook de ${largo} sobre el siguiente tema que tenga MÁXIMO POTENCIAL VIRAL.
+MISIÓN: Escribir un post de Facebook de ${largo} sobre el siguiente tema que funcione como un hilo viral de alto impacto.
 
 TEMA: ${tema}
 TONO: ${tono}
 
-ARQUITECTURA DEL POST VIRAL:
+ESTRUCTURA OBLIGATORIA DEL POST VIRAL:
 
-1. GANCHO (primeras 2 líneas — lo más importante)
-   - Máximo 8 palabras en la primera línea
-   - Tiene que generar una reacción física: piel de gallina, incredulidad, miedo
-   - Prohibido empezar con: "En el mundo de...", "Hoy te traigo...", "¿Sabías que...", "Imaginate..."
-   - El gancho tiene que funcionar como thumbnail de video — si no engancha en 2 segundos, perdiste al lector
+1. GANCHO (primeras 2 líneas — el 80% del éxito)
+   - Primera línea: máximo 8 palabras. Tiene que generar una reacción física inmediata
+   - Segunda línea: el dato más específico y perturbador — fecha, nombre real, lugar exacto
+   - PROHIBIDO empezar con: "En el mundo de...", "Hoy te traigo...", "¿Sabías que...", "Imaginate...", "Hola a todos"
+   - Si el gancho no engancha en 2 segundos, el algoritmo de Facebook lo entierra
 
-2. DESARROLLO (el cuerpo)
-   - Construí la historia en capas: cada párrafo revela algo nuevo
-   - Usá datos concretos: fechas, lugares, nombres, números — le dan credibilidad
+2. DESARROLLO EN CAPAS
+   - Incluí al menos 3 datos específicos, fechas o nombres reales que pocos conocen
+   - Construí la historia revelando una capa por párrafo — nunca des todo de golpe
    - Frases cortas que golpeen. Párrafos de máximo 3 líneas
+   - Usá lenguaje descriptivo: atmósfera, clima, sensaciones físicas, detalles sensoriales
    - Creá micro-suspensos: dejá preguntas abiertas antes de responderlas
-   - Nunca des toda la información de golpe — construí tensión
 
 3. GIRO O REVELACIÓN
    - El momento "no puedo creer esto" del post
-   - Algo que el lector no vio venir
-   - Puede ser un dato oculto, una contradicción, una pregunta sin respuesta oficial
+   - Un dato oculto, una contradicción oficial, algo que cambia toda la perspectiva
+   - Tiene que funcionar como el plot twist de una película
 
 4. CIERRE con ${cta}
-   - El cierre tiene que obligar a comentar o compartir
-   - Si es pregunta: que divida en dos bandos claros (genera debate = algoritmo te ama)
-   - Si es encuesta: opciones que representen posiciones irreconciliables
+   - Que divida a la audiencia en dos bandos claros — genera debate y el algoritmo lo amplifica
+   - Una pregunta sin respuesta fácil es más poderosa que una afirmación
 
 5. ${ht}
 
+EUFEMISMOS NARRATIVOS OBLIGATORIOS (suenan más cinematográficos y evitan filtros):
+- En lugar de "asesinato" → "un escenario que desafiaba toda lógica forense"
+- En lugar de "ovni" → "anomalía aeroespacial de origen no convencional"
+- En lugar de "cadáver" / "cuerpo" → "lo que encontró el equipo de respuesta cambió sus carreras para siempre"
+- En lugar de "sangre" → "evidencia que los investigadores se negaron a fotografiar"
+- En lugar de "fantasma" → "presencia registrada por múltiples testigos independientes"
+- En lugar de "mató" → "fue el último en verlo con vida"
+
 REGLAS ABSOLUTAS:
 - Voz activa siempre, nunca pasiva
-- Prohibido: "aterrador", "escalofriante", "perturbador", "impresionante" — son palabras muertas
-- Cada oración tiene que justificar su existencia — si no agrega tensión o información, borrala
-- El post tiene que poder leerse en voz alta y sonar como una historia, no como un artículo
-- Escribí SOLO el post. Sin títulos de sección, sin aclaraciones previas, sin "aquí está el post"`;
+- PROHIBIDO: "aterrador", "escalofriante", "perturbador", "impresionante", "increíble" — palabras muertas que el algoritmo ignora
+- Cada oración justifica su existencia — si no agrega tensión o información concreta, no va
+- El post tiene que poder leerse en voz alta y sonar como el inicio de un documental
+- No omitás detalles técnicos ni nombres si son de dominio público — le dan credibilidad viral
+- Escribí SOLO el post. Sin títulos de sección, sin aclaraciones, sin "aquí está el post"`;
 
   try {
     const result=await callGemini(prompt);
@@ -1648,7 +1683,6 @@ if('serviceWorker'in navigator) navigator.serviceWorker.register('./sw.js').catc
 
 // ══ INIT ═══════════════════════════════════════════
 renderCounters();
-renderCompetition();
 renderActivity();
 renderFollowers();
 buildAgenda();
