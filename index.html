@@ -168,9 +168,12 @@ textarea::placeholder{color:var(--text3)}
   <button class="install-btn" id="installBtn">Instalar</button>
 </div>
 
-<nav class="nav">
+<nav class="nav" style="grid-template-columns:1fr 1fr 1fr">
   <button class="nav-btn active" onclick="setPanel('ideas',this)">
-    <span class="ni">💀</span><span class="nl">15 Ideas del día</span>
+    <span class="ni">💀</span><span class="nl">15 Ideas</span>
+  </button>
+  <button class="nav-btn" onclick="setPanel('ampliar',this)">
+    <span class="ni">📝</span><span class="nl">Ampliar</span>
   </button>
   <button class="nav-btn" onclick="setPanel('anticopy',this)">
     <span class="ni">🛡️</span><span class="nl">Anticopy</span>
@@ -216,6 +219,75 @@ textarea::placeholder{color:var(--text3)}
       <div class="skel" style="height:70px;margin-bottom:10px"></div>
       <div class="skel" style="height:70px"></div>
     </div>
+  </div>
+
+  <!-- ══ AMPLIAR ═══════════════════════════════════ -->
+  <div class="panel" id="panel-ampliar">
+    <div class="page-title">📝 Ampliar post</div>
+    <div class="page-sub">Desarrolla cualquier idea en un post completo para Facebook</div>
+
+    <div id="ampSelected" style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:13px 16px;margin-bottom:14px;border-left:3px solid var(--gold)">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Idea seleccionada</div>
+      <div style="font-size:14px;color:var(--text2)">Elegí una idea del panel de Ideas o escribí tu tema abajo.</div>
+    </div>
+
+    <textarea id="ampTema" placeholder="O escribí el tema que querés desarrollar con los datos que tenés..." style="min-height:90px"></textarea>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Tono</div>
+        <select id="ampTono" style="width:100%;background:transparent;border:none;color:var(--text);font-size:14px;font-family:var(--fb);outline:none">
+          <option value="cinematográfico y oscuro como documental de Netflix">Documental Netflix</option>
+          <option value="periodístico e investigativo como caso sin resolver">Investigativo</option>
+          <option value="narrativo en primera persona como testigo directo">Primera persona</option>
+          <option value="dramático con suspenso creciente">Dramático</option>
+        </select>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Largo</div>
+        <select id="ampLargo" style="width:100%;background:transparent;border:none;color:var(--text);font-size:14px;font-family:var(--fb);outline:none">
+          <option value="entre 150 y 220 palabras — conciso y directo">Corto (150-220 palabras)</option>
+          <option value="entre 250 y 380 palabras — desarrollo completo">Medio (250-380 palabras)</option>
+          <option value="entre 400 y 550 palabras — post largo con profundidad">Largo (400-550 palabras)</option>
+        </select>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Cierre</div>
+        <select id="ampCierre" style="width:100%;background:transparent;border:none;color:var(--text);font-size:14px;font-family:var(--fb);outline:none">
+          <option value="pregunta que divide en dos bandos irreconciliables">Pregunta divisora</option>
+          <option value="revelación final perturbadora que deja sin respuesta">Revelación abierta</option>
+          <option value="invitación a comentar con dato adicional sorpresivo">Dato sorpresa</option>
+        </select>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Hashtags</div>
+        <select id="ampHt" style="width:100%;background:transparent;border:none;color:var(--text);font-size:14px;font-family:var(--fb);outline:none">
+          <option value="5 hashtags en español al final">5 hashtags</option>
+          <option value="sin hashtags">Sin hashtags</option>
+          <option value="8 hashtags en español al final">8 hashtags</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="err" id="ampErr"></div>
+    <div class="prog" id="ampProg">
+      <div class="prog-step" id="amp1"><span style="font-size:14px;width:18px">💀</span>Analizando datos reales de la idea</div>
+      <div class="prog-step" id="amp2"><span style="font-size:14px;width:18px">🎬</span>Construyendo narrativa cinematográfica</div>
+      <div class="prog-step" id="amp3"><span style="font-size:14px;width:18px">✍️</span>Redactando post con máximo impacto</div>
+      <div class="pbar-wrap"><div class="pbar" id="ampBar"></div></div>
+    </div>
+
+    <button class="btn-gold" id="ampBtn" onclick="ampliar()">📝 Generar post para Facebook</button>
+
+    <div class="result" id="ampResult">
+      <div class="result-head">
+        <span class="result-label">Post generado</span>
+        <button class="copy-btn" id="ampCopyBtn" onclick="copyText('ampText','ampCopyBtn')">Copiar</button>
+      </div>
+      <div class="result-text" id="ampText"></div>
+    </div>
+
+    <button class="btn-ghost" onclick="clearAmp()">Limpiar</button>
   </div>
 
   <!-- ══ ANTICOPY ══════════════════════════════════ -->
@@ -355,7 +427,14 @@ const CAT = {
 
 const USER_PROMPT_IDEAS = () => {
   const hoy = new Date().toLocaleDateString('es-AR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+  // Get history of last 90 used titles to avoid repetition
+  const historial = S.get('ideasHistorial', []);
+  const historialStr = historial.length
+    ? `\nTEMAS YA USADOS — PROHIBIDO REPETIR O HACER VARIACIONES DE ESTOS:\n${historial.map((t,i)=>`${i+1}. ${t}`).join('\n')}\n\nCada idea de hoy debe ser sobre un tema, caso, evento o fenómeno COMPLETAMENTE DISTINTO a los de la lista de arriba.`
+    : '';
+
   return `HOY ES: ${hoy}
+${historialStr}
 
 MISIÓN: Generá exactamente 15 ideas de contenido para Facebook. Cada idea debe basarse en un hecho real, documentado y verificable. Distribuidas en 5 categorías: paranormal (3), crimenes (3), ovnis (3), ciencia (3), misterios (3).
 
@@ -372,6 +451,7 @@ CRITERIO DE CALIDAD — rechazá cualquier idea que:
 - Use frases de relleno o adjetivos vacíos
 - Sea una leyenda urbana sin base verificable
 - Repita estructuras similares a las otras 14 ideas
+- Sea similar a cualquier tema de la lista de temas ya usados
 
 Respondé SOLO con JSON array sin texto extra ni backticks:
 [
@@ -425,6 +505,7 @@ async function generarIdeas(force) {
     ideasLoaded = true;
     S.set('ideas', IDEAS);
     S.set('ideasDate', new Date().toDateString());
+    // Only published ideas go to history — unpublished ones can return tomorrow
     setLive('15 ideas generadas ✓', 'Datos reales · ' + new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}));
     renderIdeas();
     startCountdown();
@@ -463,10 +544,16 @@ function renderIdeas() {
     document.getElementById('ideasWrap').innerHTML = '<div style="text-align:center;padding:24px;color:var(--text3);font-size:14px">No hay ideas en esta categoría.</div>';
     return;
   }
+  const published = S.get('ideasPublished', []);
   document.getElementById('ideasWrap').innerHTML = filtered.map((idea,idx) => {
     const c = CAT[idea.cat] || { color:'#888', label:idea.cat };
     const tagColor = `background:${c.color}22;color:${c.color};border:1px solid ${c.color}44`;
-    return `<div class="idea-card">
+    const isPub = published.includes(new Date().toDateString() + '_' + idea.id);
+    const cardStyle = isPub ? 'opacity:0.5;border-color:rgba(34,197,94,0.3)' : '';
+    const pubBtnStyle = isPub ? 'background:rgba(34,197,94,0.25);border-color:#22c55e;color:#22c55e' : 'background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22c55e';
+    const pubBtnText = isPub ? '✅ Hecha' : '✓ Publicada';
+    const pubBtnDisabled = isPub ? 'disabled' : '';
+    return `<div class="idea-card" style="${cardStyle}">
       <div class="idea-head" onclick="toggleIdea('ib${idea.id}',this)">
         <span class="idea-num">${idea.id}</span>
         <span class="idea-cat-dot" style="background:${c.color}"></span>
@@ -486,7 +573,13 @@ function renderIdeas() {
           <span class="idea-tag" style="${tagColor}">${c.label}</span>
           ${idea.fuente ? `<span class="idea-tag" style="background:var(--golddim);color:var(--gold);border:1px solid var(--border2)">📚 ${idea.fuente}</span>` : ''}
         </div>
-        <button class="copy-idea-btn" onclick="copyIdea('${idea.id}')">📋 Copiar idea completa</button>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="copy-idea-btn" onclick="ampliarIdea('${idea.id}')">📝 Ampliar para Facebook</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button onclick="copyIdea('${idea.id}')" style="padding:9px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer">📋 Copiar</button>
+            <button onclick="marcarPublicada('${idea.id}',this)" style="padding:9px;border-radius:var(--rs);font-size:13px;font-weight:500;cursor:pointer;${pubBtnStyle}" id="pub${idea.id}" ${pubBtnDisabled}>${pubBtnText}</button>
+          </div>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -505,6 +598,53 @@ function filterCat(cat, el) {
   document.querySelectorAll('.cat-pill').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   renderIdeas();
+}
+
+function marcarPublicada(id, btn) {
+  const idea = IDEAS.find(i=>i.id===id);
+  if (!idea) return;
+  // Add to published history
+  const hist = S.get('ideasHistorial', []);
+  if (!hist.includes(idea.titulo)) {
+    hist.unshift(idea.titulo);
+    if (hist.length > 120) hist.pop(); // Keep last 8 days
+    S.set('ideasHistorial', hist);
+  }
+  // Mark locally
+  const published = S.get('ideasPublished', []);
+  const key = new Date().toDateString() + '_' + id;
+  if (!published.includes(key)) {
+    published.push(key);
+    S.set('ideasPublished', published);
+  }
+  // Visual feedback
+  btn.textContent = '✅ Hecha';
+  btn.style.background = 'rgba(34,197,94,0.25)';
+  btn.style.borderColor = '#22c55e';
+  btn.disabled = true;
+  // Mark card
+  const card = btn.closest('.idea-card');
+  if (card) {
+    card.style.opacity = '0.5';
+    card.style.borderColor = 'rgba(34,197,94,0.3)';
+  }
+  if (navigator.vibrate) navigator.vibrate(40);
+}
+
+function ampliarIdea(id) {
+  const idea = IDEAS.find(i=>i.id===id);
+  if (!idea) return;
+  // Store selected idea for ampliar panel
+  window._selectedIdea = idea;
+  // Switch to ampliar tab
+  document.querySelector('[onclick*="setPanel"]') // nav handled below
+  setPanel('ampliar', document.querySelector('.nav-btn[onclick*="ampliar"]'));
+  // Pre-fill
+  document.getElementById('ampTema').value = '';
+  document.getElementById('ampSelected').innerHTML =
+    '<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Idea seleccionada</div>' +
+    '<div style="font-size:14px;font-weight:600;color:var(--gold);margin-bottom:4px">[' + idea.id + '] ' + idea.titulo + '</div>' +
+    '<div style="font-size:13px;color:var(--text2);line-height:1.5">' + idea.gancho + '</div>';
 }
 
 function copyIdea(id) {
@@ -548,6 +688,115 @@ function checkAutoGen() {
 setInterval(checkAutoGen, 60000);
 
 // ══ ANTICOPY ══════════════════════════════════════════
+const AMPLIAR_PROMPT = (tema, tono, largo, cierre, ht) => `MISIÓN CRÍTICA — POST PARA FACEBOOK:
+
+Desarrollá el siguiente tema en un post de ${largo} con tono ${tono}.
+
+TEMA / DATOS DISPONIBLES:
+${tema}
+
+ARQUITECTURA OBLIGATORIA DEL POST:
+
+1. GANCHO (primera línea — máximo 8 palabras)
+   - El hecho más perturbador o impactante del tema
+   - Tiene que generar reacción física inmediata: piel de gallina, incredulidad
+   - PROHIBIDO empezar con: "En el año...", "Hoy te traigo...", "¿Sabías que...", "Imaginate...", "Hola a todos"
+   - Si no engancha en 2 segundos, el algoritmo lo entierra
+
+2. DESARROLLO EN CAPAS
+   - Revelá los datos de a uno, construyendo tensión
+   - Incluí TODOS los datos concretos disponibles: fechas, nombres, lugares, cifras
+   - Párrafos de máximo 3 líneas — nunca un bloque de texto largo
+   - Usá detalles sensoriales cuando son reales: temperatura, hora exacta, lugar específico
+   - Cada párrafo tiene que terminar dejando una pregunta implícita en la mente del lector
+
+3. EL GIRO
+   - El momento "no puedo creer esto" del post
+   - La contradicción, el dato que cambia todo, lo que las versiones oficiales no explican
+   - Tiene que ser un dato verificable, no especulación
+
+4. CIERRE con ${cierre}
+
+5. ${ht}
+
+REGLAS ABSOLUTAS:
+- Usá SOLO los datos del tema — PROHIBIDO inventar, agregar datos no mencionados o especular
+- Si el tema tiene datos insuficientes, construí atmósfera con los que hay — nunca rellenes con inventos
+- Voz activa siempre — prohibida la voz pasiva
+- PROHIBIDO: "aterrador", "escalofriante", "perturbador", "impresionante", "increíble" — palabras muertas
+- Eufemismos narrativos: "asesinato"→"lo que encontró el equipo forense", "cadáver"→"lo que quedó en el lugar"
+- El post tiene que poder leerse en voz alta y sonar como el inicio de un documental
+- Escribí SOLO el post. Sin títulos de sección, sin "aquí está el post", sin aclaraciones`;
+
+async function ampliar() {
+  const customTema = document.getElementById('ampTema').value.trim();
+  const idea = window._selectedIdea;
+
+  let tema = '';
+  if (customTema) {
+    tema = customTema;
+  } else if (idea) {
+    tema = `Título: ${idea.titulo}\nGancho disponible: ${idea.gancho}\nDato central: ${idea.dato_central}\nGiro: ${idea.giro}\nPregunta de cierre sugerida: ${idea.pregunta_cierre}\nFuente: ${idea.fuente||'Registro histórico documentado'}`;
+  } else {
+    alert('Elegí una idea del panel de Ideas o escribí tu tema.');
+    return;
+  }
+
+  const tono   = document.getElementById('ampTono').value;
+  const largo  = document.getElementById('ampLargo').value;
+  const cierre = document.getElementById('ampCierre').value;
+  const ht     = document.getElementById('ampHt').value;
+
+  const btn = document.getElementById('ampBtn');
+  btn.disabled = true;
+  document.getElementById('ampResult').classList.remove('show');
+  document.getElementById('ampErr').classList.remove('show');
+
+  const prog = document.getElementById('ampProg');
+  const bar  = document.getElementById('ampBar');
+  prog.classList.add('show'); bar.style.width='0%';
+  let s=0;
+  const steps=[1,2,3].map(i=>document.getElementById('amp'+i));
+  steps.forEach(el=>{if(el)el.className='prog-step';});
+  if(steps[0])steps[0].className='prog-step active';
+  bar.style.width='15%';
+  const iv=setInterval(()=>{
+    s++;
+    steps.forEach((el,i)=>{
+      if(!el)return;
+      if(i<s)el.className='prog-step done';
+      else if(i===s)el.className='prog-step active';
+      else el.className='prog-step';
+    });
+    bar.style.width=Math.min(15+s*30,88)+'%';
+    if(s>=steps.length)clearInterval(iv);
+  },1600);
+
+  try {
+    const result = await callGroq(AMPLIAR_PROMPT(tema,tono,largo,cierre,ht), SYSTEM_PROMPT);
+    clearInterval(iv); bar.style.width='100%';
+    setTimeout(()=>{prog.classList.remove('show');bar.style.width='0';},500);
+    document.getElementById('ampText').textContent = result.trim();
+    document.getElementById('ampResult').classList.add('show');
+  } catch(e) {
+    clearInterval(iv); prog.classList.remove('show');
+    const errEl = document.getElementById('ampErr');
+    errEl.textContent = '⚠️ '+e.message;
+    errEl.classList.add('show');
+  }
+  btn.disabled = false;
+}
+
+function clearAmp() {
+  document.getElementById('ampTema').value='';
+  document.getElementById('ampResult').classList.remove('show');
+  document.getElementById('ampErr').classList.remove('show');
+  document.getElementById('ampSelected').innerHTML =
+    '<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Idea seleccionada</div>' +
+    '<div style="font-size:14px;color:var(--text2)">Elegí una idea del panel de Ideas o escribí tu tema abajo.</div>';
+  window._selectedIdea = null;
+}
+
 async function anticopy() {
   const txt = document.getElementById('acInput').value.trim();
   if (!txt || txt.length < 50) { alert('Pegá un texto de al menos 50 caracteres.'); return; }
