@@ -663,6 +663,8 @@ select option { background: #1f1a24; color: #f5f0ff; }
 
 /* ── DIVIDER ──────────────────────────────── */
 .divider { height: 1px; background: var(--border); margin: 16px 0; }
+.tp-quick { padding:10px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-size:14px;font-family:var(--fb);font-weight:500;cursor:pointer;transition:all 0.15s; }
+.tp-quick:hover,.tp-quick:active { background:var(--gold-dim);border-color:var(--gold);color:var(--gold); }
 
 /* ── AMPLIAR SELECTED ────────────────────── */
 .amp-selected {
@@ -743,17 +745,37 @@ select option { background: #1f1a24; color: #f5f0ff; }
         <div class="comp-leader" id="comp-leader">¡Empate! Los dos arrancando la semana 🔥</div>
       </div>
 
+      <!-- TIME PICKER MODAL -->
+      <div id="timepicker-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;align-items:flex-end;justify-content:center" onclick="closeTimePicker()">
+        <div onclick="event.stopPropagation()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:24px 24px 0 0;padding:24px 20px 40px;width:100%;max-width:430px">
+          <div style="width:40px;height:4px;background:var(--bg4);border-radius:2px;margin:0 auto 20px"></div>
+          <div id="tp-title" style="font-size:19px;font-weight:700;color:var(--text);margin-bottom:5px"></div>
+          <div style="font-size:14px;color:var(--text3);margin-bottom:20px">¿A qué hora está programada?</div>
+          <input type="time" id="tp-time" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px;color:var(--text);font-size:24px;font-family:var(--fd);text-align:center;outline:none;margin-bottom:14px;letter-spacing:2px">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+            <button onclick="setQuickTime('08:00')" class="tp-quick">8:00 AM</button>
+            <button onclick="setQuickTime('10:00')" class="tp-quick">10:00 AM</button>
+            <button onclick="setQuickTime('12:00')" class="tp-quick">12:00 PM</button>
+            <button onclick="setQuickTime('15:00')" class="tp-quick">3:00 PM</button>
+            <button onclick="setQuickTime('18:00')" class="tp-quick">6:00 PM</button>
+            <button onclick="setQuickTime('21:30')" class="tp-quick">9:30 PM</button>
+          </div>
+          <button onclick="confirmRegistrar()" style="width:100%;padding:16px;background:linear-gradient(135deg,#8c6800,#f5c518);color:#0d0b0f;border:none;border-radius:var(--radius);font-family:var(--fd);font-size:19px;font-weight:900;letter-spacing:2px;cursor:pointer">✓ CONFIRMAR</button>
+          <button onclick="closeTimePicker()" style="width:100%;padding:12px;background:transparent;border:none;color:var(--text3);font-size:14px;cursor:pointer;margin-top:8px">Cancelar</button>
+        </div>
+      </div>
+
       <!-- TEAM BUTTONS -->
       <div class="team-grid">
         <div class="team-card">
           <div class="team-name">💀 Cristian</div>
-          <button class="team-btn reel" onclick="registrar('Cristian','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
-          <button class="team-btn post" onclick="registrar('Cristian','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
+          <button class="team-btn reel" onclick="openTimePicker('Cristian','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
+          <button class="team-btn post" onclick="openTimePicker('Cristian','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
         </div>
         <div class="team-card">
           <div class="team-name">👁️ Vanessa</div>
-          <button class="team-btn reel" onclick="registrar('Vanessa','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
-          <button class="team-btn post" onclick="registrar('Vanessa','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
+          <button class="team-btn reel" onclick="openTimePicker('Vanessa','Reel')">🎬 Subí Reel <span style="margin-left:auto;font-size:11px;color:var(--text3)">+2pts</span></button>
+          <button class="team-btn post" onclick="openTimePicker('Vanessa','Post')">📝 Subí Post <span style="margin-left:auto;font-size:11px;color:var(--text3)">+1pt</span></button>
         </div>
       </div>
 
@@ -1045,6 +1067,49 @@ function setPanel(id, el) {
   document.querySelector('.content').scrollTop = 0;
 }
 
+// ══ TIME PICKER ════════════════════════════════════
+let tpPending = { quien: null, tipo: null };
+
+function openTimePicker(quien, tipo) {
+  tpPending = { quien, tipo };
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('tp-time').value = hh+':'+mm;
+  const icon = tipo==='Reel'?'🎬':'📝';
+  document.getElementById('tp-title').textContent = icon+' '+quien+' — '+tipo;
+  const overlay = document.getElementById('timepicker-overlay');
+  overlay.style.display = 'flex';
+  setTimeout(()=>overlay.style.opacity='1',10);
+}
+
+function closeTimePicker() {
+  document.getElementById('timepicker-overlay').style.display = 'none';
+  tpPending = { quien: null, tipo: null };
+}
+
+function setQuickTime(val) {
+  document.getElementById('tp-time').value = val;
+}
+
+function confirmRegistrar() {
+  const timeVal = document.getElementById('tp-time').value;
+  const { quien, tipo } = tpPending;
+  if(!quien||!tipo) return;
+  closeTimePicker();
+
+  // Format display time
+  let displayTime = timeVal;
+  if(timeVal) {
+    const [h,m] = timeVal.split(':').map(Number);
+    const ampm = h>=12?'PM':'AM';
+    const h12 = h%12||12;
+    displayTime = h12+':'+String(m).padStart(2,'0')+' '+ampm;
+  }
+
+  registrar(quien, tipo, displayTime);
+}
+
 // ══ BATTLE STATE ═══════════════════════════════════
 let state = S.get('state',{reels:21,posts:35,goalReels:21,goalPosts:35});
 let pts = S.get('pts',{c:0,v:0});
@@ -1091,7 +1156,7 @@ function resetWeek() {
   addActivity('Sistema','nueva semana iniciada','🔄','#888');
 }
 
-function registrar(quien, tipo) {
+function registrar(quien, tipo, customTime) {
   if(tipo==='Reel') {
     if(state.reels>0) state.reels--;
     if(state.posts>0) state.posts--; // Reel cuenta como Post también
@@ -1101,13 +1166,13 @@ function registrar(quien, tipo) {
   pts[key] += tipo==='Reel'?2:1;
   S.set('state',state); S.set('pts',pts);
   renderCounters(); renderCompetition();
-  const label = tipo==='Reel'?'Reel · -1 Reel -1 Post (+2pts)':'Post · -1 Post (+1pt)';
-  addActivity(quien,label,tipo==='Reel'?'🎬':'📝',quien==='Cristian'?'#e63b2e':'#a855f7');
+  const label = tipo==='Reel'?'Reel (+2pts · también -1 Post)':'Post (+1pt)';
+  addActivity(quien, label, tipo==='Reel'?'🎬':'📝', quien==='Cristian'?'#e63b2e':'#a855f7', customTime);
   if(navigator.vibrate) navigator.vibrate(40);
 }
 
-function addActivity(quien,accion,icon,color) {
-  const time = new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+function addActivity(quien,accion,icon,color,customTime) {
+  const time = customTime || new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
   activity.unshift({time,quien,accion,icon,color:color||'#888'});
   if(activity.length>60) activity.pop();
   S.set('activity',activity);
