@@ -68,7 +68,7 @@ export default async function handler(req, res) {
   } catch (e) {
     return res.status(500).json({ error: 'Crash: ' + e.message });
   }
-}
+
 
     return res.status(500).json({ error: errores.join(' | ').substring(0, 500) || 'Sin respuesta de ningún modelo' });
   } catch (e) {
