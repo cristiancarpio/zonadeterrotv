@@ -64,13 +64,11 @@ export default async function handler(req, res) {
           const data = await r.json();
           if (!r.ok) { errores.push('gemini/' + model + ': ' + (data.error?.message || r.status)); continue; }
           const text = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('');
-          if (text) return res.status(200).json({ text });
-          errores.push('gemini/' + model + ': respuesta vacía');
-        } catch (e) {
-          errores.push('gemini/' + model + ': ' + e.message);
-        }
-      }
-    }
+          if (text)    return res.status(500).json({ error: errores.join(' | ').substring(0, 500) || 'Sin respuesta de ningún modelo' });
+  } catch (e) {
+    return res.status(500).json({ error: 'Crash: ' + e.message });
+  }
+}
 
     return res.status(500).json({ error: errores.join(' | ').substring(0, 500) || 'Sin respuesta de ningún modelo' });
   } catch (e) {
